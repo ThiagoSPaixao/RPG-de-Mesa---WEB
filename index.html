@@ -9,7 +9,48 @@
     <link rel="stylesheet" href="css/responsive.css">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=MedievalSharp&family=Uncial+Antiqua&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <a href="vampire.html" onclick="navigateToRPG('vampire')" class="rpg-card"></a>
+    <style>
+        /* Estilos específicos para a homepage */
+        .vampire-badge {
+            background: linear-gradient(135deg, #8B0000, #660000);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            display: inline-block;
+        }
+        
+        .werewolf-badge {
+            background: linear-gradient(135deg, #8B4513, #654321);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            display: inline-block;
+        }
+        
+        .mage-badge {
+            background: linear-gradient(135deg, #4B0082, #483D8B);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            display: inline-block;
+        }
+        
+        .btn-explore:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(139, 0, 0, 0.4);
+        }
+        
+        .session-card:hover {
+            transform: translateY(-5px);
+            transition: transform 0.3s ease;
+        }
+    </style>
 </head>
 <body>
     <!-- Efeito de Neblina -->
@@ -54,6 +95,9 @@
                         <span class="tag">🧛 Drama Político</span>
                         <span class="tag">🌙 Mundo das Trevas</span>
                     </div>
+                    <button class="btn-play" onclick="goToVampirePage()">
+                        <i class="fas fa-bat"></i> Entrar no Mundo Vampírico
+                    </button>
                 </div>
                 <div class="slide-overlay"></div>
             </div>
@@ -151,7 +195,7 @@
         
         <div class="rpg-systems-grid">
             <!-- Card Vampiro -->
-            <div class="rpg-card" data-rpg="vampire" onclick="navigateToRPG('vampire')">
+            <div class="rpg-card" data-rpg="vampire">
                 <div class="rpg-card-header">
                     <i class="fas fa-bat rpg-icon"></i>
                     <h3>Vampiro: A Máscara</h3>
@@ -169,14 +213,14 @@
                     </div>
                 </div>
                 <div class="rpg-card-footer">
-                    <button class="btn-explore" onclick="event.stopPropagation(); navigateToRPG('vampire')">
+                    <button class="btn-explore" onclick="goToVampirePage()">
                         Explorar <i class="fas fa-arrow-right"></i>
                     </button>
                 </div>
             </div>
             
             <!-- Card Lobisomem -->
-            <div class="rpg-card" data-rpg="werewolf" onclick="navigateToRPG('werewolf')">
+            <div class="rpg-card" data-rpg="werewolf">
                 <div class="rpg-card-header">
                     <i class="fas fa-paw rpg-icon"></i>
                     <h3>Lobisomem: Idade das Trevas</h3>
@@ -194,14 +238,14 @@
                     </div>
                 </div>
                 <div class="rpg-card-footer">
-                    <button class="btn-explore" onclick="event.stopPropagation(); navigateToRPG('werewolf')">
+                    <button class="btn-explore" onclick="navigateToRPG('werewolf')">
                         Explorar <i class="fas fa-arrow-right"></i>
                     </button>
                 </div>
             </div>
             
             <!-- Card Mago -->
-            <div class="rpg-card" data-rpg="mage" onclick="navigateToRPG('mage')">
+            <div class="rpg-card" data-rpg="mage">
                 <div class="rpg-card-header">
                     <i class="fas fa-hat-wizard rpg-icon"></i>
                     <h3>Mago: A Ascensão</h3>
@@ -219,14 +263,14 @@
                     </div>
                 </div>
                 <div class="rpg-card-footer">
-                    <button class="btn-explore" onclick="event.stopPropagation(); navigateToRPG('mage')">
+                    <button class="btn-explore" onclick="navigateToRPG('mage')">
                         Explorar <i class="fas fa-arrow-right"></i>
                     </button>
                 </div>
             </div>
             
             <!-- Card Tormenta -->
-            <div class="rpg-card" data-rpg="tormenta" onclick="navigateToRPG('tormenta')">
+            <div class="rpg-card" data-rpg="tormenta">
                 <div class="rpg-card-header">
                     <i class="fas fa-scroll rpg-icon"></i>
                     <h3>Tormenta</h3>
@@ -244,14 +288,14 @@
                     </div>
                 </div>
                 <div class="rpg-card-footer">
-                    <button class="btn-explore" onclick="event.stopPropagation(); navigateToRPG('tormenta')">
+                    <button class="btn-explore" onclick="navigateToRPG('tormenta')">
                         Explorar <i class="fas fa-arrow-right"></i>
                     </button>
                 </div>
             </div>
             
             <!-- Card D&D -->
-            <div class="rpg-card" data-rpg="dnd" onclick="navigateToRPG('dnd')">
+            <div class="rpg-card" data-rpg="dnd">
                 <div class="rpg-card-header">
                     <i class="fas fa-dragon rpg-icon"></i>
                     <h3>Dungeons & Dragons 5E</h3>
@@ -269,14 +313,14 @@
                     </div>
                 </div>
                 <div class="rpg-card-footer">
-                    <button class="btn-explore" onclick="event.stopPropagation(); navigateToRPG('dnd')">
+                    <button class="btn-explore" onclick="navigateToRPG('dnd')">
                         Explorar <i class="fas fa-arrow-right"></i>
                     </button>
                 </div>
             </div>
             
             <!-- Card Crie Seu Sistema -->
-            <div class="rpg-card custom-system" onclick="openCustomSystemModal()">
+            <div class="rpg-card custom-system">
                 <div class="rpg-card-header">
                     <i class="fas fa-plus-circle rpg-icon"></i>
                     <h3>Crie Seu Sistema</h3>
@@ -294,7 +338,7 @@
                     </div>
                 </div>
                 <div class="rpg-card-footer">
-                    <button class="btn-custom" onclick="event.stopPropagation(); openCustomSystemModal()">
+                    <button class="btn-custom" onclick="openCustomSystemModal()">
                         Criar Sistema <i class="fas fa-magic"></i>
                     </button>
                 </div>
@@ -308,7 +352,7 @@
         <p class="section-subtitle">Junte-se a mesas incríveis acontecendo agora</p>
         
         <div class="sessions-list">
-            <!-- Sessão 1 -->
+            <!-- Sessão 1 - VAMPIRO -->
             <div class="session-card featured">
                 <div class="session-badge">
                     <i class="fas fa-crown"></i> Destaque
@@ -356,16 +400,16 @@
                 </div>
                 
                 <div class="session-actions">
-                    <button class="btn-join-session" onclick="joinSession(101)">
+                    <button class="btn-join-session" onclick="joinVampireSession(101)">
                         <i class="fas fa-door-open"></i> Entrar
                     </button>
-                    <button class="btn-spectate" onclick="spectateSession(101)">
+                    <button class="btn-spectate" onclick="spectateVampireSession(101)">
                         <i class="fas fa-eye"></i> Assistir
                     </button>
                 </div>
             </div>
             
-            <!-- Sessão 2 -->
+            <!-- Sessão 2 - LOBISOMEM -->
             <div class="session-card">
                 <div class="session-header">
                     <div class="session-title">
@@ -418,7 +462,7 @@
                 </div>
             </div>
             
-            <!-- Sessão 3 -->
+            <!-- Sessão 3 - MAGO -->
             <div class="session-card">
                 <div class="session-header">
                     <div class="session-title">
@@ -467,6 +511,60 @@
                         <i class="fas fa-door-open"></i> Entrar
                     </button>
                     <button class="btn-spectate" onclick="spectateSession(103)">
+                        <i class="fas fa-eye"></i> Assistir
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Sessão 4 - VAMPIRO (IA) -->
+            <div class="session-card">
+                <div class="session-header">
+                    <div class="session-title">
+                        <h3>"Noites de São Paulo"</h3>
+                        <span class="session-system vampire-badge">Vampiro</span>
+                    </div>
+                    <div class="session-gm">
+                        <i class="fas fa-robot ai-icon"></i>
+                        <span>Narrador: <strong>IA Gothic</strong></span>
+                        <span class="gm-rating">🤖 IA Especializada</span>
+                    </div>
+                </div>
+                
+                <div class="session-description">
+                    <p>Sessão com narrador IA especializado em Vampiro: A Máscara. Horror pessoal e política vampírica.</p>
+                </div>
+                
+                <div class="session-info">
+                    <div class="info-item">
+                        <i class="fas fa-users"></i>
+                        <span>👥 <strong>1/4</strong> jogadores</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <span>⏱️ <strong>30m</strong> em andamento</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-lock-open"></i>
+                        <span>🔓 <strong>Aberto</strong></span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-eye"></i>
+                        <span>👁️ <strong>18</strong> espectadores</span>
+                    </div>
+                </div>
+                
+                <div class="session-tags">
+                    <span class="tag">🧛 Clã Toreador</span>
+                    <span class="tag">🌃 Cenário Urbano</span>
+                    <span class="tag">🤖 IA Narradora</span>
+                    <span class="tag">🎭 Horror Pessoal</span>
+                </div>
+                
+                <div class="session-actions">
+                    <button class="btn-join-session" onclick="joinVampireSession(104)">
+                        <i class="fas fa-bat"></i> Entrar no Mundo Vampírico
+                    </button>
+                    <button class="btn-spectate" onclick="spectateVampireSession(104)">
                         <i class="fas fa-eye"></i> Assistir
                     </button>
                 </div>
@@ -549,6 +647,9 @@
                     
                     <button class="btn-try-ai" onclick="startAIDemo()">
                         <i class="fas fa-play"></i> Iniciar Demo IA
+                    </button>
+                    <button class="btn-try-vampire-ai" onclick="goToVampireAIPage()" style="margin-top: 10px; background: linear-gradient(135deg, #8B0000, #660000);">
+                        <i class="fas fa-bat"></i> IA Vampírica Avançada
                     </button>
                 </div>
             </div>
@@ -647,7 +748,7 @@
             <div class="footer-section">
                 <h4>Sistemas</h4>
                 <ul>
-                    <li><a href="#" onclick="navigateToRPG('vampire')">Vampiro</a></li>
+                    <li><a href="#" onclick="goToVampirePage()">Vampiro: A Máscara</a></li>
                     <li><a href="#" onclick="navigateToRPG('werewolf')">Lobisomem</a></li>
                     <li><a href="#" onclick="navigateToRPG('mage')">Mago</a></li>
                     <li><a href="#" onclick="navigateToRPG('tormenta')">Tormenta</a></li>
@@ -659,7 +760,7 @@
                 <h4>Recursos</h4>
                 <ul>
                     <li><a href="character-creator.html">Criador de Personagens</a></li>
-                    <li><a href="#">Mercado de Assets</a></li>
+                    <li><a href="#" onclick="goToVampirePage()">Mundo Vampírico</a></li>
                     <li><a href="#">Documentação</a></li>
                     <li><a href="#">API para Desenvolvedores</a></li>
                     <li><a href="#">Blog de RPG</a></li>
@@ -688,23 +789,74 @@
     <script src="js/app.js"></script>
     <script src="js/ai-narrator.js"></script>
     <script>
-        // Inicialização
-        document.addEventListener('DOMContentLoaded', function() {
-            initSlideshow();
-            updateLiveStats();
-            initThemeSwitcher();
-        });
+        // ============================================
+        // FUNÇÕES PRINCIPAIS DE NAVEGAÇÃO
+        // ============================================
         
-        // Funções de navegação
-        function navigateToRPG(system) {
-            // Muda o tema global
-            document.documentElement.setAttribute('data-theme', system);
+        // Função PRINCIPAL para ir para a página de Vampiro
+        function goToVampirePage() {
+            console.log('Redirecionando para vampire.html...');
             
-            // Salva preferência
+            // Salva no localStorage que o usuário escolheu Vampiro
+            localStorage.setItem('selectedRPG', 'vampire');
+            localStorage.setItem('lastVisited', 'vampire');
+            
+            // Muda o tema para vampiro
+            document.documentElement.setAttribute('data-theme', 'vampire');
+            
+            // Redireciona para vampire.html
+            window.location.href = 'vampire.html';
+        }
+        
+        // Função para ir para IA Vampírica específica
+        function goToVampireAIPage() {
+            localStorage.setItem('selectedRPG', 'vampire');
+            localStorage.setItem('vampireAIAction', 'start_demo');
+            window.location.href = 'vampire.html#ai-demo';
+        }
+        
+        // Funções para sessões de Vampiro
+        function joinVampireSession(sessionId) {
+            console.log(`Entrando na sessão vampírica ${sessionId}...`);
+            
+            // Salva dados da sessão
+            localStorage.setItem('selectedRPG', 'vampire');
+            localStorage.setItem('joiningSession', sessionId);
+            localStorage.setItem('sessionType', 'vampire');
+            
+            // Mostra mensagem e redireciona
+            alert(`Entrando na sessão vampírica ${sessionId}...\nRedirecionando para o Mundo das Trevas!`);
+            
+            // Redireciona para vampire.html com parâmetro da sessão
+            window.location.href = `vampire.html?session=${sessionId}&join=true`;
+        }
+        
+        function spectateVampireSession(sessionId) {
+            console.log(`Assistindo sessão vampírica ${sessionId}...`);
+            
+            localStorage.setItem('selectedRPG', 'vampire');
+            localStorage.setItem('spectatingSession', sessionId);
+            
+            alert(`Preparando para assistir sessão vampírica ${sessionId}...`);
+            window.location.href = `vampire.html?session=${sessionId}&spectate=true`;
+        }
+        
+        // ============================================
+        // FUNÇÕES GENÉRICAS DE NAVEGAÇÃO
+        // ============================================
+        
+        function navigateToRPG(system) {
+            if (system === 'vampire') {
+                goToVampirePage();
+                return;
+            }
+            
+            // Para outros sistemas (em desenvolvimento)
+            document.documentElement.setAttribute('data-theme', system);
             localStorage.setItem('selectedRPG', system);
             
-            // Navega para a página do sistema
-            window.location.href = `system.html?system=${system}`;
+            alert(`Sistema ${system} em desenvolvimento. Em breve!`);
+            // window.location.href = `${system}.html`; // Quando outras páginas existirem
         }
         
         function navigateTo(page) {
@@ -716,9 +868,7 @@
         }
         
         function joinSession(sessionId) {
-            // Em produção, isso redirecionaria para a sala
-            alert(`Entrando na sessão ${sessionId}...`);
-            // window.location.href = `rpg-room.html?session=${sessionId}`;
+            alert(`Entrando na sessão ${sessionId}...\n(Em produção, redirecionaria para a sala)`);
         }
         
         function spectateSession(sessionId) {
@@ -731,15 +881,47 @@
         
         function viewAllSessions() {
             alert('Redirecionando para lista completa de sessões...');
-            // Navegaria para página de todas as sessões
+            // Em produção: window.location.href = 'all-sessions.html';
         }
         
         function openCustomSystemModal() {
             alert('Abrindo criador de sistemas personalizados...');
-            // Modal personalizado seria aberto aqui
         }
         
-        // Slideshow automático
+        // ============================================
+        // INICIALIZAÇÃO DA PÁGINA
+        // ============================================
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            initSlideshow();
+            updateLiveStats();
+            initThemeSwitcher();
+            setupVampireLinks();
+        });
+        
+        // Configura todos os links de Vampiro
+        function setupVampireLinks() {
+            // Adiciona eventos aos cards de Vampiro
+            document.querySelectorAll('.rpg-card[data-rpg="vampire"]').forEach(card => {
+                card.addEventListener('click', function(e) {
+                    if (!e.target.closest('.btn-explore')) {
+                        goToVampirePage();
+                    }
+                });
+            });
+            
+            // Adiciona tooltips
+            const vampireCards = document.querySelectorAll('.rpg-card[data-rpg="vampire"], .session-card .vampire-badge');
+            vampireCards.forEach(card => {
+                card.style.cursor = 'pointer';
+                card.title = 'Clique para entrar no Mundo Vampírico';
+            });
+        }
+        
+        // ============================================
+        // SLIDESHOW
+        // ============================================
+        
         function initSlideshow() {
             let currentSlide = 0;
             const slides = document.querySelectorAll('.slide');
@@ -759,11 +941,11 @@
             }
             
             // Controles
-            document.querySelector('.slide-next').addEventListener('click', () => {
+            document.querySelector('.slide-next')?.addEventListener('click', () => {
                 showSlide(currentSlide + 1);
             });
             
-            document.querySelector('.slide-prev').addEventListener('click', () => {
+            document.querySelector('.slide-prev')?.addEventListener('click', () => {
                 showSlide(currentSlide - 1);
             });
             
@@ -779,37 +961,48 @@
             }, 8000);
         }
         
-        // Atualizar estatísticas (simulado)
+        // ============================================
+        // ESTATÍSTICAS AO VIVO
+        // ============================================
+        
         function updateLiveStats() {
             setInterval(() => {
                 const online = document.getElementById('online-count');
                 const sessions = document.getElementById('active-sessions');
                 const gms = document.getElementById('available-gms');
                 
-                // Simula variação
-                online.textContent = (parseInt(online.textContent) + Math.floor(Math.random() * 10) - 3).toString();
-                sessions.textContent = (parseInt(sessions.textContent) + Math.floor(Math.random() * 5) - 2).toString();
-                gms.textContent = (parseInt(gms.textContent) + Math.floor(Math.random() * 3) - 1).toString();
-                
-                // Garante números positivos
-                if (parseInt(online.textContent) < 1000) online.textContent = '1000';
-                if (parseInt(sessions.textContent) < 50) sessions.textContent = '50';
-                if (parseInt(gms.textContent) < 20) gms.textContent = '20';
+                if (online && sessions && gms) {
+                    // Simula variação
+                    online.textContent = (parseInt(online.textContent) + Math.floor(Math.random() * 10) - 3).toString();
+                    sessions.textContent = (parseInt(sessions.textContent) + Math.floor(Math.random() * 5) - 2).toString();
+                    gms.textContent = (parseInt(gms.textContent) + Math.floor(Math.random() * 3) - 1).toString();
+                    
+                    // Garante números positivos
+                    if (parseInt(online.textContent) < 1000) online.textContent = '1000';
+                    if (parseInt(sessions.textContent) < 50) sessions.textContent = '50';
+                    if (parseInt(gms.textContent) < 20) gms.textContent = '20';
+                }
             }, 10000);
         }
         
-        // Seletor de tema
+        // ============================================
+        // TEMA
+        // ============================================
+        
         function initThemeSwitcher() {
             const savedTheme = localStorage.getItem('selectedRPG') || 'vampire';
             document.documentElement.setAttribute('data-theme', savedTheme);
         }
         
-        // Demo da IA
+        // ============================================
+        // DEMO DA IA
+        // ============================================
+        
         function sendToAI() {
             const input = document.getElementById('player-input');
             const aiResponse = document.getElementById('ai-response');
             
-            if (input.value.trim() === '') return;
+            if (!input || !aiResponse || input.value.trim() === '') return;
             
             // Mostra a mensagem do jogador
             const playerMessage = document.createElement('div');
@@ -822,7 +1015,10 @@
                 <p>${input.value}</p>
             `;
             
-            document.querySelector('.ai-chat').insertBefore(playerMessage, document.querySelector('.player-message'));
+            const chatContainer = document.querySelector('.ai-chat');
+            if (chatContainer) {
+                chatContainer.insertBefore(playerMessage, document.querySelector('.player-message'));
+            }
             
             // Simula resposta da IA
             const responses = [
@@ -844,10 +1040,12 @@
         }
         
         function startAIDemo() {
-            const system = document.getElementById('ai-system').value;
-            const style = document.getElementById('ai-style').value;
-            
+            const system = document.getElementById('ai-system')?.value || 'vampire';
+            const style = document.getElementById('ai-style')?.value || 'gothic';
             const aiResponse = document.getElementById('ai-response');
+            
+            if (!aiResponse) return;
+            
             const greetings = {
                 vampire: "Bem-vindo às trevas. A noite pertence aos vampiros. Qual é seu primeiro movimento?",
                 werewolf: "Gaia chama seus filhos. Sinta a fúria da Wyrm se aproximando.",
@@ -856,7 +1054,7 @@
                 dnd: "Role para iniciativa! Sua jornada épica está prestes a começar."
             };
             
-            aiResponse.textContent = `"${greetings[system]}"`;
+            aiResponse.textContent = `"${greetings[system] || greetings.vampire}"`;
             document.documentElement.setAttribute('data-theme', system);
             
             // Toca som de ambiente
@@ -864,6 +1062,9 @@
         }
         
         function rollDemoDice() {
+            const chatContainer = document.querySelector('.ai-chat');
+            if (!chatContainer) return;
+            
             const diceResults = document.createElement('div');
             diceResults.className = 'dice-roll-demo';
             diceResults.innerHTML = `
@@ -873,7 +1074,7 @@
                 </div>
             `;
             
-            document.querySelector('.ai-chat').insertBefore(diceResults, document.querySelector('.player-message'));
+            chatContainer.insertBefore(diceResults, document.querySelector('.player-message'));
         }
         
         function playDemoSound() {
@@ -881,13 +1082,56 @@
             const soundBtn = document.createElement('button');
             soundBtn.className = 'sound-notification';
             soundBtn.innerHTML = '<i class="fas fa-music"></i> Trilha sonora iniciada';
+            soundBtn.style.cssText = 'background: #8B0000; color: white; border: none; padding: 5px 10px; border-radius: 5px; margin: 10px;';
             
-            document.querySelector('.ai-chat').insertBefore(soundBtn, document.querySelector('.player-message'));
-            
-            setTimeout(() => {
-                soundBtn.remove();
-            }, 3000);
+            const chatContainer = document.querySelector('.ai-chat');
+            if (chatContainer) {
+                chatContainer.insertBefore(soundBtn, document.querySelector('.player-message'));
+                
+                setTimeout(() => {
+                    soundBtn.remove();
+                }, 3000);
+            }
         }
+        
+        // ============================================
+        // FUNÇÕES DA COMUNIDADE
+        // ============================================
+        
+        function viewEvents() {
+            alert('Abrindo eventos...');
+        }
+        
+        function viewWorkshops() {
+            alert('Abrindo workshops...');
+        }
+        
+        function viewRankings() {
+            alert('Abrindo rankings...');
+        }
+        
+        function viewMarket() {
+            alert('Abrindo mercado...');
+        }
+        
+        // ============================================
+        // DETECÇÃO DE CLIQUE EM ELEMENTOS VAMPÍRICOS
+        // ============================================
+        
+        // Detecta cliques em qualquer elemento relacionado a Vampiro
+        document.addEventListener('click', function(e) {
+            // Se clicar em um badge de Vampiro
+            if (e.target.closest('.vampire-badge')) {
+                goToVampirePage();
+                e.preventDefault();
+            }
+            
+            // Se clicar em uma tag relacionada a Vampiro
+            if (e.target.closest('.tag') && e.target.textContent.includes('Vamp')) {
+                goToVampirePage();
+                e.preventDefault();
+            }
+        });
     </script>
 </body>
 </html>
