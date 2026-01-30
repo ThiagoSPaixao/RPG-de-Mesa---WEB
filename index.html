@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="vampire">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RPG Online - Plataforma Completa</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=MedievalSharp&family=Uncial+Antiqua&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Efeito de Neblina -->
+    <div class="fog-effect"></div>
+    
+    <!-- Barra de Navegação -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <i class="fas fa-dragon brand-icon"></i>
+            <h1>RPG Online</h1>
+            <span class="version">v1.0</span>
+        </div>
+        
+        <div class="nav-menu">
+            <a href="#" class="nav-link active"><i class="fas fa-home"></i> Home</a>
+            <a href="#systems" class="nav-link"><i class="fas fa-dice-d20"></i> Sistemas</a>
+            <a href="#sessions" class="nav-link"><i class="fas fa-users"></i> Sessões</a>
+            <a href="#community" class="nav-link"><i class="fas fa-comments"></i> Comunidade</a>
+            <a href="character-creator.html" class="nav-link"><i class="fas fa-user-plus"></i> Criar Personagem</a>
+        </div>
+        
+        <div class="nav-user">
+            <button class="btn-login"><i class="fas fa-sign-in-alt"></i> Entrar</button>
+            <button class="btn-register"><i class="fas fa-user-plus"></i> Cadastrar</button>
+        </div>
+        
+        <button class="mobile-menu-btn">
+            <i class="fas fa-bars"></i>
+        </button>
+    </nav>
+
+    <!-- Banner Principal -->
+    <section class="hero-banner">
+        <div class="slideshow" id="rpgSlideshow">
+            <!-- Slide Vampiro -->
+            <div class="slide active" data-rpg="vampire">
+                <div class="slide-content">
+                    <h1 class="slide-title">Vampiro: A Máscara</h1>
+                    <p class="slide-description">Jogue nas sombras da sociedade vampírica</p>
+                    <div class="slide-tags">
+                        <span class="tag">🎭 Horror Pessoal</span>
+                        <span class="tag">🧛 Drama Político</span>
+                        <span class="tag">🌙 Mundo das Trevas</span>
+                    </div>
+                </div>
+                <div class="slide-overlay"></div>
+            </div>
+            
+            <!-- Slide Lobisomem -->
+            <div class="slide" data-rpg="werewolf">
+                <div class="slide-content">
+                    <h1 class="slide-title">Lobisomem: Idade das Trevas</h1>
+                    <p class="slide-description">Proteja Gaia como um guerreiro das trevas</p>
+                    <div class="slide-tags">
+                        <span class="tag">🐺 Tribal</span>
+                        <span class="tag">🌍 Ecologia</span>
+                        <span class="tag">⚔️ Combate Épico</span>
+                    </div>
+                </div>
+                <div class="slide-overlay"></div>
+            </div>
+            
+            <!-- Slide Mago -->
+            <div class="slide" data-rpg="mage">
+                <div class="slide-content">
+                    <h1 class="slide-title">Mago: A Ascensão</h1>
+                    <p class="slide-description">Moldando a realidade através da vontade</p>
+                    <div class="slide-tags">
+                        <span class="tag">🔮 Magia</span>
+                        <span class="tag">🌌 Conspiração</span>
+                        <span class="tag">🧠 Filosofia</span>
+                    </div>
+                </div>
+                <div class="slide-overlay"></div>
+            </div>
+        </div>
+        
+        <!-- Controles do Slideshow -->
+        <div class="slideshow-controls">
+            <button class="slide-prev"><i class="fas fa-chevron-left"></i></button>
+            <div class="slide-dots">
+                <span class="dot active" data-slide="0"></span>
+                <span class="dot" data-slide="1"></span>
+                <span class="dot" data-slide="2"></span>
+            </div>
+            <button class="slide-next"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        
+        <!-- CTA Buttons -->
+        <div class="cta-buttons">
+            <button class="btn-play" onclick="navigateTo('find-session')">
+                <i class="fas fa-search"></i> Encontrar Mesa
+            </button>
+            <button class="btn-create" onclick="navigateTo('create-session')">
+                <i class="fas fa-plus-circle"></i> Criar Sessão
+            </button>
+            <button class="btn-demo" onclick="tryAIDemo()">
+                <i class="fas fa-robot"></i> Experimentar IA GM
+            </button>
+        </div>
+        
+        <!-- Estatísticas ao Vivo -->
+        <div class="live-stats">
+            <div class="stat-card">
+                <i class="fas fa-users online-icon"></i>
+                <div class="stat-info">
+                    <span class="stat-number" id="online-count">1,247</span>
+                    <span class="stat-label">Jogadores Online</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-dice-d20 session-icon"></i>
+                <div class="stat-info">
+                    <span class="stat-number" id="active-sessions">89</span>
+                    <span class="stat-label">Sessões Ativas</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-crown gm-icon"></i>
+                <div class="stat-info">
+                    <span class="stat-number" id="available-gms">42</span>
+                    <span class="stat-label">Narradores Disponíveis</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-calendar-alt event-icon"></i>
+                <div class="stat-info">
+                    <span class="stat-number" id="next-events">15</span>
+                    <span class="stat-label">Próximos Eventos</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Grid de Sistemas de RPG -->
+    <section class="rpg-systems-section" id="systems">
+        <h2 class="section-title">Escolha Seu Sistema de RPG</h2>
+        <p class="section-subtitle">Cada sistema possui regras, temas e mecânicas únicas</p>
+        
+        <div class="rpg-systems-grid">
+            <!-- Card Vampiro -->
+            <div class="rpg-card" data-rpg="vampire" onclick="navigateToRPG('vampire')">
+                <div class="rpg-card-header">
+                    <i class="fas fa-bat rpg-icon"></i>
+                    <h3>Vampiro: A Máscara</h3>
+                </div>
+                <div class="rpg-card-body">
+                    <p>Vampiros em um mundo moderno, lutando por poder e contra sua natureza bestial.</p>
+                    <div class="rpg-stats">
+                        <span class="online-count"><i class="fas fa-circle online-dot"></i> 128 online</span>
+                        <span class="sessions-count"><i class="fas fa-dice-d20"></i> 45 sessões ativas</span>
+                    </div>
+                    <div class="rpg-features">
+                        <span class="feature-tag">D10</span>
+                        <span class="feature-tag">Horror Pessoal</span>
+                        <span class="feature-tag">Clãs</span>
+                    </div>
+                </div>
+                <div class="rpg-card-footer">
+                    <button class="btn-explore" onclick="event.stopPropagation(); navigateToRPG('vampire')">
+                        Explorar <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Card Lobisomem -->
+            <div class="rpg-card" data-rpg="werewolf" onclick="navigateToRPG('werewolf')">
+                <div class="rpg-card-header">
+                    <i class="fas fa-paw rpg-icon"></i>
+                    <h3>Lobisomem: Idade das Trevas</h3>
+                </div>
+                <div class="rpg-card-body">
+                    <p>Guerreiros espirituais protegendo Gaia das forças da Corrupção.</p>
+                    <div class="rpg-stats">
+                        <span class="online-count"><i class="fas fa-circle online-dot"></i> 92 online</span>
+                        <span class="sessions-count"><i class="fas fa-dice-d20"></i> 31 sessões ativas</span>
+                    </div>
+                    <div class="rpg-features">
+                        <span class="feature-tag">D10</span>
+                        <span class="feature-tag">Combate Tribal</span>
+                        <span class="feature-tag">Ragabash</span>
+                    </div>
+                </div>
+                <div class="rpg-card-footer">
+                    <button class="btn-explore" onclick="event.stopPropagation(); navigateToRPG('werewolf')">
+                        Explorar <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Card Mago -->
+            <div class="rpg-card" data-rpg="mage" onclick="navigateToRPG('mage')">
+                <div class="rpg-card-header">
+                    <i class="fas fa-hat-wizard rpg-icon"></i>
+                    <h3>Mago: A Ascensão</h3>
+                </div>
+                <div class="rpg-card-body">
+                    <p>Magos que moldam a realidade através de sua vontade e paradigmas.</p>
+                    <div class="rpg-stats">
+                        <span class="online-count"><i class="fas fa-circle online-dot"></i> 87 online</span>
+                        <span class="sessions-count"><i class="fas fa-dice-d20"></i> 28 sessões ativas</span>
+                    </div>
+                    <div class="rpg-features">
+                        <span class="feature-tag">D10</span>
+                        <span class="feature-tag">Realidade Flexível</span>
+                        <span class="feature-tag">Paradoxo</span>
+                    </div>
+                </div>
+                <div class="rpg-card-footer">
+                    <button class="btn-explore" onclick="event.stopPropagation(); navigateToRPG('mage')">
+                        Explorar <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Card Tormenta -->
+            <div class="rpg-card" data-rpg="tormenta" onclick="navigateToRPG('tormenta')">
+                <div class="rpg-card-header">
+                    <i class="fas fa-scroll rpg-icon"></i>
+                    <h3>Tormenta</h3>
+                </div>
+                <div class="rpg-card-body">
+                    <p>Aventuras épicas em Arton, um mundo de fantasia brasileiro.</p>
+                    <div class="rpg-stats">
+                        <span class="online-count"><i class="fas fa-circle online-dot"></i> 156 online</span>
+                        <span class="sessions-count"><i class="fas fa-dice-d20"></i> 52 sessões ativas</span>
+                    </div>
+                    <div class="rpg-features">
+                        <span class="feature-tag">D20</span>
+                        <span class="feature-tag">Fantasia Épica</span>
+                        <span class="feature-tag">Poderes Divinos</span>
+                    </div>
+                </div>
+                <div class="rpg-card-footer">
+                    <button class="btn-explore" onclick="event.stopPropagation(); navigateToRPG('tormenta')">
+                        Explorar <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Card D&D -->
+            <div class="rpg-card" data-rpg="dnd" onclick="navigateToRPG('dnd')">
+                <div class="rpg-card-header">
+                    <i class="fas fa-dragon rpg-icon"></i>
+                    <h3>Dungeons & Dragons 5E</h3>
+                </div>
+                <div class="rpg-card-body">
+                    <p>O clássico dos RPGs de fantasia medieval. Aventuras sem fim.</p>
+                    <div class="rpg-stats">
+                        <span class="online-count"><i class="fas fa-circle online-dot"></i> 324 online</span>
+                        <span class="sessions-count"><i class="fas fa-dice-d20"></i> 112 sessões ativas</span>
+                    </div>
+                    <div class="rpg-features">
+                        <span class="feature-tag">D20</span>
+                        <span class="feature-tag">Fantasia Medieval</span>
+                        <span class="feature-tag">Classes</span>
+                    </div>
+                </div>
+                <div class="rpg-card-footer">
+                    <button class="btn-explore" onclick="event.stopPropagation(); navigateToRPG('dnd')">
+                        Explorar <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Card Crie Seu Sistema -->
+            <div class="rpg-card custom-system" onclick="openCustomSystemModal()">
+                <div class="rpg-card-header">
+                    <i class="fas fa-plus-circle rpg-icon"></i>
+                    <h3>Crie Seu Sistema</h3>
+                </div>
+                <div class="rpg-card-body">
+                    <p>Personalize regras, dados e temas para seu RPG único.</p>
+                    <div class="rpg-stats">
+                        <span class="online-count"><i class="fas fa-tools"></i> Customizável</span>
+                        <span class="sessions-count"><i class="fas fa-infinity"></i> Ilimitado</span>
+                    </div>
+                    <div class="rpg-features">
+                        <span class="feature-tag">Qualquer Dado</span>
+                        <span class="feature-tag">Regras Únicas</span>
+                        <span class="feature-tag">Tema Personalizado</span>
+                    </div>
+                </div>
+                <div class="rpg-card-footer">
+                    <button class="btn-custom" onclick="event.stopPropagation(); openCustomSystemModal()">
+                        Criar Sistema <i class="fas fa-magic"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sessões em Destaque -->
+    <section class="featured-sessions" id="sessions">
+        <h2 class="section-title">Sessões em Destaque</h2>
+        <p class="section-subtitle">Junte-se a mesas incríveis acontecendo agora</p>
+        
+        <div class="sessions-list">
+            <!-- Sessão 1 -->
+            <div class="session-card featured">
+                <div class="session-badge">
+                    <i class="fas fa-crown"></i> Destaque
+                </div>
+                <div class="session-header">
+                    <div class="session-title">
+                        <h3>"Crônicas de Los Angeles"</h3>
+                        <span class="session-system vampire-badge">Vampiro</span>
+                    </div>
+                    <div class="session-gm">
+                        <i class="fas fa-crown gm-icon"></i>
+                        <span>Narrador: <strong>Drácula92</strong></span>
+                        <span class="gm-rating">⭐ 4.8</span>
+                    </div>
+                </div>
+                
+                <div class="session-description">
+                    <p>Uma campanha política na Camarilla de Los Angeles. Intrigas, traições e sangue fresco.</p>
+                </div>
+                
+                <div class="session-info">
+                    <div class="info-item">
+                        <i class="fas fa-users"></i>
+                        <span>👥 <strong>3/5</strong> jogadores</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <span>⏱️ <strong>2h 15m</strong> em andamento</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-lock"></i>
+                        <span>🔒 Senha: <strong>Sim</strong></span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-eye"></i>
+                        <span>👁️ <strong>12</strong> espectadores</span>
+                    </div>
+                </div>
+                
+                <div class="session-tags">
+                    <span class="tag">🎭 Política Vampírica</span>
+                    <span class="tag">🏙️ Cenário Urbano</span>
+                    <span class="tag">🧛 Clã Ventrue</span>
+                    <span class="tag">🎙️ Voz Ativa</span>
+                </div>
+                
+                <div class="session-actions">
+                    <button class="btn-join-session" onclick="joinSession(101)">
+                        <i class="fas fa-door-open"></i> Entrar
+                    </button>
+                    <button class="btn-spectate" onclick="spectateSession(101)">
+                        <i class="fas fa-eye"></i> Assistir
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Sessão 2 -->
+            <div class="session-card">
+                <div class="session-header">
+                    <div class="session-title">
+                        <h3>"Guardiões da Floresta Negra"</h3>
+                        <span class="session-system werewolf-badge">Lobisomem</span>
+                    </div>
+                    <div class="session-gm">
+                        <i class="fas fa-crown gm-icon"></i>
+                        <span>Narrador: <strong>Luna_Selvagem</strong></span>
+                        <span class="gm-rating">⭐ 4.5</span>
+                    </div>
+                </div>
+                
+                <div class="session-description">
+                    <p>Os Garou protegem seu território da expansão urbana e das criaturas da Wyrm.</p>
+                </div>
+                
+                <div class="session-info">
+                    <div class="info-item">
+                        <i class="fas fa-users"></i>
+                        <span>👥 <strong>4/6</strong> jogadores</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <span>⏱️ <strong>45m</strong> em andamento</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-lock-open"></i>
+                        <span>🔓 <strong>Aberto</strong></span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-eye"></i>
+                        <span>👁️ <strong>8</strong> espectadores</span>
+                    </div>
+                </div>
+                
+                <div class="session-tags">
+                    <span class="tag">🐺 Tribo Shadow Lords</span>
+                    <span class="tag">🌳 Ambientação Florestal</span>
+                    <span class="tag">🤖 IA Narradora</span>
+                </div>
+                
+                <div class="session-actions">
+                    <button class="btn-join-session" onclick="joinSession(102)">
+                        <i class="fas fa-door-open"></i> Entrar
+                    </button>
+                    <button class="btn-spectate" onclick="spectateSession(102)">
+                        <i class="fas fa-eye"></i> Assistir
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Sessão 3 -->
+            <div class="session-card">
+                <div class="session-header">
+                    <div class="session-title">
+                        <h3>"Mistérios de Atlântida"</h3>
+                        <span class="session-system mage-badge">Mago</span>
+                    </div>
+                    <div class="session-gm">
+                        <i class="fas fa-robot ai-icon"></i>
+                        <span>Narrador: <strong>IA Arcana</strong></span>
+                        <span class="gm-rating">🤖 IA Avançada</span>
+                    </div>
+                </div>
+                
+                <div class="session-description">
+                    <p>Magos da Tradição exploram ruínas atlantes em busca de conhecimento perdido.</p>
+                </div>
+                
+                <div class="session-info">
+                    <div class="info-item">
+                        <i class="fas fa-users"></i>
+                        <span>👥 <strong>2/4</strong> jogadores</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <span>⏱️ <strong>1h 30m</strong> em andamento</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-lock"></i>
+                        <span>🔒 Senha: <strong>Sim</strong></span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-eye"></i>
+                        <span>👁️ <strong>25</strong> espectadores</span>
+                    </div>
+                </div>
+                
+                <div class="session-tags">
+                    <span class="tag">🔮 Tradição Hermética</span>
+                    <span class="tag">🏛️ Arqueologia Mística</span>
+                    <span class="tag">🤖 Narrador IA</span>
+                    <span class="tag">🎵 Trilha Sonora</span>
+                </div>
+                
+                <div class="session-actions">
+                    <button class="btn-join-session" onclick="joinSession(103)">
+                        <i class="fas fa-door-open"></i> Entrar
+                    </button>
+                    <button class="btn-spectate" onclick="spectateSession(103)">
+                        <i class="fas fa-eye"></i> Assistir
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="view-all-sessions">
+            <button class="btn-view-all" onclick="viewAllSessions()">
+                <i class="fas fa-list"></i> Ver Todas as Sessões
+            </button>
+        </div>
+    </section>
+
+    <!-- Seção IA Narradora -->
+    <section class="ai-narrator-section" id="ai-demo">
+        <div class="ai-container">
+            <div class="ai-header">
+                <i class="fas fa-robot ai-main-icon"></i>
+                <h2>Narrador IA Inteligente</h2>
+                <p>Jogue com nossa IA treinada em sistemas de RPG</p>
+            </div>
+            
+            <div class="ai-demo">
+                <div class="ai-chat">
+                    <div class="ai-message gm-message">
+                        <div class="message-header">
+                            <i class="fas fa-robot"></i>
+                            <strong>Narrador IA (Vampiro):</strong>
+                        </div>
+                        <p id="ai-response">"A noite cai sobre São Paulo. Nas sombras dos arranha-céus, você sente a presença de outros da sua espécie. O que fazem nesta noite?"</p>
+                    </div>
+                    
+                    <div class="player-message">
+                        <div class="message-header">
+                            <i class="fas fa-user"></i>
+                            <strong>Você:</strong>
+                        </div>
+                        <div class="message-input">
+                            <input type="text" id="player-input" placeholder="Digite sua ação...">
+                            <button onclick="sendToAI()"><i class="fas fa-paper-plane"></i></button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="ai-settings">
+                    <h3><i class="fas fa-cog"></i> Configurar IA</h3>
+                    
+                    <div class="setting-group">
+                        <label>Sistema:</label>
+                        <select id="ai-system">
+                            <option value="vampire">Vampiro: A Máscara</option>
+                            <option value="werewolf">Lobisomem</option>
+                            <option value="mage">Mago</option>
+                            <option value="tormenta">Tormenta</option>
+                            <option value="dnd">D&D 5E</option>
+                        </select>
+                    </div>
+                    
+                    <div class="setting-group">
+                        <label>Estilo:</label>
+                        <select id="ai-style">
+                            <option value="gothic">Gótico/Dramático</option>
+                            <option value="neutral">Neutro/Descriptivo</option>
+                            <option value="humorous">Humorístico</option>
+                            <option value="epic">Épico/Cinematográfico</option>
+                        </select>
+                    </div>
+                    
+                    <div class="setting-group">
+                        <label>Complexidade:</label>
+                        <div class="slider-container">
+                            <input type="range" id="ai-complexity" min="1" max="5" value="3">
+                            <div class="slider-labels">
+                                <span>Simples</span>
+                                <span>Médio</span>
+                                <span>Complexo</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn-try-ai" onclick="startAIDemo()">
+                        <i class="fas fa-play"></i> Iniciar Demo IA
+                    </button>
+                </div>
+            </div>
+            
+            <div class="ai-features">
+                <div class="feature">
+                    <i class="fas fa-brain"></i>
+                    <h4>Adaptativo</h4>
+                    <p>Aprende com suas ações</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-book"></i>
+                    <h4>Especializado</h4>
+                    <p>Conhece cada sistema</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-music"></i>
+                    <h4>Imersivo</h4>
+                    <p>Descreve com detalhes</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-bolt"></i>
+                    <h4>Rápido</h4>
+                    <p>Responde em segundos</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comunidade -->
+    <section class="community-section" id="community">
+        <h2 class="section-title">Comunidade Ativa</h2>
+        <p class="section-subtitle">Conecte-se com outros jogadores e narradores</p>
+        
+        <div class="community-grid">
+            <div class="community-card">
+                <div class="community-icon">
+                    <i class="fas fa-calendar-star"></i>
+                </div>
+                <h3>Eventos Semanais</h3>
+                <p>Torneios, oneshots e encontros temáticos</p>
+                <button class="btn-community" onclick="viewEvents()">
+                    Ver Eventos <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+            
+            <div class="community-card">
+                <div class="community-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h3>Workshops</h3>
+                <p>Aprenda a narrar ou melhorar seu personagem</p>
+                <button class="btn-community" onclick="viewWorkshops()">
+                    Aprender <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+            
+            <div class="community-card">
+                <div class="community-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <h3>Ranqueamento</h3>
+                <p>Suba na classificação dos jogadores</p>
+                <button class="btn-community" onclick="viewRankings()">
+                    Ver Ranking <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+            
+            <div class="community-card">
+                <div class="community-icon">
+                    <i class="fas fa-store"></i>
+                </div>
+                <h3>Mercado</h3>
+                <p>Compre assets, mapas e recursos</p>
+                <button class="btn-community" onclick="viewMarket()">
+                    Explorar <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rodapé -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3><i class="fas fa-dragon"></i> RPG Online</h3>
+                <p>Conectando jogadores de RPG desde 2024</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-discord"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Sistemas</h4>
+                <ul>
+                    <li><a href="#" onclick="navigateToRPG('vampire')">Vampiro</a></li>
+                    <li><a href="#" onclick="navigateToRPG('werewolf')">Lobisomem</a></li>
+                    <li><a href="#" onclick="navigateToRPG('mage')">Mago</a></li>
+                    <li><a href="#" onclick="navigateToRPG('tormenta')">Tormenta</a></li>
+                    <li><a href="#" onclick="navigateToRPG('dnd')">D&D 5E</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Recursos</h4>
+                <ul>
+                    <li><a href="character-creator.html">Criador de Personagens</a></li>
+                    <li><a href="#">Mercado de Assets</a></li>
+                    <li><a href="#">Documentação</a></li>
+                    <li><a href="#">API para Desenvolvedores</a></li>
+                    <li><a href="#">Blog de RPG</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Suporte</h4>
+                <ul>
+                    <li><a href="#">Central de Ajuda</a></li>
+                    <li><a href="#">Contato</a></li>
+                    <li><a href="#">Reportar Bug</a></li>
+                    <li><a href="#">Política de Privacidade</a></li>
+                    <li><a href="#">Termos de Uso</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 RPG Online Platform. Todos os direitos reservados.</p>
+            <p>Vampiro: A Máscara, Lobisomem e outros são marcas registradas da White Wolf Publishing.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/app.js"></script>
+    <script src="js/ai-narrator.js"></script>
+    <script>
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            initSlideshow();
+            updateLiveStats();
+            initThemeSwitcher();
+        });
+        
+        // Funções de navegação
+        function navigateToRPG(system) {
+            // Muda o tema global
+            document.documentElement.setAttribute('data-theme', system);
+            
+            // Salva preferência
+            localStorage.setItem('selectedRPG', system);
+            
+            // Navega para a página do sistema
+            window.location.href = `system.html?system=${system}`;
+        }
+        
+        function navigateTo(page) {
+            if (page === 'create-session') {
+                window.location.href = 'create-session.html';
+            } else if (page === 'find-session') {
+                document.getElementById('sessions').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+        
+        function joinSession(sessionId) {
+            // Em produção, isso redirecionaria para a sala
+            alert(`Entrando na sessão ${sessionId}...`);
+            // window.location.href = `rpg-room.html?session=${sessionId}`;
+        }
+        
+        function spectateSession(sessionId) {
+            alert(`Assistindo sessão ${sessionId}...`);
+        }
+        
+        function tryAIDemo() {
+            document.getElementById('ai-demo').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function viewAllSessions() {
+            alert('Redirecionando para lista completa de sessões...');
+            // Navegaria para página de todas as sessões
+        }
+        
+        function openCustomSystemModal() {
+            alert('Abrindo criador de sistemas personalizados...');
+            // Modal personalizado seria aberto aqui
+        }
+        
+        // Slideshow automático
+        function initSlideshow() {
+            let currentSlide = 0;
+            const slides = document.querySelectorAll('.slide');
+            const dots = document.querySelectorAll('.dot');
+            
+            function showSlide(n) {
+                slides.forEach(slide => slide.classList.remove('active'));
+                dots.forEach(dot => dot.classList.remove('active'));
+                
+                currentSlide = (n + slides.length) % slides.length;
+                slides[currentSlide].classList.add('active');
+                dots[currentSlide].classList.add('active');
+                
+                // Atualiza tema baseado no slide
+                const theme = slides[currentSlide].getAttribute('data-rpg');
+                document.documentElement.setAttribute('data-theme', theme);
+            }
+            
+            // Controles
+            document.querySelector('.slide-next').addEventListener('click', () => {
+                showSlide(currentSlide + 1);
+            });
+            
+            document.querySelector('.slide-prev').addEventListener('click', () => {
+                showSlide(currentSlide - 1);
+            });
+            
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    showSlide(index);
+                });
+            });
+            
+            // Automático
+            setInterval(() => {
+                showSlide(currentSlide + 1);
+            }, 8000);
+        }
+        
+        // Atualizar estatísticas (simulado)
+        function updateLiveStats() {
+            setInterval(() => {
+                const online = document.getElementById('online-count');
+                const sessions = document.getElementById('active-sessions');
+                const gms = document.getElementById('available-gms');
+                
+                // Simula variação
+                online.textContent = (parseInt(online.textContent) + Math.floor(Math.random() * 10) - 3).toString();
+                sessions.textContent = (parseInt(sessions.textContent) + Math.floor(Math.random() * 5) - 2).toString();
+                gms.textContent = (parseInt(gms.textContent) + Math.floor(Math.random() * 3) - 1).toString();
+                
+                // Garante números positivos
+                if (parseInt(online.textContent) < 1000) online.textContent = '1000';
+                if (parseInt(sessions.textContent) < 50) sessions.textContent = '50';
+                if (parseInt(gms.textContent) < 20) gms.textContent = '20';
+            }, 10000);
+        }
+        
+        // Seletor de tema
+        function initThemeSwitcher() {
+            const savedTheme = localStorage.getItem('selectedRPG') || 'vampire';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        }
+        
+        // Demo da IA
+        function sendToAI() {
+            const input = document.getElementById('player-input');
+            const aiResponse = document.getElementById('ai-response');
+            
+            if (input.value.trim() === '') return;
+            
+            // Mostra a mensagem do jogador
+            const playerMessage = document.createElement('div');
+            playerMessage.className = 'player-message';
+            playerMessage.innerHTML = `
+                <div class="message-header">
+                    <i class="fas fa-user"></i>
+                    <strong>Você:</strong>
+                </div>
+                <p>${input.value}</p>
+            `;
+            
+            document.querySelector('.ai-chat').insertBefore(playerMessage, document.querySelector('.player-message'));
+            
+            // Simula resposta da IA
+            const responses = [
+                "A noite parece se intensificar com sua decisão. Um corvo pousa na janela, observando você com olhos vermelhos.",
+                "Na distância, você ouve risadas abafadas. Algo se move nas sombras do beco.",
+                "Seu instinto vampírico alerta para perigo próximo. O cheiro de sangue fresco está no ar.",
+                "A Lua cheia ilumina as ruas vazias. Esta é a hora dos predadores.",
+                "Você sente a presença de outros Membros. Eles estão próximos, observando."
+            ];
+            
+            const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+            aiResponse.textContent = `"${randomResponse}"`;
+            
+            // Limpa o input
+            input.value = '';
+            
+            // Rolagem automática
+            rollDemoDice();
+        }
+        
+        function startAIDemo() {
+            const system = document.getElementById('ai-system').value;
+            const style = document.getElementById('ai-style').value;
+            
+            const aiResponse = document.getElementById('ai-response');
+            const greetings = {
+                vampire: "Bem-vindo às trevas. A noite pertence aos vampiros. Qual é seu primeiro movimento?",
+                werewolf: "Gaia chama seus filhos. Sinta a fúria da Wyrm se aproximando.",
+                mage: "A realidade é maleável em suas mãos. Que paradigma você escolhe?",
+                tormenta: "Arton aguarda seus heróis. Uma nova aventura começa.",
+                dnd: "Role para iniciativa! Sua jornada épica está prestes a começar."
+            };
+            
+            aiResponse.textContent = `"${greetings[system]}"`;
+            document.documentElement.setAttribute('data-theme', system);
+            
+            // Toca som de ambiente
+            playDemoSound();
+        }
+        
+        function rollDemoDice() {
+            const diceResults = document.createElement('div');
+            diceResults.className = 'dice-roll-demo';
+            diceResults.innerHTML = `
+                <div class="dice-roll">
+                    <span class="dice-icon">🎲</span>
+                    <span class="roll-result">D10: ${Math.floor(Math.random() * 10) + 1}</span>
+                </div>
+            `;
+            
+            document.querySelector('.ai-chat').insertBefore(diceResults, document.querySelector('.player-message'));
+        }
+        
+        function playDemoSound() {
+            // Simula tocar som ambiente
+            const soundBtn = document.createElement('button');
+            soundBtn.className = 'sound-notification';
+            soundBtn.innerHTML = '<i class="fas fa-music"></i> Trilha sonora iniciada';
+            
+            document.querySelector('.ai-chat').insertBefore(soundBtn, document.querySelector('.player-message'));
+            
+            setTimeout(() => {
+                soundBtn.remove();
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
