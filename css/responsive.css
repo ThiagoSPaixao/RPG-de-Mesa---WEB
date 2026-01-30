@@ -1,0 +1,498 @@
+/* responsive.css - Layouts responsivos */
+
+/* Mobile First */
+@media (max-width: 768px) {
+    /* Layout principal */
+    .container {
+        padding: 0 var(--spacing-sm);
+    }
+    
+    /* Navegação */
+    .navbar {
+        flex-wrap: wrap;
+        padding: var(--spacing-sm);
+    }
+    
+    .nav-brand h1 {
+        font-size: 1.2rem;
+    }
+    
+    .nav-menu {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        margin-top: var(--spacing-md);
+    }
+    
+    .nav-menu.active {
+        display: flex;
+    }
+    
+    .nav-user {
+        margin-left: auto;
+    }
+    
+    .mobile-menu-btn {
+        display: block;
+        background: none;
+        border: none;
+        color: var(--text);
+        font-size: 1.5rem;
+        cursor: pointer;
+    }
+    
+    /* Hero Banner */
+    .hero-banner {
+        height: 50vh;
+        min-height: 300px;
+    }
+    
+    .slide-content {
+        padding: var(--spacing-md);
+        margin: 0 var(--spacing-sm);
+    }
+    
+    .slide-title {
+        font-size: 1.5rem;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+        padding: 0 var(--spacing-md);
+    }
+    
+    .cta-buttons .btn {
+        width: 100%;
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    /* Estatísticas ao vivo */
+    .live-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-sm);
+        padding: var(--spacing-md);
+    }
+    
+    .stat-card {
+        padding: var(--spacing-sm);
+    }
+    
+    .stat-number {
+        font-size: 1.2rem;
+    }
+    
+    /* Grid de sistemas */
+    .rpg-systems-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+    
+    .rpg-card {
+        padding: var(--spacing-md);
+    }
+    
+    /* Lista de sessões */
+    .sessions-list {
+        grid-template-columns: 1fr;
+    }
+    
+    .session-card {
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .session-info {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    /* Seção IA */
+    .ai-demo {
+        flex-direction: column;
+    }
+    
+    .ai-chat {
+        height: 300px;
+    }
+    
+    .ai-settings {
+        margin-top: var(--spacing-lg);
+    }
+    
+    /* Sala de RPG */
+    .rpg-room-container {
+        height: 100vh;
+    }
+    
+    .room-main-layout {
+        flex-direction: column;
+    }
+    
+    .room-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-md);
+    }
+    
+    .room-info {
+        width: 100%;
+    }
+    
+    .room-actions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+    
+    .main-content-panel {
+        height: 60vh;
+    }
+    
+    .sidebar-panel {
+        width: 100%;
+        height: 40vh;
+        border-left: none;
+        border-top: 2px solid var(--primary);
+    }
+    
+    /* Painéis na sala */
+    .narration-panel,
+    .chat-panel {
+        height: 50%;
+    }
+    
+    .narration-content,
+    .chat-messages {
+        font-size: 0.9rem;
+    }
+    
+    .message-sender {
+        flex-wrap: wrap;
+    }
+    
+    .message-time {
+        margin-left: 0;
+        width: 100%;
+        text-align: right;
+        font-size: 0.8rem;
+    }
+    
+    /* Lista de jogadores */
+    .players-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: var(--spacing-sm);
+    }
+    
+    .player-card {
+        flex-direction: column;
+        text-align: center;
+        padding: var(--spacing-sm);
+    }
+    
+    .player-info {
+        width: 100%;
+    }
+    
+    .player-actions {
+        margin-top: var(--spacing-sm);
+    }
+    
+    /* Ferramentas */
+    .tools-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .tool-btn {
+        padding: var(--spacing-sm);
+        font-size: 0.8rem;
+    }
+    
+    .tool-btn i {
+        font-size: 1.2rem;
+    }
+    
+    /* Dados */
+    .dice-history {
+        max-height: 150px;
+    }
+    
+    /* Criador de personagens */
+    .creator-tabs {
+        flex-wrap: wrap;
+    }
+    
+    .tab-btn {
+        flex: 1 0 calc(50% - var(--spacing-sm));
+        margin-bottom: var(--spacing-sm);
+        font-size: 0.9rem;
+        padding: var(--spacing-sm);
+    }
+    
+    .attributes-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    /* Formulários */
+    .form-section {
+        padding: var(--spacing-md);
+    }
+    
+    .form-group {
+        margin-bottom: var(--spacing-md);
+    }
+    
+    input, select, textarea {
+        font-size: 1rem;
+        padding: var(--spacing-sm);
+    }
+    
+    /* Modal */
+    .modal-content {
+        width: 95%;
+        margin: var(--spacing-sm);
+    }
+    
+    .modal-body {
+        padding: var(--spacing-md);
+    }
+    
+    /* Footer */
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+    }
+    
+    .footer-section {
+        margin-bottom: var(--spacing-lg);
+    }
+    
+    /* Barra de ferramentas móvel */
+    .mobile-toolbar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(30, 30, 30, 0.95);
+        backdrop-filter: blur(10px);
+        border-top: 2px solid var(--primary);
+        display: flex;
+        justify-content: space-around;
+        padding: var(--spacing-sm);
+        z-index: 1000;
+    }
+    
+    .mobile-tool {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: none;
+        border: none;
+        color: var(--text);
+        font-size: 0.8rem;
+        padding: var(--spacing-sm);
+        cursor: pointer;
+    }
+    
+    .mobile-tool i {
+        font-size: 1.2rem;
+        margin-bottom: var(--spacing-xs);
+    }
+    
+    /* Esconde elementos não essenciais no mobile */
+    .desktop-only {
+        display: none !important;
+    }
+    
+    /* Ajustes de tipografia */
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+    
+    h3 {
+        font-size: 1.2rem;
+    }
+    
+    p, li {
+        font-size: 1rem;
+    }
+    
+    .btn {
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: 0.9rem;
+    }
+    
+    /* Utilitários mobile */
+    .mobile-full-width {
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+    
+    .mobile-text-center {
+        text-align: center;
+    }
+    
+    .mobile-mb-sm { margin-bottom: var(--spacing-sm); }
+    .mobile-mb-md { margin-bottom: var(--spacing-md); }
+    .mobile-mb-lg { margin-bottom: var(--spacing-lg); }
+}
+
+/* Tablet */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .rpg-systems-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .sessions-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .room-main-layout {
+        flex-direction: row;
+    }
+    
+    .sidebar-panel {
+        width: 280px;
+    }
+    
+    .tools-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .mobile-toolbar {
+        display: none;
+    }
+}
+
+/* Desktop */
+@media (min-width: 1025px) {
+    .rpg-systems-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .sessions-list {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .mobile-toolbar {
+        display: none;
+    }
+}
+
+/* Orientação paisagem no mobile */
+@media (max-height: 600px) and (orientation: landscape) {
+    .hero-banner {
+        height: 80vh;
+        min-height: 400px;
+    }
+    
+    .rpg-room-container {
+        height: 100vh;
+    }
+    
+    .main-content-panel {
+        height: 70vh;
+    }
+    
+    .sidebar-panel {
+        height: 30vh;
+    }
+    
+    .narration-panel {
+        height: 60%;
+    }
+    
+    .chat-panel {
+        height: 40%;
+    }
+}
+
+/* Dispositivos muito pequenos */
+@media (max-width: 360px) {
+    .rpg-systems-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .live-stats {
+        grid-template-columns: 1fr;
+    }
+    
+    .session-info {
+        grid-template-columns: 1fr;
+    }
+    
+    .tools-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    h1 {
+        font-size: 1.5rem;
+    }
+    
+    h2 {
+        font-size: 1.3rem;
+    }
+}
+
+/* Alto DPI/Retina */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .rpg-card,
+    .session-card,
+    .player-card {
+        border-width: 0.5px;
+    }
+    
+    .btn {
+        border-width: 1px;
+    }
+}
+
+/* Modo escuro/claro automático */
+@media (prefers-color-scheme: light) {
+    :root:not([data-theme]) {
+        --bg: #f5f5f5;
+        --text: #333333;
+        --text-secondary: #666666;
+        --border: #dddddd;
+        --card-bg: rgba(255, 255, 255, 0.9);
+    }
+    
+    .rpg-card {
+        background: rgba(255, 255, 255, 0.9);
+        border-color: var(--border);
+    }
+    
+    .navbar {
+        background: rgba(255, 255, 255, 0.95);
+    }
+}
+
+/* Impressão */
+@media print {
+    .navbar,
+    .cta-buttons,
+    .room-actions,
+    .mobile-toolbar,
+    .btn {
+        display: none !important;
+    }
+    
+    .rpg-room-container {
+        height: auto;
+    }
+    
+    body {
+        background: white;
+        color: black;
+    }
+    
+    .rpg-card,
+    .session-card {
+        break-inside: avoid;
+        border: 1px solid #ccc;
+        box-shadow: none;
+    }
+}

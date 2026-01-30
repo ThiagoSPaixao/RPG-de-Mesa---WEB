@@ -1,0 +1,401 @@
+/* vampire-specific.css - Estilos únicos para Vampiro */
+
+/* Animações de Sangue */
+@keyframes bloodDrip {
+    0% {
+        transform: translateY(-100px) scale(0.5);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) scale(1.5);
+        opacity: 0;
+    }
+}
+
+.blood-drip-animation {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    animation: bloodDrip 3s linear forwards;
+}
+
+/* Efeito de Fumaça Vampírica */
+.vampire-mist {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 50%, 
+            rgba(139, 0, 0, 0.1) 0%, 
+            transparent 50%),
+        radial-gradient(circle at 80% 20%, 
+            rgba(75, 0, 130, 0.05) 0%, 
+            transparent 50%);
+    pointer-events: none;
+    z-index: 1;
+    animation: mistFloat 20s infinite alternate ease-in-out;
+}
+
+@keyframes mistFloat {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+    100% {
+        transform: translate(50px, 30px) scale(1.1);
+    }
+}
+
+/* Candelabros decorativos */
+.vampire-decoration {
+    position: fixed;
+    z-index: 2;
+    opacity: 0.1;
+    pointer-events: none;
+}
+
+.candelabra-left {
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 5rem;
+}
+
+.candelabra-right {
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 5rem;
+}
+
+/* Bordas góticas */
+.gothic-border {
+    position: relative;
+    padding: 20px;
+}
+
+.gothic-border::before,
+.gothic-border::after {
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border: 3px solid var(--blood-red);
+    pointer-events: none;
+}
+
+.gothic-border::before {
+    top: -3px;
+    left: -3px;
+    border-right: none;
+    border-bottom: none;
+}
+
+.gothic-border::after {
+    bottom: -3px;
+    right: -3px;
+    border-left: none;
+    border-top: none;
+}
+
+/* Texto gótico animado */
+.gothic-text-animated {
+    font-family: 'Uncial Antiqua', cursive;
+    background: linear-gradient(90deg, 
+        #8B0000, #DAA520, #4B0082, #8B0000);
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gothicShimmer 5s infinite linear;
+}
+
+@keyframes gothicShimmer {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+}
+
+/* Cartas de convite vampírico */
+.invitation-card {
+    background: linear-gradient(135deg, 
+        rgba(26, 26, 26, 0.95) 0%,
+        rgba(43, 0, 0, 0.8) 100%);
+    border: 2px solid var(--gold-elite);
+    padding: 30px;
+    position: relative;
+    font-family: 'MedievalSharp', cursive;
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+}
+
+.invitation-card:hover {
+    transform: rotateY(10deg) rotateX(5deg);
+}
+
+.invitation-card::before {
+    content: '⚜️';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 2rem;
+    opacity: 0.3;
+}
+
+.invitation-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><path d="M0,0 L100,0 L100,100 L0,100 Z" fill="none" stroke="rgba(218,165,32,0.1)" stroke-width="2"/></svg>');
+    pointer-events: none;
+}
+
+/* Selo de sangue */
+.blood-seal {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, 
+        rgba(139, 0, 0, 0.8) 0%,
+        rgba(102, 0, 0, 0.9) 50%,
+        rgba(26, 26, 26, 1) 100%);
+    border: 3px solid var(--gold-elite);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-family: 'Uncial Antiqua', cursive;
+    font-size: 0.8rem;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(139, 0, 0, 0.5);
+}
+
+.blood-seal::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    border: 1px solid rgba(139, 0, 0, 0.3);
+    border-radius: 50%;
+    animation: sealPulse 2s infinite;
+}
+
+@keyframes sealPulse {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+}
+
+/* Interface de caçada */
+.hunting-interface {
+    background: linear-gradient(135deg, 
+        rgba(26, 26, 26, 0.95) 0%,
+        rgba(70, 0, 0, 0.8) 100%);
+    border: 2px solid var(--blood-red);
+    border-radius: 15px;
+    padding: 25px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hunting-interface::before {
+    content: '🎯';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 2rem;
+    opacity: 0.2;
+}
+
+.prey-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(139, 0, 0, 0.3);
+    border-radius: 10px;
+    padding: 15px;
+    margin: 10px 0;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.prey-card:hover {
+    background: rgba(139, 0, 0, 0.2);
+    border-color: var(--blood-red);
+    transform: translateX(5px);
+}
+
+.prey-status {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.prey-status.unaware { background: #32CD32; }
+.prey-status.suspicious { background: #FFD700; }
+.prey-status.aware { background: #FF4500; }
+.prey-status.terrified { background: #8B0000; }
+
+/* Sistema de fome */
+.hunger-display {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    background: rgba(26, 26, 26, 0.9);
+    border: 2px solid var(--blood-red);
+    border-radius: 10px;
+    padding: 15px;
+    z-index: 1000;
+    min-width: 150px;
+}
+
+.hunger-level {
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+    color: var(--gold-elite);
+}
+
+.hunger-dots {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+}
+
+.hunger-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid var(--silver-accent);
+    transition: all 0.3s;
+}
+
+.hunger-dot.filled {
+    background: var(--blood-red);
+    box-shadow: 0 0 10px rgba(139, 0, 0, 0.7);
+    animation: hungerPulse 2s infinite;
+}
+
+@keyframes hungerPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+/* Áudio ambiente */
+.ambience-controls {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(26, 26, 26, 0.9);
+    border: 2px solid var(--gothic-purple);
+    border-radius: 10px;
+    padding: 15px;
+    z-index: 1000;
+}
+
+.ambience-track {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.track-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--gothic-purple);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+/* Responsividade para elementos vampíricos */
+@media (max-width: 768px) {
+    .candelabra-left,
+    .candelabra-right {
+        display: none;
+    }
+    
+    .hunger-display {
+        position: static;
+        margin: 20px auto;
+        width: 90%;
+    }
+    
+    .ambience-controls {
+        position: static;
+        margin: 20px auto;
+        width: 90%;
+    }
+    
+    .invitation-card {
+        transform: none !important;
+    }
+}
+
+/* Animações para efeitos especiais */
+@keyframes batFly {
+    0% {
+        transform: translateX(-100px) translateY(-100px) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(100vw) translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+.bat-animation {
+    position: fixed;
+    font-size: 2rem;
+    pointer-events: none;
+    z-index: 9998;
+    animation: batFly 15s linear infinite;
+}
+
+/* Estilo para rolagens críticas */
+.critical-roll {
+    position: relative;
+    animation: criticalGlow 0.5s infinite alternate;
+}
+
+@keyframes criticalGlow {
+    from {
+        box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    }
+    to {
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 
+                    0 0 30px rgba(255, 215, 0, 0.6);
+    }
+}
+
+.botch-roll {
+    position: relative;
+    animation: botchShake 0.5s infinite;
+}
+
+@keyframes botchShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
