@@ -453,6 +453,40 @@
             margin: 10px 0;
             border-radius: 0 5px 5px 0;
         }
+        
+        /* Cores para raças */
+        .breed-homid { color: #E6E6FA; }
+        .breed-metis { color: #98FB98; }
+        .breed-lupus { color: #F0E68C; }
+        
+        /* Estilos para auras */
+        .aura-ragabash { border-color: #8A2BE2; }
+        .aura-theurge { border-color: #4682B4; }
+        .aura-philodox { border-color: #32CD32; }
+        .aura-galliard { border-color: #FFD700; }
+        .aura-ahroun { border-color: #DC143C; }
+        
+        /* Estilos para fases da lua */
+        .moon-new { color: #708090; }
+        .moon-crescent { color: #87CEEB; }
+        .moon-half { color: #C0C0C0; }
+        .moon-gibbous { color: #F0E68C; }
+        .moon-full { color: #FFFFFF; }
+        
+        /* Loader específico */
+        .wolf-loader {
+            border: 4px solid var(--earth-brown);
+            border-top: 4px solid var(--forest-green);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body class="werewolf-bg">
@@ -487,12 +521,12 @@
                     <span class="current-rage">5</span>/<span class="max-rage">10</span>
                 </div>
             </div>
-            <button class="btn-werewolf btn-login">
+            <button class="btn-werewolf btn-login" onclick="loginGarou()">
                 <i class="fas fa-paw"></i> Abraçar Gaia
             </button>
         </div>
         
-        <button class="mobile-menu-btn">
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
             <i class="fas fa-bars"></i>
         </button>
     </nav>
@@ -590,7 +624,7 @@
         <div class="chronicles-filters">
             <div class="filter-group">
                 <label><i class="fas fa-filter"></i> Filtrar por:</label>
-                <select id="chronicle-filter">
+                <select id="chronicle-filter" onchange="filterChronicles()">
                     <option value="all">Todas as Caçadas</option>
                     <option value="pack">Meu Pack</option>
                     <option value="tribe">Por Tribo</option>
@@ -598,7 +632,7 @@
                     <option value="breed">Por Raça</option>
                 </select>
                 
-                <select id="region-filter">
+                <select id="region-filter" onchange="filterChronicles()">
                     <option value="all">Todas as Regiões</option>
                     <option value="amazonia">Amazônia</option>
                     <option value="cerrado">Cerrado</option>
@@ -607,7 +641,7 @@
                     <option value="urban">Área Urbana</option>
                 </select>
                 
-                <select id="tribe-filter">
+                <select id="tribe-filter" onchange="filterChronicles()">
                     <option value="all">Todas as Tribos</option>
                     <option value="shadowlords">Lords das Sombras</option>
                     <option value="silverfangs">Presas de Prata</option>
@@ -625,276 +659,13 @@
             </button>
         </div>
         
-        <div class="chronicles-grid">
-            <!-- Caçada 1 -->
-            <div class="session-card werewolf-session-card featured">
-                <div class="session-badge">
-                    <i class="fas fa-crown"></i> Destaque
-                </div>
-                
-                <div class="session-header">
-                    <div class="session-title">
-                        <h3>"Defensores da Amazônia: O Sangue da Wyrm"</h3>
-                        <div class="session-tags">
-                            <span class="tribe-badge tribe-shadowlords">Lords das Sombras</span>
-                            <span class="tribe-badge tribe-blackfuries">Fúrias Negras</span>
-                            <span class="renown-badge renown-glory">Alta Glória</span>
-                        </div>
-                    </div>
-                    
-                    <div class="session-gm">
-                        <div class="gm-avatar">
-                            <img src="assets/avatars/elder.png" alt="Ancião">
-                            <span class="gm-status online"></span>
-                        </div>
-                        <div class="gm-info">
-                            <span class="gm-name">Ancião Koga</span>
-                            <span class="gm-rating">⭐ 4.9 (42 reviews)</span>
-                            <span class="gm-tribe tribe-shadowlords">Lords das Sombras</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="session-description">
-                    <p>Uma caçada épica na Amazônia brasileira. O Pack deve proteger um antigo Caern da corrupção da Wyrm enquanto corporações avançam sobre a floresta.</p>
-                    
-                    <div class="session-setting">
-                        <i class="fas fa-tree"></i>
-                        <strong>Cenário:</strong> Amazônia Profunda, Caern Antigo
-                    </div>
-                    
-                    <div class="session-theme">
-                        <i class="fas fa-theater-masks"></i>
-                        <strong>Temas:</strong> Espiritualidade, Ecologia, Combate Épico, Sacrifício
-                    </div>
-                </div>
-                
-                <div class="session-stats">
-                    <div class="stat">
-                        <i class="fas fa-users"></i>
-                        <div>
-                            <span class="stat-value">4/5</span>
-                            <span class="stat-label">Garou</span>
-                        </div>
-                    </div>
-                    
-                    <div class="stat">
-                        <i class="fas fa-clock"></i>
-                        <div>
-                            <span class="stat-value">12</span>
-                            <span class="stat-label">Sessões</span>
-                        </div>
-                    </div>
-                    
-                    <div class="stat">
-                        <i class="fas fa-fire"></i>
-                        <div>
-                            <span class="stat-value">92%</span>
-                            <span class="stat-label">Fúria Desperta</span>
-                        </div>
-                    </div>
-                    
-                    <div class="stat">
-                        <i class="fas fa-skull-crossbones"></i>
-                        <div>
-                            <span class="stat-value">2</span>
-                            <span class="stat-label">Harano</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="session-spirits">
-                    <h4><i class="fas fa-ghost"></i> Espíritos Envolvidos:</h4>
-                    <div class="spirit-list">
-                        <span class="spirit-tag">Espírito da Floresta</span>
-                        <span class="spirit-tag">Wyrm Corruptor</span>
-                        <span class="spirit-tag">Totem: Jaguar</span>
-                    </div>
-                </div>
-                
-                <div class="session-actions">
-                    <button class="btn-werewolf" onclick="joinChronicle(1)">
-                        <i class="fas fa-door-open"></i> Juntar-se à Caçada
-                    </button>
-                    <button class="btn-werewolf btn-outline" onclick="spectateChronicle(1)">
-                        <i class="fas fa-eye"></i> Espiar (15)
-                    </button>
-                </div>
-            </div>
-            
-            <!-- Caçada 2 -->
-            <div class="session-card werewolf-session-card">
-                <div class="session-header">
-                    <div class="session-title">
-                        <h3>"Urban Shadows: A Batalha de São Paulo"</h3>
-                        <div class="session-tags">
-                            <span class="tribe-badge tribe-glasswalkers">Andarilhos Urbanos</span>
-                            <span class="tribe-badge tribe-bonegnawers">Roe Ossos</span>
-                            <span class="renown-badge renown-honor">Honra</span>
-                        </div>
-                    </div>
-                    
-                    <div class="session-gm">
-                        <div class="gm-avatar">
-                            <img src="assets/avatars/urban.png" alt="Urban">
-                            <span class="gm-status online"></span>
-                        </div>
-                        <div class="gm-info">
-                            <span class="gm-name">Ragabash Leo</span>
-                            <span class="gm-rating">⭐ 4.7 (38 reviews)</span>
-                            <span class="gm-tribe tribe-glasswalkers">Andarilhos Urbanos</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="session-description">
-                    <p>Uma guerra nas sombras de São Paulo. O Pack urbano luta contra espíritos poluídos e corporações controladas pela Wyrm nos arranha-céus.</p>
-                    
-                    <div class="session-setting">
-                        <i class="fas fa-city"></i>
-                        <strong>Cenário:</strong> São Paulo, Centro e Periferias
-                    </div>
-                </div>
-                
-                <div class="session-stats">
-                    <div class="stat">
-                        <i class="fas fa-users"></i>
-                        <div>
-                            <span class="stat-value">3/5</span>
-                            <span class="stat-label">Urbanos</span>
-                        </div>
-                    </div>
-                    
-                    <div class="stat">
-                        <i class="fas fa-clock"></i>
-                        <div>
-                            <span class="stat-value">8</span>
-                            <span class="stat-label">Sessões</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="session-actions">
-                    <button class="btn-werewolf" onclick="joinChronicle(2)">
-                        <i class="fas fa-fist-raised"></i> Defender a Cidade
-                    </button>
-                </div>
-            </div>
-            
-            <!-- Caçada 3 -->
-            <div class="session-card werewolf-session-card">
-                <div class="session-header">
-                    <div class="session-title">
-                        <h3>"Ritual da Lua Cheia"</h3>
-                        <div class="session-tags">
-                            <span class="tribe-badge tribe-silverfangs">Presas de Prata</span>
-                            <span class="tribe-badge tribe-stargazers">Observadores das Estrelas</span>
-                            <span class="renown-badge renown-wisdom">Sabedoria</span>
-                        </div>
-                    </div>
-                    
-                    <div class="session-gm">
-                        <div class="gm-avatar">
-                            <img src="assets/avatars/theurge.png" alt="Theurge">
-                            <span class="gm-status idle"></span>
-                        </div>
-                        <div class="gm-info">
-                            <span class="gm-name">Theurge Lua</span>
-                            <span class="gm-rating">⭐ 4.8 (31 reviews)</span>
-                            <span class="gm-tribe tribe-silverfangs">Presas de Prata</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="session-description">
-                    <p>Um ritual ancestral sob a lua cheia para fortalecer um Caern moribundo. Envolve negociações com espíritos antigos e proteção contra a Wyrm.</p>
-                </div>
-                
-                <div class="session-stats">
-                    <div class="stat">
-                        <i class="fas fa-users"></i>
-                        <div>
-                            <span class="stat-value">2/3</span>
-                            <span class="stat-label">Ritualistas</span>
-                        </div>
-                    </div>
-                    
-                    <div class="stat">
-                        <i class="fas fa-hat-wizard"></i>
-                        <div>
-                            <span class="stat-value">7</span>
-                            <span class="stat-label">Rituais</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="session-actions">
-                    <button class="btn-werewolf" onclick="joinChronicle(3)">
-                        <i class="fas fa-hat-wizard"></i> Participar do Ritual
-                    </button>
-                </div>
-            </div>
-            
-            <!-- Caçada 4 (IA) -->
-            <div class="session-card werewolf-session-card ai-session">
-                <div class="session-badge ai-badge">
-                    <i class="fas fa-robot"></i> IA Narradora
-                </div>
-                
-                <div class="session-header">
-                    <div class="session-title">
-                        <h3>"A Primeira Mudança" (Oneshot)</h3>
-                        <div class="session-tags">
-                            <span class="tribe-badge tribe-getoffenris">Get of Fenris</span>
-                            <span class="tribe-badge tribe-redtalons">Garras Vermelhas</span>
-                        </div>
-                    </div>
-                    
-                    <div class="session-gm">
-                        <div class="gm-avatar">
-                            <i class="fas fa-robot"></i>
-                        </div>
-                        <div class="gm-info">
-                            <span class="gm-name">Narrador IA Primal</span>
-                            <span class="gm-rating">🤖 IA Avançada</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="session-description">
-                    <p>Viva sua Primeira Mudança. Um Garou recém-descoberto deve sobreviver à sua transformação e primeira caçada. Tempo real, consequências permanentes.</p>
-                    
-                    <div class="ai-features">
-                        <span class="ai-feature"><i class="fas fa-brain"></i> Primal</span>
-                        <span class="ai-feature"><i class="fas fa-music"></i> Trilha Tribal</span>
-                        <span class="ai-feature"><i class="fas fa-dice"></i> Dados Automáticos</span>
-                    </div>
-                </div>
-                
-                <div class="session-stats">
-                    <div class="stat">
-                        <i class="fas fa-users"></i>
-                        <div>
-                            <span class="stat-value">1/3</span>
-                            <span class="stat-label">Neófitos</span>
-                        </div>
-                    </div>
-                    
-                    <div class="stat">
-                        <i class="fas fa-stopwatch"></i>
-                        <div>
-                            <span class="stat-value">2h</span>
-                            <span class="stat-label">Duração</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="session-actions">
-                    <button class="btn-werewolf" onclick="joinAIChronicle()">
-                        <i class="fas fa-play"></i> Iniciar Primeira Mudança
-                    </button>
-                </div>
-            </div>
+        <div class="chronicles-grid" id="chronicles-grid">
+            <!-- As caçadas serão carregadas via JavaScript -->
+        </div>
+        
+        <div class="loading-section" id="chronicles-loading">
+            <div class="wolf-loader"></div>
+            <p>Carregando caçadas ativas...</p>
         </div>
     </section>
 
@@ -906,7 +677,7 @@
         </div>
         
         <div class="character-creation-flow">
-            <div class="flow-step active">
+            <div class="flow-step active" data-step="1">
                 <div class="step-number">1</div>
                 <div class="step-content">
                     <h4>Escolha a Tribo</h4>
@@ -914,7 +685,7 @@
                 </div>
             </div>
             
-            <div class="flow-step">
+            <div class="flow-step" data-step="2">
                 <div class="step-number">2</div>
                 <div class="step-content">
                     <h4>Auspício</h4>
@@ -922,7 +693,7 @@
                 </div>
             </div>
             
-            <div class="flow-step">
+            <div class="flow-step" data-step="3">
                 <div class="step-number">3</div>
                 <div class="step-content">
                     <h4>Raça</h4>
@@ -930,7 +701,7 @@
                 </div>
             </div>
             
-            <div class="flow-step">
+            <div class="flow-step" data-step="4">
                 <div class="step-number">4</div>
                 <div class="step-content">
                     <h4>Dons</h4>
@@ -938,7 +709,7 @@
                 </div>
             </div>
             
-            <div class="flow-step">
+            <div class="flow-step" data-step="5">
                 <div class="step-number">5</div>
                 <div class="step-content">
                     <h4>Renome</h4>
@@ -951,182 +722,8 @@
             <h3><i class="fas fa-users-between-lines"></i> Selecione Sua Tribo</h3>
             <p>Cada tribo oferece uma visão única da luta por Gaia</p>
             
-            <div class="tribes-grid">
-                <!-- Shadow Lords -->
-                <div class="tribe-card" data-tribe="shadowlords" onclick="selectTribe('shadowlords')">
-                    <div class="tribe-icon">
-                        <i class="fas fa-crown"></i>
-                    </div>
-                    <div class="tribe-info">
-                        <h4 class="tribe-name">Lords das Sombras</h4>
-                        <p class="tribe-description">Líderes natos e estrategistas. Acreditam que o fim justifica os meios.</p>
-                        <div class="tribe-gifts">
-                            <span class="gift-badge">Dominação</span>
-                            <span class="gift-badge">Furtividade</span>
-                            <span class="gift-badge">Liderança</span>
-                        </div>
-                        <div class="tribe-totem">
-                            <small><strong>Totem:</strong> Grifo</small>
-                        </div>
-                    </div>
-                    <div class="tribe-select">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                </div>
-                
-                <!-- Get of Fenris -->
-                <div class="tribe-card" data-tribe="getoffenris" onclick="selectTribe('getoffenris')">
-                    <div class="tribe-icon">
-                        <i class="fas fa-fist-raised"></i>
-                    </div>
-                    <div class="tribe-info">
-                        <h4 class="tribe-name">Get of Fenris</h4>
-                        <p class="tribe-description">Guerreiros ferozes e tradicionais. Valorizam força e honra acima de tudo.</p>
-                        <div class="tribe-gifts">
-                            <span class="gift-badge">Fúria</span>
-                            <span class="gift-badge">Resistência</span>
-                            <span class="gift-badge">Combate</span>
-                        </div>
-                        <div class="tribe-totem">
-                            <small><strong>Totem:</strong> Fenris</small>
-                        </div>
-                    </div>
-                    <div class="tribe-select">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                </div>
-                
-                <!-- Glass Walkers -->
-                <div class="tribe-card" data-tribe="glasswalkers" onclick="selectTribe('glasswalkers')">
-                    <div class="tribe-icon">
-                        <i class="fas fa-city"></i>
-                    </div>
-                    <div class="tribe-info">
-                        <h4 class="tribe-name">Andarilhos Urbanos</h4>
-                        <p class="tribe-description">Mestres da tecnologia e da cidade. Lutam a Wyrm em seu próprio território.</p>
-                        <div class="tribe-gifts">
-                            <span class="gift-badge">Tecnologia</span>
-                            <span class="gift-badge">Adaptação</span>
-                            <span class="gift-badge">Engenharia</span>
-                        </div>
-                        <div class="tribe-totem">
-                            <small><strong>Totem:</strong> Aranha</small>
-                        </div>
-                    </div>
-                    <div class="tribe-select">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                </div>
-                
-                <!-- Black Furies -->
-                <div class="tribe-card" data-tribe="blackfuries" onclick="selectTribe('blackfuries')">
-                    <div class="tribe-icon">
-                        <i class="fas fa-female"></i>
-                    </div>
-                    <div class="tribe-info">
-                        <h4 class="tribe-name">Fúrias Negras</h4>
-                        <p class="tribe-description">Matriarcas protetoras da natureza. Guardiãs dos lugares sagrados.</p>
-                        <div class="tribe-gifts">
-                            <span class="gift-badge">Natureza</span>
-                            <span class="gift-badge">Cura</span>
-                            <span class="gift-badge">Proteção</span>
-                        </div>
-                        <div class="tribe-totem">
-                            <small><strong>Totem:</strong> Pegasus</small>
-                        </div>
-                    </div>
-                    <div class="tribe-select">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                </div>
-                
-                <!-- Silver Fangs -->
-                <div class="tribe-card" data-tribe="silverfangs" onclick="selectTribe('silverfangs')">
-                    <div class="tribe-icon">
-                        <i class="fas fa-crown"></i>
-                    </div>
-                    <div class="tribe-info">
-                        <h4 class="tribe-name">Presas de Prata</h4>
-                        <p class="tribe-description">A realeza Garou. Liderança por direito de sangue e tradição.</p>
-                        <div class="tribe-gifts">
-                            <span class="gift-badge">Liderança</span>
-                            <span class="gift-badge">Diplomacia</span>
-                            <span class="gift-badge">Nobreza</span>
-                        </div>
-                        <div class="tribe-totem">
-                            <small><strong>Totem:</strong> Falcão</small>
-                        </div>
-                    </div>
-                    <div class="tribe-select">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                </div>
-                
-                <!-- Bone Gnawers -->
-                <div class="tribe-card" data-tribe="bonegnawers" onclick="selectTribe('bonegnawers')">
-                    <div class="tribe-icon">
-                        <i class="fas fa-utensils"></i>
-                    </div>
-                    <div class="tribe-info">
-                        <h4 class="tribe-name">Roe Ossos</h4>
-                        <p class="tribe-description">Sobreviventes das ruas. Mestres em viver com pouco e sobreviver a tudo.</p>
-                        <div class="tribe-gifts">
-                            <span class="gift-badge">Sobrevivência</span>
-                            <span class="gift-badge">Furtividade</span>
-                            <span class="gift-badge">Reciclagem</span>
-                        </div>
-                        <div class="tribe-totem">
-                            <small><strong>Totem:</strong> Rato</small>
-                        </div>
-                    </div>
-                    <div class="tribe-select">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                </div>
-                
-                <!-- Red Talons -->
-                <div class="tribe-card" data-tribe="redtalons" onclick="selectTribe('redtalons')">
-                    <div class="tribe-icon">
-                        <i class="fas fa-paw"></i>
-                    </div>
-                    <div class="tribe-info">
-                        <h4 class="tribe-name">Garras Vermelhas</h4>
-                        <p class="tribe-description">Os mais bestiais. Acreditam que a humanidade é a verdadeira praga.</p>
-                        <div class="tribe-gifts">
-                            <span class="gift-badge">Ferradura</span>
-                            <span class="gift-badge">Caça</span>
-                            <span class="gift-badge">Instinto</span>
-                        </div>
-                        <div class="tribe-totem">
-                            <small><strong>Totem:</strong> Lobo</small>
-                        </div>
-                    </div>
-                    <div class="tribe-select">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                </div>
-                
-                <!-- Stargazers -->
-                <div class="tribe-card" data-tribe="stargazers" onclick="selectTribe('stargazers')">
-                    <div class="tribe-icon">
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <div class="tribe-info">
-                        <h4 class="tribe-name">Observadores das Estrelas</h4>
-                        <p class="tribe-description">Filósofos e místicos. Buscam equilíbrio e iluminação espiritual.</p>
-                        <div class="tribe-gifts">
-                            <span class="gift-badge">Meditação</span>
-                            <span class="gift-badge">Visão</span>
-                            <span class="gift-badge">Equilíbrio</span>
-                        </div>
-                        <div class="tribe-totem">
-                            <small><strong>Totem:</strong> Coruja</small>
-                        </div>
-                    </div>
-                    <div class="tribe-select">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                </div>
+            <div class="tribes-grid" id="tribes-grid">
+                <!-- As tribos serão carregadas via JavaScript -->
             </div>
             
             <div class="character-actions">
@@ -1213,8 +810,26 @@
                 <div class="tool-content">
                     <h3>Gerador de NPCs</h3>
                     <p>Crie Garous e Espíritos rapidamente</p>
+                    <div class="npc-options">
+                        <select id="npc-type" onchange="updateNPCOptions()">
+                            <option value="garou">Garou</option>
+                            <option value="spirit">Espírito</option>
+                            <option value="kinfolk">Kinfolk</option>
+                            <option value="villain">Antagonista</option>
+                        </select>
+                        
+                        <select id="npc-rank" style="display: none;">
+                            <option value="cub">Filhote</option>
+                            <option value="cliate">Cliate</option>
+                            <option value="fostern">Fostern</option>
+                            <option value="adren">Adren</option>
+                            <option value="athro">Athro</option>
+                            <option value="elder">Ancião</option>
+                        </select>
+                    </div>
+                    
                     <button class="btn-werewolf" onclick="generateWerewolfNPC()">
-                        <i class="fas fa-random"></i> Gerar Garou NPC
+                        <i class="fas fa-random"></i> Gerar NPC
                     </button>
                     
                     <div class="npc-preview" id="npc-preview">
@@ -1235,7 +850,7 @@
                     <div class="form-calculator">
                         <div class="form-control">
                             <label>Forma:</label>
-                            <select id="form-select">
+                            <select id="form-select" onchange="calculateForm()">
                                 <option value="homid">Homid (Humano)</option>
                                 <option value="glabro">Glabro (Quase-Humano)</option>
                                 <option value="crinos" selected>Crinos (Guerreiro)</option>
@@ -1288,13 +903,8 @@
                     <h3>Mapa de Caerns</h3>
                     <p>Planeje territórios sagrados</p>
                     <div class="caern-map">
-                        <div class="map-grid">
-                            <!-- Grid do mapa -->
-                            <div class="map-tile" data-caern="major">🌳 Caern Maior</div>
-                            <div class="map-tile" data-caern="minor">🌿 Caern Menor</div>
-                            <div class="map-tile" data-caern="lair">🏠 Covil</div>
-                            <div class="map-tile" data-caern="wyrm">☠️ Infestação</div>
-                            <div class="map-tile" data-caern="neutral">⚖️ Neutro</div>
+                        <div class="map-grid" id="caern-map-grid">
+                            <!-- Grid do mapa será gerado via JavaScript -->
                         </div>
                     </div>
                     <button class="btn-werewolf" onclick="saveCaernMap()">
@@ -1314,11 +924,11 @@
         
         <div class="lore-tabs">
             <div class="tab-buttons">
-                <button class="tab-btn active" data-tab="litany">A Litania</button>
-                <button class="tab-btn" data-tab="triat">A Triat</button>
-                <button class="tab-btn" data-tab="breeds">Raças</button>
-                <button class="tab-btn" data-tab="auspices">Auspícios</button>
-                <button class="tab-btn" data-tab="history">História</button>
+                <button class="tab-btn active" data-tab="litany" onclick="openTab('litany')">A Litania</button>
+                <button class="tab-btn" data-tab="triat" onclick="openTab('triat')">A Triat</button>
+                <button class="tab-btn" data-tab="breeds" onclick="openTab('breeds')">Raças</button>
+                <button class="tab-btn" data-tab="auspices" onclick="openTab('auspices')">Auspícios</button>
+                <button class="tab-btn" data-tab="history" onclick="openTab('history')">História</button>
             </div>
             
             <div class="tab-content">
@@ -1382,6 +992,93 @@
                                 <span class="aspect">Destruição</span>
                                 <span class="aspect">Corrupção</span>
                                 <span class="aspect">Entropia</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-pane" id="tab-breeds">
+                    <h3><i class="fas fa-dna"></i> Raças Garou</h3>
+                    <div class="breeds-grid">
+                        <div class="breed-card">
+                            <h4 class="breed-homid">Homid</h4>
+                            <p>Nascido entre humanos, criado na sociedade humana.</p>
+                            <div class="breed-stats">
+                                <span><strong>Vantagens:</strong> +3 Habilidades, +2 Atributos Sociais</span>
+                                <span><strong>Desvantagens:</strong> Início: Fúria 1, Gnosis 1</span>
+                            </div>
+                        </div>
+                        
+                        <div class="breed-card">
+                            <h4 class="breed-metis">Metis</h4>
+                            <p>Filho de dois Garous, nascido deformado mas poderoso.</p>
+                            <div class="breed-stats">
+                                <span><strong>Vantagens:</strong> +2 Atributos Físicos, +1 Gnosis</span>
+                                <span><strong>Desvantagens:</strong> Deformidade, Início: Renome 0</span>
+                            </div>
+                        </div>
+                        
+                        <div class="breed-card">
+                            <h4 class="breed-lupus">Lupus</h4>
+                            <p>Nascido como lobo, criado na natureza.</p>
+                            <div class="breed-stats">
+                                <span><strong>Vantagens:</strong> +2 Atributos Físicos, +2 Fúria</span>
+                                <span><strong>Desvantagens:</strong> Habilidades Humanas limitadas</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-pane" id="tab-auspices">
+                    <h3><i class="fas fa-moon"></i> Auspícios Lunares</h3>
+                    <div class="auspices-grid">
+                        <div class="auspice-card">
+                            <h4 class="aura-ragabash">Ragabash (Lua Nova)</h4>
+                            <p>O Trapaceiro, o Inovador, o Desafiador.</p>
+                            <div class="auspice-gifts">
+                                <span class="gift-tag">Furtividade</span>
+                                <span class="gift-tag">Engano</span>
+                                <span class="gift-tag">Percepção</span>
+                            </div>
+                        </div>
+                        
+                        <div class="auspice-card">
+                            <h4 class="aura-theurge">Theurge (Lua Crescente)</h4>
+                            <p>O Xamã, o Médico Espiritual, o Comunicador.</p>
+                            <div class="auspice-gifts">
+                                <span class="gift-tag">Espiritualidade</span>
+                                <span class="gift-tag">Cura</span>
+                                <span class="gift-tag">Visão</span>
+                            </div>
+                        </div>
+                        
+                        <div class="auspice-card">
+                            <h4 class="aura-philodox">Philodox (Meia Lua)</h4>
+                            <p>O Juiz, o Diplomata, o Guardião da Tradição.</p>
+                            <div class="auspice-gifts">
+                                <span class="gift-tag">Sabedoria</span>
+                                <span class="gift-tag">Justiça</span>
+                                <span class="gift-tag">Liderança</span>
+                            </div>
+                        </div>
+                        
+                        <div class="auspice-card">
+                            <h4 class="aura-galliard">Galliard (Lua Gibosa)</h4>
+                            <p>O Bardista, o Historiador, o Inspirador.</p>
+                            <div class="auspice-gifts">
+                                <span class="gift-tag">Performance</span>
+                                <span class="gift-tag">Memória</span>
+                                <span class="gift-tag">Inspiração</span>
+                            </div>
+                        </div>
+                        
+                        <div class="auspice-card">
+                            <h4 class="aura-ahroun">Ahroun (Lua Cheia)</h4>
+                            <p>O Guerreiro, o Herói, o Protetor.</p>
+                            <div class="auspice-gifts">
+                                <span class="gift-tag">Combate</span>
+                                <span class="gift-tag">Fúria</span>
+                                <span class="gift-tag">Proteção</span>
                             </div>
                         </div>
                     </div>
@@ -1584,6 +1281,7 @@
     <script src="js/app.js"></script>
     <script src="js/ai-narrator.js"></script>
     <script src="js/dice-roller.js"></script>
+    <script src="js/ambience-system.js"></script>
     
     <script>
         // ============================================
@@ -1599,7 +1297,8 @@
                     breed: "Homid",
                     gifts: ["Liderança", "Furtividade", "Dominação"],
                     totem: "Grifo",
-                    description: "Líderes natos e estrategistas implacáveis."
+                    description: "Líderes natos e estrategistas implacáveis.",
+                    color: "#2F4F4F"
                 },
                 getoffenris: {
                     name: "Get of Fenris",
@@ -1608,7 +1307,8 @@
                     breed: "Homid/Lupus",
                     gifts: ["Fúria", "Combate", "Resistência"],
                     totem: "Fenris",
-                    description: "Guerreiros ferozes que valorizam honra acima de tudo."
+                    description: "Guerreiros ferozes que valorizam honra acima de tudo.",
+                    color: "#8B0000"
                 },
                 glasswalkers: {
                     name: "Andarilhos Urbanos",
@@ -1617,7 +1317,58 @@
                     breed: "Homid",
                     gifts: ["Tecnologia", "Adaptação", "Engenharia"],
                     totem: "Aranha",
-                    description: "Mestres da cidade e da tecnologia."
+                    description: "Mestres da cidade e da tecnologia.",
+                    color: "#4682B4"
+                },
+                blackfuries: {
+                    name: "Fúrias Negras",
+                    nicknames: ["As Matriarcas", "As Protetoras"],
+                    auspice: "Galliard",
+                    breed: "Homid/Metis",
+                    gifts: ["Natureza", "Cura", "Proteção"],
+                    totem: "Pegasus",
+                    description: "Matriarcas protetoras da natureza.",
+                    color: "#4B0082"
+                },
+                silverfangs: {
+                    name: "Presas de Prata",
+                    nicknames: ["A Realeza", "Os Nobres"],
+                    auspice: "Philodox",
+                    breed: "Homid",
+                    gifts: ["Liderança", "Diplomacia", "Nobreza"],
+                    totem: "Falcão",
+                    description: "A realeza Garou, liderança por direito de sangue.",
+                    color: "#C0C0C0"
+                },
+                bonegnawers: {
+                    name: "Roe Ossos",
+                    nicknames: ["Os Sobreviventes", "Os Marginalizados"],
+                    auspice: "Ragabash",
+                    breed: "Homid",
+                    gifts: ["Sobrevivência", "Furtividade", "Reciclagem"],
+                    totem: "Rato",
+                    description: "Mestres em viver com pouco e sobreviver a tudo.",
+                    color: "#8B4513"
+                },
+                redtalons: {
+                    name: "Garras Vermelhas",
+                    nicknames: ["Os Bestiais", "Os Puristas"],
+                    auspice: "Ahroun",
+                    breed: "Lupus",
+                    gifts: ["Ferradura", "Caça", "Instinto"],
+                    totem: "Lobo",
+                    description: "Os mais bestiais, acreditam que a humanidade é a praga.",
+                    color: "#DC143C"
+                },
+                stargazers: {
+                    name: "Observadores das Estrelas",
+                    nicknames: ["Os Filósofos", "Os Místicos"],
+                    auspice: "Theurge",
+                    breed: "Homid/Lupus",
+                    gifts: ["Meditação", "Visão", "Equilíbrio"],
+                    totem: "Coruja",
+                    description: "Buscam equilíbrio e iluminação espiritual.",
+                    color: "#4169E1"
                 }
             },
             
@@ -1625,13 +1376,1113 @@
                 ragabash: {
                     name: "Ragabash",
                     moon: "Lua Nova",
-                    role: "Trapaceiro, Inovador",
-                    gifts: ["Furtividade", "Engano", "Percepção"]
+                    role: "Trapaceiro, Inovador, Desafiador",
+                    gifts: ["Furtividade", "Engano", "Percepção"],
+                    color: "#8A2BE2"
                 },
                 theurge: {
                     name: "Theurge",
                     moon: "Lua Crescente",
-                    role: "Xamã, Médico Espiritual",
-                    gifts: ["Espiritualidade", "Cura", "Visão"]
+                    role: "Xamã, Médico Espiritual, Comunicador",
+                    gifts: ["Espiritualidade", "Cura", "Visão"],
+                    color: "#4682B4"
                 },
-                philodox
+                philodox: {
+                    name: "Philodox",
+                    moon: "Meia Lua",
+                    role: "Juiz, Diplomata, Guardião da Tradição",
+                    gifts: ["Sabedoria", "Justiça", "Liderança"],
+                    color: "#32CD32"
+                },
+                galliard: {
+                    name: "Galliard",
+                    moon: "Lua Gibosa",
+                    role: "Bardista, Historiador, Inspirador",
+                    gifts: ["Performance", "Memória", "Inspiração"],
+                    color: "#FFD700"
+                },
+                ahroun: {
+                    name: "Ahroun",
+                    moon: "Lua Cheia",
+                    role: "Guerreiro, Herói, Protetor",
+                    gifts: ["Combate", "Fúria", "Proteção"],
+                    color: "#DC143C"
+                }
+            },
+            
+            breeds: {
+                homid: {
+                    name: "Homid",
+                    description: "Nascido entre humanos, criado na sociedade humana.",
+                    startingTraits: {
+                        willpower: 3,
+                        rage: 1,
+                        gnosis: 1
+                    }
+                },
+                metis: {
+                    name: "Metis",
+                    description: "Filho de dois Garous, nascido deformado mas poderoso.",
+                    startingTraits: {
+                        willpower: 4,
+                        rage: 2,
+                        gnosis: 2
+                    }
+                },
+                lupus: {
+                    name: "Lupus",
+                    description: "Nascido como lobo, criado na natureza.",
+                    startingTraits: {
+                        willpower: 3,
+                        rage: 3,
+                        gnosis: 1
+                    }
+                }
+            },
+            
+            forms: {
+                homid: {
+                    name: "Homid",
+                    description: "Forma humana, socialmente aceita.",
+                    modifiers: {
+                        strength: 0,
+                        dexterity: 0,
+                        stamina: 0,
+                        manipulation: 0,
+                        appearance: 0
+                    }
+                },
+                glabro: {
+                    name: "Glabro",
+                    description: "Quase-humano, musculatura exagerada.",
+                    modifiers: {
+                        strength: 2,
+                        dexterity: 0,
+                        stamina: 2,
+                        manipulation: -1,
+                        appearance: -1
+                    }
+                },
+                crinos: {
+                    name: "Crinos",
+                    description: "Forma de guerra, a mais temida.",
+                    modifiers: {
+                        strength: 3,
+                        dexterity: 1,
+                        stamina: 4,
+                        manipulation: -3,
+                        appearance: -3
+                    }
+                },
+                hispo: {
+                    name: "Hispo",
+                    description: "Lobo gigante, feroz e ágil.",
+                    modifiers: {
+                        strength: 2,
+                        dexterity: 3,
+                        stamina: 3,
+                        manipulation: -4,
+                        appearance: -4
+                    }
+                },
+                lupus: {
+                    name: "Lupus",
+                    description: "Lobo verdadeiro, totalmente animal.",
+                    modifiers: {
+                        strength: 1,
+                        dexterity: 2,
+                        stamina: 3,
+                        manipulation: -4,
+                        appearance: -4
+                    }
+                }
+            },
+            
+            // Sistema de áudio
+            audioSystem: null
+        };
+        
+        // ============================================
+        // FUNÇÕES PRINCIPAIS
+        // ============================================
+        
+        // Inicialização da página
+        document.addEventListener('DOMContentLoaded', async function() {
+            console.log('🐺 Inicializando sistema Lobisomem: A Idade das Trevas');
+            
+            // Carregar caçadas
+            loadChronicles();
+            
+            // Carregar tribos
+            loadTribes();
+            
+            // Inicializar sistema de áudio
+            await initializeAudioSystem();
+            
+            // Inicializar mapa de caerns
+            initializeCaernMap();
+            
+            // Atualizar contador da lua
+            updateMoonPhase();
+            
+            // Inicializar tabs de lore
+            initializeLoreTabs();
+            
+            console.log('✅ Sistema Lobisomem inicializado');
+        });
+        
+        // ============================================
+        // SISTEMA DE ÁUDIO
+        // ============================================
+        
+        async function initializeAudioSystem() {
+            try {
+                // Verificar se o sistema de áudio já foi carregado
+                if (typeof RPGAmbienceSystem !== 'undefined') {
+                    werewolfData.audioSystem = await RPGAmbienceSystem.create({
+                        volume: 0.7,
+                        crossfadeDuration: 3000,
+                        enable3DAudio: false,
+                        autoplay: true
+                    });
+                    
+                    console.log('🎵 Sistema de áudio Garou inicializado');
+                    
+                    // Configurar eventos de áudio
+                    setupAudioEvents();
+                    
+                    // Tocar música inicial
+                    setTimeout(() => {
+                        if (werewolfData.audioSystem) {
+                            werewolfData.audioSystem.playBackgroundMusic('werewolf', 'primal');
+                        }
+                    }, 2000);
+                }
+            } catch (error) {
+                console.error('❌ Erro ao inicializar sistema de áudio:', error);
+            }
+        }
+        
+        function setupAudioEvents() {
+            if (!werewolfData.audioSystem) return;
+            
+            // Eventos de música
+            werewolfData.audioSystem.addEventListener('musicChanged', (e) => {
+                console.log('🎵 Música alterada:', e.detail.track.name);
+            });
+            
+            // Eventos de efeitos
+            werewolfData.audioSystem.addEventListener('effectPlayed', (e) => {
+                console.log('🔊 Efeito tocado:', e.detail.effect.name);
+            });
+            
+            // Eventos de mood
+            werewolfData.audioSystem.addEventListener('moodChanged', (e) => {
+                console.log('🌙 Mood alterado:', e.detail.mood);
+            });
+        }
+        
+        // ============================================
+        // FUNÇÕES DE CAÇADAS (CHRONICLES)
+        // ============================================
+        
+        function loadChronicles() {
+            const grid = document.getElementById('chronicles-grid');
+            const loading = document.getElementById('chronicles-loading');
+            
+            if (!grid) return;
+            
+            // Simular carregamento
+            setTimeout(() => {
+                const chronicles = generateChronicles();
+                grid.innerHTML = chronicles;
+                
+                if (loading) {
+                    loading.style.display = 'none';
+                }
+            }, 1000);
+        }
+        
+        function generateChronicles() {
+            const chronicles = [
+                {
+                    id: 1,
+                    title: "Defensores da Amazônia: O Sangue da Wyrm",
+                    tribes: ["shadowlords", "blackfuries"],
+                    tags: ["featured", "epic"],
+                    description: "Uma caçada épica na Amazônia brasileira. O Pack deve proteger um antigo Caern da corrupção da Wyrm enquanto corporações avançam sobre a floresta.",
+                    stats: {
+                        players: "4/5",
+                        sessions: "12",
+                        rage: "92%",
+                        harano: "2"
+                    }
+                },
+                {
+                    id: 2,
+                    title: "Urban Shadows: A Batalha de São Paulo",
+                    tribes: ["glasswalkers", "bonegnawers"],
+                    tags: ["urban"],
+                    description: "Uma guerra nas sombras de São Paulo. O Pack urbano luta contra espíritos poluídos e corporações controladas pela Wyrm.",
+                    stats: {
+                        players: "3/5",
+                        sessions: "8",
+                        rage: "85%",
+                        harano: "1"
+                    }
+                },
+                {
+                    id: 3,
+                    title: "Ritual da Lua Cheia",
+                    tribes: ["silverfangs", "stargazers"],
+                    tags: ["ritual"],
+                    description: "Um ritual ancestral sob a lua cheia para fortalecer um Caern moribundo. Envolve negociações com espíritos antigos.",
+                    stats: {
+                        players: "2/3",
+                        sessions: "6",
+                        rage: "70%",
+                        harano: "0"
+                    }
+                },
+                {
+                    id: 4,
+                    title: "A Primeira Mudança (Oneshot IA)",
+                    tribes: ["getoffenris", "redtalons"],
+                    tags: ["ai", "oneshot"],
+                    description: "Viva sua Primeira Mudança. Um Garou recém-descoberto deve sobreviver à sua transformação e primeira caçada.",
+                    stats: {
+                        players: "1/3",
+                        sessions: "1",
+                        rage: "100%",
+                        harano: "0"
+                    }
+                }
+            ];
+            
+            return chronicles.map(chronicle => createChronicleCard(chronicle)).join('');
+        }
+        
+        function createChronicleCard(chronicle) {
+            const isFeatured = chronicle.tags.includes('featured');
+            const isAI = chronicle.tags.includes('ai');
+            
+            return `
+                <div class="session-card werewolf-session-card ${isFeatured ? 'featured' : ''}">
+                    ${isFeatured ? `
+                        <div class="session-badge">
+                            <i class="fas fa-crown"></i> Destaque
+                        </div>
+                    ` : ''}
+                    
+                    ${isAI ? `
+                        <div class="session-badge ai-badge">
+                            <i class="fas fa-robot"></i> IA Narradora
+                        </div>
+                    ` : ''}
+                    
+                    <div class="session-header">
+                        <div class="session-title">
+                            <h3>"${chronicle.title}"</h3>
+                            <div class="session-tags">
+                                ${chronicle.tribes.map(tribe => `
+                                    <span class="tribe-badge tribe-${tribe}">${werewolfData.tribes[tribe].name}</span>
+                                `).join('')}
+                                <span class="renown-badge renown-glory">Alta Glória</span>
+                            </div>
+                        </div>
+                        
+                        <div class="session-gm">
+                            <div class="gm-avatar">
+                                <img src="assets/avatars/${chronicle.tribes[0]}.png" alt="${werewolfData.tribes[chronicle.tribes[0]].name}">
+                                <span class="gm-status ${isAI ? 'ai' : 'online'}"></span>
+                            </div>
+                            <div class="gm-info">
+                                <span class="gm-name">${isAI ? 'Narrador IA Primal' : 'Ancião ' + werewolfData.tribes[chronicle.tribes[0]].name.split(' ')[0]}</span>
+                                <span class="gm-rating">${isAI ? '🤖 IA Avançada' : '⭐ 4.8 (42 reviews)'}</span>
+                                <span class="gm-tribe tribe-${chronicle.tribes[0]}">${werewolfData.tribes[chronicle.tribes[0]].name}</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="session-description">
+                        <p>${chronicle.description}</p>
+                        
+                        <div class="session-setting">
+                            <i class="fas fa-${chronicle.tags.includes('urban') ? 'city' : 'tree'}"></i>
+                            <strong>Cenário:</strong> ${chronicle.tags.includes('urban') ? 'São Paulo, Centro e Periferias' : 'Amazônia Profunda, Caern Antigo'}
+                        </div>
+                        
+                        ${chronicle.tags.includes('featured') ? `
+                            <div class="session-theme">
+                                <i class="fas fa-theater-masks"></i>
+                                <strong>Temas:</strong> Espiritualidade, Ecologia, Combate Épico, Sacrifício
+                            </div>
+                        ` : ''}
+                    </div>
+                    
+                    <div class="session-stats">
+                        <div class="stat">
+                            <i class="fas fa-users"></i>
+                            <div>
+                                <span class="stat-value">${chronicle.stats.players}</span>
+                                <span class="stat-label">Garou</span>
+                            </div>
+                        </div>
+                        
+                        <div class="stat">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <span class="stat-value">${chronicle.stats.sessions}</span>
+                                <span class="stat-label">Sessões</span>
+                            </div>
+                        </div>
+                        
+                        <div class="stat">
+                            <i class="fas fa-fire"></i>
+                            <div>
+                                <span class="stat-value">${chronicle.stats.rage}</span>
+                                <span class="stat-label">Fúria Desperta</span>
+                            </div>
+                        </div>
+                        
+                        <div class="stat">
+                            <i class="fas fa-skull-crossbones"></i>
+                            <div>
+                                <span class="stat-value">${chronicle.stats.harano}</span>
+                                <span class="stat-label">Harano</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    ${chronicle.tags.includes('featured') ? `
+                        <div class="session-spirits">
+                            <h4><i class="fas fa-ghost"></i> Espíritos Envolvidos:</h4>
+                            <div class="spirit-list">
+                                <span class="spirit-tag">Espírito da Floresta</span>
+                                <span class="spirit-tag">Wyrm Corruptor</span>
+                                <span class="spirit-tag">Totem: Jaguar</span>
+                            </div>
+                        </div>
+                    ` : ''}
+                    
+                    <div class="session-actions">
+                        <button class="btn-werewolf" onclick="joinChronicle(${chronicle.id})">
+                            ${isAI ? '<i class="fas fa-play"></i> Iniciar Primeira Mudança' : '<i class="fas fa-door-open"></i> Juntar-se à Caçada'}
+                        </button>
+                        <button class="btn-werewolf btn-outline" onclick="spectateChronicle(${chronicle.id})">
+                            <i class="fas fa-eye"></i> Espiar (15)
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function filterChronicles() {
+            const filter = document.getElementById('chronicle-filter').value;
+            const region = document.getElementById('region-filter').value;
+            const tribe = document.getElementById('tribe-filter').value;
+            
+            console.log('Filtrando caçadas:', { filter, region, tribe });
+            
+            // Aqui você implementaria a filtragem real
+            // Por enquanto, apenas mostra uma mensagem
+            showNotification('Filtros aplicados com sucesso!', 'success');
+        }
+        
+        function searchChronicles() {
+            showNotification('Buscando caçadas...', 'info');
+        }
+        
+        // ============================================
+        // FUNÇÕES DE CRIAÇÃO DE PERSONAGEM
+        // ============================================
+        
+        function loadTribes() {
+            const grid = document.getElementById('tribes-grid');
+            if (!grid) return;
+            
+            let html = '';
+            
+            Object.entries(werewolfData.tribes).forEach(([key, tribe]) => {
+                html += `
+                    <div class="tribe-card" data-tribe="${key}" onclick="selectTribe('${key}')">
+                        <div class="tribe-icon" style="background: ${tribe.color}">
+                            <i class="fas fa-${getTribeIcon(key)}"></i>
+                        </div>
+                        <div class="tribe-info">
+                            <h4 class="tribe-name">${tribe.name}</h4>
+                            <p class="tribe-description">${tribe.description}</p>
+                            <div class="tribe-gifts">
+                                ${tribe.gifts.map(gift => `
+                                    <span class="gift-badge">${gift}</span>
+                                `).join('')}
+                            </div>
+                            <div class="tribe-totem">
+                                <small><strong>Totem:</strong> ${tribe.totem}</small>
+                            </div>
+                        </div>
+                        <div class="tribe-select">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            grid.innerHTML = html;
+        }
+        
+        function getTribeIcon(tribeKey) {
+            const icons = {
+                shadowlords: 'crown',
+                getoffenris: 'fist-raised',
+                glasswalkers: 'city',
+                blackfuries: 'female',
+                silverfangs: 'crown',
+                bonegnawers: 'utensils',
+                redtalons: 'paw',
+                stargazers: 'star'
+            };
+            
+            return icons[tribeKey] || 'users';
+        }
+        
+        let selectedTribe = null;
+        
+        function selectTribe(tribeKey) {
+            selectedTribe = tribeKey;
+            
+            // Remover seleção anterior
+            document.querySelectorAll('.tribe-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Adicionar seleção atual
+            const selectedCard = document.querySelector(`.tribe-card[data-tribe="${tribeKey}"]`);
+            if (selectedCard) {
+                selectedCard.classList.add('selected');
+            }
+            
+            // Atualizar passo
+            updateCreationStep(2);
+            
+            showNotification(`Tribo selecionada: ${werewolfData.tribes[tribeKey].name}`, 'success');
+        }
+        
+        function updateCreationStep(step) {
+            document.querySelectorAll('.flow-step').forEach(stepEl => {
+                stepEl.classList.remove('active');
+            });
+            
+            const currentStep = document.querySelector(`.flow-step[data-step="${step}"]`);
+            if (currentStep) {
+                currentStep.classList.add('active');
+            }
+        }
+        
+        function startWerewolfCreation() {
+            if (!selectedTribe) {
+                showNotification('Selecione uma tribo primeiro!', 'error');
+                return;
+            }
+            
+            window.location.href = `character-creator.html?system=werewolf&tribe=${selectedTribe}`;
+        }
+        
+        function openWerewolfTemplates() {
+            showNotification('Abrindo templates de personagens...', 'info');
+        }
+        
+        function importWerewolfCharacter() {
+            showNotification('Importando ficha de personagem...', 'info');
+        }
+        
+        // ============================================
+        // FUNÇÕES DE FERRAMENTAS
+        // ============================================
+        
+        let dicePool = 6;
+        
+        function adjustPool(amount) {
+            dicePool = Math.max(1, Math.min(20, dicePool + amount));
+            document.getElementById('pool-count').textContent = dicePool;
+        }
+        
+        function rollWerewolfPool() {
+            const difficulty = parseInt(document.getElementById('difficulty-select').value);
+            const hasSpecialty = document.getElementById('specialty-check').checked;
+            const hasRage = document.getElementById('rage-check').checked;
+            
+            let successes = 0;
+            let rolls = [];
+            let specialCount = 0;
+            
+            // Rolar os dados
+            for (let i = 0; i < dicePool; i++) {
+                const roll = Math.floor(Math.random() * 10) + 1;
+                rolls.push(roll);
+                
+                // Contar sucessos
+                if (roll >= difficulty) {
+                    successes++;
+                    if (roll === 10) {
+                        specialCount++;
+                    }
+                } else if (roll === 1) {
+                    specialCount--;
+                }
+            }
+            
+            // Aplicar bônus
+            if (hasSpecialty && successes > 0) {
+                const specialtyRoll = Math.floor(Math.random() * 10) + 1;
+                rolls.push(`Especialidade: ${specialtyRoll}`);
+                if (specialtyRoll >= difficulty) {
+                    successes++;
+                    if (specialtyRoll === 10) {
+                        specialCount++;
+                    }
+                }
+            }
+            
+            if (hasRage) {
+                successes = Math.min(successes * 2, dicePool * 2);
+            }
+            
+            // Aplicar especiais
+            successes = Math.max(0, successes + specialCount);
+            
+            // Mostrar resultado
+            const resultDiv = document.getElementById('werewolf-roll-result');
+            let resultHTML = `
+                <div class="werewolf-roll-result">
+                    <h4><i class="fas fa-dice"></i> Resultado da Rolagem</h4>
+                    <div class="roll-details">
+                        <p><strong>Dados:</strong> ${dicePool} <strong>Dificuldade:</strong> ${difficulty}</p>
+                        <p><strong>Rolagens:</strong> ${rolls.join(', ')}</p>
+                        <p><strong>Sucessos:</strong> <span class="success-count">${successes}</span></p>
+                        ${specialCount !== 0 ? `<p><strong>Especiais:</strong> ${specialCount > 0 ? '+' : ''}${specialCount}</p>` : ''}
+                    </div>
+                    <div class="roll-interpretation">
+                        <p><strong>Interpretação:</strong> ${getRollInterpretation(successes)}</p>
+                    </div>
+                </div>
+            `;
+            
+            resultDiv.innerHTML = resultHTML;
+            
+            // Tocar som de dados
+            if (werewolfData.audioSystem) {
+                werewolfData.audioSystem.playSoundEffect('dice_roll', { volume: 0.5 });
+            }
+        }
+        
+        function getRollInterpretation(successes) {
+            if (successes <= 0) return "Falha catastrófica! O personagem falha miseravelmente.";
+            if (successes <= 1) return "Falha simples. O personagem não consegue realizar a ação.";
+            if (successes <= 2) return "Sucesso marginal. Consegue, mas com complicações.";
+            if (successes <= 4) return "Sucesso. Ação realizada com competência.";
+            if (successes <= 6) return "Sucesso notável. Resultado acima do esperado.";
+            return "Sucesso espetacular! Resultado impressionante com benefícios extras.";
+        }
+        
+        function generateWerewolfNPC() {
+            const type = document.getElementById('npc-type').value;
+            const rank = document.getElementById('npc-rank').value;
+            
+            const npc = createNPC(type, rank);
+            const preview = document.getElementById('npc-preview');
+            
+            preview.innerHTML = `
+                <div class="npc-display">
+                    <h4><i class="fas fa-${type === 'garou' ? 'paw' : 'ghost'}"></i> ${npc.name}</h4>
+                    <p><strong>Tipo:</strong> ${npc.type}</p>
+                    ${npc.tribe ? `<p><strong>Tribo:</strong> ${npc.tribe}</p>` : ''}
+                    ${npc.auspice ? `<p><strong>Auspício:</strong> ${npc.auspice}</p>` : ''}
+                    ${npc.rank ? `<p><strong>Patente:</strong> ${npc.rank}</p>` : ''}
+                    <p><strong>Descrição:</strong> ${npc.description}</p>
+                    <div class="npc-stats">
+                        ${npc.stats ? `
+                            <p><strong>Atributos:</strong> ${npc.stats.physical.join('/')} ${npc.stats.social.join('/')} ${npc.stats.mental.join('/')}</p>
+                            <p><strong>Fúria:</strong> ${npc.stats.rage} <strong>Gnosis:</strong> ${npc.stats.gnosis} <strong>Força de Vontade:</strong> ${npc.stats.willpower}</p>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+        }
+        
+        function updateNPCOptions() {
+            const type = document.getElementById('npc-type').value;
+            const rankSelect = document.getElementById('npc-rank');
+            
+            if (type === 'garou') {
+                rankSelect.style.display = 'block';
+            } else {
+                rankSelect.style.display = 'none';
+            }
+        }
+        
+        function createNPC(type, rank = 'cliate') {
+            const tribes = Object.keys(werewolfData.tribes);
+            const auspices = Object.keys(werewolfData.auspices);
+            const breeds = Object.keys(werewolfData.breeds);
+            
+            const randomTribe = tribes[Math.floor(Math.random() * tribes.length)];
+            const randomAuspice = auspices[Math.floor(Math.random() * auspices.length)];
+            const randomBreed = breeds[Math.floor(Math.random() * breeds.length)];
+            
+            const names = {
+                garou: ['Koga', 'Luna', 'Fenrir', 'Sasha', 'Bruno', 'Raven', 'Thor', 'Maya'],
+                spirit: ['Espírito da Floresta', 'Wyrm Corruptor', 'Totem do Lobo', 'Ancestral Antigo'],
+                kinfolk: ['Carlos Silva', 'Ana Santos', 'Pedro Oliveira', 'Maria Costa'],
+                villain: ['Dr. Corrupção', 'Industrialista', 'Caçador de Recompensas', 'Servo da Wyrm']
+            };
+            
+            const descriptions = {
+                garou: `Um ${werewolfData.tribes[randomTribe].name} ${werewolfData.auspices[randomAuspice].name}, ${werewolfData.breeds[randomBreed].description.toLowerCase()}`,
+                spirit: 'Uma entidade espiritual com objetivos misteriosos e poderes sobrenaturais.',
+                kinfolk: 'Um humano com sangue Garou, vivendo entre os dois mundos.',
+                villain: 'Uma ameaça aos Garou e à própria Gaia, servindo à corrupção.'
+            };
+            
+            return {
+                name: names[type][Math.floor(Math.random() * names[type].length)],
+                type: type === 'garou' ? 'Garou' : type === 'spirit' ? 'Espírito' : type === 'kinfolk' ? 'Kinfolk' : 'Antagonista',
+                tribe: type === 'garou' ? werewolfData.tribes[randomTribe].name : null,
+                auspice: type === 'garou' ? werewolfData.auspices[randomAuspice].name : null,
+                rank: type === 'garou' ? rank : null,
+                description: descriptions[type],
+                stats: type === 'garou' ? {
+                    physical: [3, 3, 3],
+                    social: [2, 2, 2],
+                    mental: [2, 2, 2],
+                    rage: Math.floor(Math.random() * 6) + 3,
+                    gnosis: Math.floor(Math.random() * 6) + 1,
+                    willpower: Math.floor(Math.random() * 6) + 3
+                } : null
+            };
+        }
+        
+        function calculateForm() {
+            const form = document.getElementById('form-select').value;
+            const modifiers = werewolfData.forms[form].modifiers;
+            
+            // Atualizar modificadores
+            document.getElementById('str-mod').textContent = modifiers.strength > 0 ? `+${modifiers.strength}` : modifiers.strength;
+            document.getElementById('dex-mod').textContent = modifiers.dexterity > 0 ? `+${modifiers.dexterity}` : modifiers.dexterity;
+            document.getElementById('sta-mod').textContent = modifiers.stamina > 0 ? `+${modifiers.stamina}` : modifiers.stamina;
+            
+            // Calcular totais (com valores base hipotéticos)
+            const baseStr = 3;
+            const baseDex = 3;
+            const baseSta = 3;
+            
+            const totalStr = baseStr + modifiers.strength;
+            const totalDex = baseDex + modifiers.dexterity;
+            const totalInit = totalDex + 3; // Iniciativa base + destreza
+            
+            document.getElementById('str-total').textContent = totalStr;
+            document.getElementById('init-total').textContent = totalInit;
+        }
+        
+        function initializeCaernMap() {
+            const grid = document.getElementById('caern-map-grid');
+            if (!grid) return;
+            
+            const tiles = [
+                { type: 'major', label: '🌳 Caern Maior', description: 'Um grande caern sagrado' },
+                { type: 'minor', label: '🌿 Caern Menor', description: 'Um pequeno local de poder' },
+                { type: 'lair', label: '🏠 Covil', description: 'Covil de um pack' },
+                { type: 'wyrm', label: '☠️ Infestação', description: 'Área corrupta pela Wyrm' },
+                { type: 'neutral', label: '⚖️ Neutro', description: 'Território neutro' }
+            ];
+            
+            grid.innerHTML = tiles.map(tile => `
+                <div class="map-tile" data-caern="${tile.type}" onclick="selectCaern('${tile.type}')" title="${tile.description}">
+                    ${tile.label}
+                </div>
+            `).join('');
+        }
+        
+        function selectCaern(type) {
+            showNotification(`Caern selecionado: ${type}`, 'info');
+        }
+        
+        function saveCaernMap() {
+            showNotification('Mapa de Caerns salvo com sucesso!', 'success');
+        }
+        
+        // ============================================
+        // FUNÇÕES DE LORE
+        // ============================================
+        
+        function initializeLoreTabs() {
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const tabPanes = document.querySelectorAll('.tab-pane');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const tab = this.getAttribute('data-tab');
+                    openTab(tab);
+                });
+            });
+        }
+        
+        function openTab(tabName) {
+            // Atualizar botões
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-tab') === tabName) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Atualizar conteúdo
+            document.querySelectorAll('.tab-pane').forEach(pane => {
+                pane.classList.remove('active');
+                if (pane.id === `tab-${tabName}`) {
+                    pane.classList.add('active');
+                }
+            });
+            
+            // Carregar conteúdo se necessário
+            loadTabContent(tabName);
+        }
+        
+        function loadTabContent(tabName) {
+            // Aqui você poderia carregar conteúdo dinâmico
+            console.log(`Carregando conteúdo da tab: ${tabName}`);
+        }
+        
+        // ============================================
+        // FUNÇÕES DE IA
+        // ============================================
+        
+        function sendWerewolfAction() {
+            const action = document.getElementById('werewolf-player-input').value;
+            const mood = document.getElementById('werewolf-mood').value;
+            const actionType = document.getElementById('werewolf-action-type').value;
+            
+            if (!action.trim()) {
+                showNotification('Digite uma ação primeiro!', 'error');
+                return;
+            }
+            
+            // Simular resposta da IA
+            const responses = {
+                hunt: [
+                    "Seus instintos guiam você através da floresta. O cheiro de presa é forte no ar. A fúria lateja em suas veias.",
+                    "A caça está próxima. Você sente cada movimento, cada som. A natureza conspira a seu favor."
+                ],
+                ritual: [
+                    "O círculo está traçado, os espíritos atendem. O Umbra responde ao seu chamado.",
+                    "A energia espiritual flui através de você. Os ancestrais sussurram segredos antigos."
+                ],
+                gift: [
+                    "Seu dom desperta. O poder ancestral flui através de seu sangue, manifestando-se no mundo físico.",
+                    "A essência Garou se manifesta. Um poder antigo responde ao seu chamado."
+                ],
+                investigate: [
+                    "Seus sentidos aguçados analisam cada detalhe. Nada escapa ao olhar de um Garou.",
+                    "O cheiro da verdade está no ar. A Wyrm pode esconder, mas nunca completamente."
+                ],
+                spirit: [
+                    "O espírito se manifesta diante de você. Sua presença é ao mesmo tempo assustadora e fascinante.",
+                    "O Umbra se abre. Uma entidade ancestral estabelece comunicação."
+                ]
+            };
+            
+            const moodResponses = {
+                primal: "A besta dentro de você resmunga de satisfação.",
+                spiritual: "Uma sensação de conexão cósmica invade seu ser.",
+                epic: "Este momento será lembrado nas canções dos Galliard.",
+                tragic: "O peso do dever Garou oprime seu coração, mas você segue em frente."
+            };
+            
+            const randomResponse = responses[actionType][Math.floor(Math.random() * responses[actionType].length)];
+            const moodResponse = moodResponses[mood];
+            
+            document.getElementById('werewolf-ai-response').textContent = 
+                `${randomResponse} ${moodResponse}`;
+            
+            // Limpar input
+            document.getElementById('werewolf-player-input').value = '';
+            
+            // Tocar som apropriado
+            if (werewolfData.audioSystem) {
+                werewolfData.audioSystem.playSoundEffect(getSoundForAction(actionType), { volume: 0.3 });
+            }
+            
+            showNotification('Ação enviada para a IA!', 'success');
+        }
+        
+        function getSoundForAction(actionType) {
+            const sounds = {
+                hunt: 'wolf_howl',
+                ritual: 'spell_cast',
+                gift: 'magic_aura',
+                investigate: 'book_close',
+                spirit: 'ancient_whisper'
+            };
+            
+            return sounds[actionType] || 'dice_roll';
+        }
+        
+        function rollWerewolfAIAction() {
+            // Primeiro rolar os dados
+            rollWerewolfPool();
+            
+            // Depois enviar a ação
+            setTimeout(() => {
+                sendWerewolfAction();
+            }, 500);
+        }
+        
+        function startWerewolfAIGame() {
+            const style = document.getElementById('ai-narrative-style').value;
+            const focus = document.getElementById('ai-chronicle-focus').value;
+            const region = document.getElementById('ai-region').value;
+            const complexity = document.getElementById('ai-complexity').value;
+            
+            showNotification(
+                `Iniciando jogo com IA: ${style}, foco ${focus}, região ${region}, complexidade ${complexidade}`, 
+                'success'
+            );
+            
+            // Iniciar música apropriada
+            if (werewolfData.audioSystem) {
+                werewolfData.audioSystem.setMood(focus);
+            }
+            
+            // Redirecionar para a página do jogo com IA
+            setTimeout(() => {
+                window.location.href = `ai-game.html?style=${style}&focus=${focus}&region=${region}&complexity=${complexity}`;
+            }, 1000);
+        }
+        
+        // ============================================
+        // FUNÇÕES GERAIS
+        // ============================================
+        
+        function joinChronicle(id) {
+            showNotification(`Entrando na caçada #${id}...`, 'info');
+            
+            // Tocar som de porta abrindo
+            if (werewolfData.audioSystem) {
+                werewolfData.audioSystem.playSoundEffect('door_open', { volume: 0.5 });
+            }
+            
+            // Simular redirecionamento
+            setTimeout(() => {
+                window.location.href = `session.html?id=${id}&system=werewolf`;
+            }, 1000);
+        }
+        
+        function spectateChronicle(id) {
+            showNotification(`Espiando caçada #${id}...`, 'info');
+        }
+        
+        function joinWerewolfSession() {
+            showNotification('Buscando sessões de Lobisomem disponíveis...', 'info');
+        }
+        
+        function createWerewolfSession() {
+            showNotification('Criando nova caçada...', 'info');
+        }
+        
+        function tryWerewolfAI() {
+            // Role para baixo até a seção de IA
+            document.querySelector('.ai-section').scrollIntoView({ behavior: 'smooth' });
+            showNotification('Experimente o narrador IA Garou!', 'info');
+        }
+        
+        function spectateWerewolf() {
+            showNotification('Procurando sessões para espiar...', 'info');
+        }
+        
+        function quickWerewolfDice() {
+            // Rolar 10 dados D10 rapidamente
+            const rolls = [];
+            let successes = 0;
+            
+            for (let i = 0; i < 10; i++) {
+                const roll = Math.floor(Math.random() * 10) + 1;
+                rolls.push(roll);
+                if (roll >= 6) successes++;
+            }
+            
+            showNotification(
+                `Rolagem rápida: ${rolls.join(', ')} | Sucessos: ${successes}`, 
+                'info'
+            );
+            
+            // Tocar som de dados
+            if (werewolfData.audioSystem) {
+                werewolfData.audioSystem.playSoundEffect('dice_roll', { volume: 0.5 });
+            }
+        }
+        
+        function openTribeGuide() {
+            showNotification('Abrindo guia completo das tribos Garou...', 'info');
+        }
+        
+        function openGifts() {
+            showNotification('Abrindo lista completa de dons Garou...', 'info');
+        }
+        
+        function openCaerns() {
+            showNotification('Abrindo mapa interativo de caerns...', 'info');
+        }
+        
+        function openMoots() {
+            showNotification('Abrindo guia de rituais e concílios...', 'info');
+        }
+        
+        function openWyrmHunt() {
+            showNotification('Iniciando nova caçada à Wyrm...', 'info');
+        }
+        
+        function loginGarou() {
+            showNotification('Abraçando Gaia... Bem-vindo, Garou!', 'success');
+            
+            // Tocar som épico
+            if (werewolfData.audioSystem) {
+                werewolfData.audioSystem.playSoundEffect('heartbeat', { volume: 0.3 });
+                setTimeout(() => {
+                    werewolfData.audioSystem.playSoundEffect('wolf_howl', { volume: 0.5 });
+                }, 500);
+            }
+        }
+        
+        function updateMoonPhase() {
+            const moonPhases = ['🌑 Lua Nova', '🌒 Crescente', '🌓 Quarto Crescente', '🌔 Gibosa', '🌕 Lua Cheia', '🌖 Minguante', '🌗 Quarto Minguante', '🌘 Balsâmica'];
+            const randomPhase = moonPhases[Math.floor(Math.random() * moonPhases.length)];
+            const randomDays = Math.floor(Math.random() * 30) + 1;
+            
+            document.getElementById('current-moon').textContent = randomPhase;
+            document.querySelector('.moon-timer').textContent = `Próxima lua cheia: ${randomDays} dias`;
+        }
+        
+        function toggleMobileMenu() {
+            const navMenu = document.querySelector('.nav-menu');
+            navMenu.classList.toggle('active');
+        }
+        
+        function showNotification(message, type = 'info') {
+            // Criar notificação
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                <span>${message}</span>
+            `;
+            
+            // Adicionar ao corpo
+            document.body.appendChild(notification);
+            
+            // Mostrar
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 10);
+            
+            // Remover após 3 segundos
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }, 3000);
+            
+            // Tocar som de notificação
+            if (type === 'success' && werewolfData.audioSystem) {
+                werewolfData.audioSystem.playSoundEffect('dice_roll', { volume: 0.2 });
+            }
+        }
+        
+        // ============================================
+        // ESTILOS PARA NOTIFICAÇÕES
+        // ============================================
+        
+        const style = document.createElement('style');
+        style.textContent = `
+            .notification {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: var(--night-black);
+                color: var(--moon-silver);
+                border-left: 4px solid var(--forest-green);
+                padding: 15px 20px;
+                border-radius: 5px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                z-index: 1000;
+                transform: translateX(150%);
+                transition: transform 0.3s ease;
+                max-width: 400px;
+            }
+            
+            .notification.show {
+                transform: translateX(0);
+            }
+            
+            .notification-success {
+                border-left-color: var(--forest-green);
+            }
+            
+            .notification-error {
+                border-left-color: var(--blood-red);
+            }
+            
+            .notification-info {
+                border-left-color: var(--spirit-blue);
+            }
+            
+            .tribe-card.selected {
+                border: 2px solid var(--golden-fur);
+                box-shadow: 0 0 15px rgba(218, 165, 32, 0.5);
+            }
+            
+            .tribe-card.selected .tribe-select {
+                display: block;
+            }
+            
+            .tribe-select {
+                display: none;
+                color: var(--golden-fur);
+                font-size: 1.5rem;
+            }
+            
+            .tribe-icon {
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.5rem;
+                color: white;
+            }
+            
+            .loading-section {
+                text-align: center;
+                padding: 40px;
+                color: var(--moon-silver);
+            }
+            
+            .ai-badge {
+                background: linear-gradient(135deg, #4B0082, #8A2BE2);
+                color: white;
+            }
+            
+            .gm-status.ai {
+                background: #8A2BE2;
+                box-shadow: 0 0 10px #8A2BE2;
+            }
+        `;
+        
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
