@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/themes.css">
     <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="shared/css/home.css">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=MedievalSharp&family=Uncial+Antiqua&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -865,422 +866,174 @@
         
         <div class="footer-bottom">
             <p>&copy; 2024 RPG Online Platform. Todos os direitos reservados.</p>
-            <p>Vampiro: A Máscara, Lobisomem: Idade das Trevas e outros são marcas registradas da White Wolf Publishing.</p>
         </div>
     </footer>
 
+    <!-- Modal de Sistema Personalizado -->
+    <div class="modal" id="customSystemModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-magic"></i> Criar Sistema Personalizado</h3>
+                <button class="modal-close" onclick="closeCustomSystemModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Em breve você poderá criar e publicar seu próprio sistema na plataforma.</p>
+                <button class="btn-custom" onclick="closeCustomSystemModal()">Entendi</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notificações -->
+    <div class="notifications-container" id="notificationsContainer"></div>
+
     <!-- Scripts -->
-    <script src="js/app.js"></script>
-    <script src="js/ai-narrator.js"></script>
+    <script src="shared/js/home.js"></script>
     <script>
         // ============================================
-        // FUNÇÕES PRINCIPAIS DE NAVEGAÇÃO
+        // NAVEGAÇÃO PARA RPG ESPECÍFICOS
         // ============================================
         
-        // Função PRINCIPAL para ir para a página de Vampiro
         function goToVampirePage() {
-            console.log('Redirecionando para vampire.html...');
-            
-            // Salva no localStorage que o usuário escolheu Vampiro
-            localStorage.setItem('selectedRPG', 'vampire');
-            localStorage.setItem('lastVisited', 'vampire');
-            
-            // Muda o tema para vampiro
-            document.documentElement.setAttribute('data-theme', 'vampire');
-            
-            // Redireciona para vampire.html
             window.location.href = 'vampire.html';
         }
         
-        // NOVA FUNÇÃO: Ir para a página de Lobisomem
         function goToWerewolfPage() {
-            console.log('Redirecionando para werewolf.html...');
-            
-            // Salva no localStorage que o usuário escolheu Lobisomem
-            localStorage.setItem('selectedRPG', 'werewolf');
-            localStorage.setItem('lastVisited', 'werewolf');
-            
-            // Muda o tema para lobisomem
-            document.documentElement.setAttribute('data-theme', 'werewolf');
-            
-            // Redireciona para werewolf.html
             window.location.href = 'werewolf.html';
         }
         
-        // Função para ir para IA Vampírica específica
         function goToVampireAIPage() {
-            localStorage.setItem('selectedRPG', 'vampire');
-            localStorage.setItem('vampireAIAction', 'start_demo');
-            window.location.href = 'vampire.html#ai-demo';
+            alert('Página de IA Vampírica Avançada em desenvolvimento! Em breve...');
         }
         
-        // NOVA FUNÇÃO: Ir para IA Lobisomem específica
         function goToWerewolfAIPage() {
-            localStorage.setItem('selectedRPG', 'werewolf');
-            localStorage.setItem('werewolfAIAction', 'start_demo');
-            window.location.href = 'werewolf.html#ai-narrator';
+            alert('Página de IA Garou Avançada em desenvolvimento! Em breve...');
         }
         
-        // Funções para sessões de Vampiro
-        function joinVampireSession(sessionId) {
-            console.log(`Entrando na sessão vampírica ${sessionId}...`);
-            
-            // Salva dados da sessão
-            localStorage.setItem('selectedRPG', 'vampire');
-            localStorage.setItem('joiningSession', sessionId);
-            localStorage.setItem('sessionType', 'vampire');
-            
-            // Mostra mensagem e redireciona
-            alert(`Entrando na sessão vampírica ${sessionId}...\nRedirecionando para o Mundo das Trevas!`);
-            
-            // Redireciona para vampire.html com parâmetro da sessão
-            window.location.href = `vampire.html?session=${sessionId}&join=true`;
-        }
-        
-        function spectateVampireSession(sessionId) {
-            console.log(`Assistindo sessão vampírica ${sessionId}...`);
-            
-            localStorage.setItem('selectedRPG', 'vampire');
-            localStorage.setItem('spectatingSession', sessionId);
-            
-            alert(`Preparando para assistir sessão vampírica ${sessionId}...`);
-            window.location.href = `vampire.html?session=${sessionId}&spectate=true`;
-        }
-        
-        // NOVAS FUNÇÕES: Sessões de Lobisomem
-        function joinWerewolfSession(sessionId) {
-            console.log(`Entrando na sessão lobisomem ${sessionId}...`);
-            
-            // Salva dados da sessão
-            localStorage.setItem('selectedRPG', 'werewolf');
-            localStorage.setItem('joiningSession', sessionId);
-            localStorage.setItem('sessionType', 'werewolf');
-            
-            // Mostra mensagem e redireciona
-            alert(`Entrando na sessão lobisomem ${sessionId}...\nRedirecionando para o Mundo dos Garou!`);
-            
-            // Redireciona para werewolf.html com parâmetro da sessão
-            window.location.href = `werewolf.html?session=${sessionId}&join=true`;
-        }
-        
-        function spectateWerewolfSession(sessionId) {
-            console.log(`Assistindo sessão lobisomem ${sessionId}...`);
-            
-            localStorage.setItem('selectedRPG', 'werewolf');
-            localStorage.setItem('spectatingSession', sessionId);
-            
-            alert(`Preparando para assistir sessão lobisomem ${sessionId}...`);
-            window.location.href = `werewolf.html?session=${sessionId}&spectate=true`;
-        }
-        
-        // ============================================
-        // FUNÇÕES GENÉRICAS DE NAVEGAÇÃO
-        // ============================================
-        
-        function navigateToRPG(system) {
-            if (system === 'vampire') {
-                goToVampirePage();
-                return;
-            }
-            
-            if (system === 'werewolf') {
-                goToWerewolfPage();
-                return;
-            }
-            
-            // Para outros sistemas (em desenvolvimento)
-            document.documentElement.setAttribute('data-theme', system);
-            localStorage.setItem('selectedRPG', system);
-            
-            alert(`Sistema ${system} em desenvolvimento. Em breve!`);
-            // window.location.href = `${system}.html`; // Quando outras páginas existirem
-        }
-        
-        function navigateTo(page) {
-            if (page === 'create-session') {
-                window.location.href = 'create-session.html';
-            } else if (page === 'find-session') {
-                document.getElementById('sessions').scrollIntoView({ behavior: 'smooth' });
-            }
-        }
-        
-        function joinSession(sessionId) {
-            alert(`Entrando na sessão ${sessionId}...\n(Em produção, redirecionaria para a sala)`);
-        }
-        
-        function spectateSession(sessionId) {
-            alert(`Assistindo sessão ${sessionId}...`);
-        }
-        
-        function tryAIDemo() {
-            document.getElementById('ai-demo').scrollIntoView({ behavior: 'smooth' });
-        }
-        
-        function viewAllSessions() {
-            alert('Redirecionando para lista completa de sessões...');
-            // Em produção: window.location.href = 'all-sessions.html';
-        }
-        
-        function openCustomSystemModal() {
-            alert('Abrindo criador de sistemas personalizados...');
-        }
-        
-        // ============================================
-        // INICIALIZAÇÃO DA PÁGINA
-        // ============================================
-        
-        document.addEventListener('DOMContentLoaded', function() {
-            initSlideshow();
-            updateLiveStats();
-            initThemeSwitcher();
-            setupVampireLinks();
-            setupWerewolfLinks(); // NOVO
-        });
-        
-        // Configura todos os links de Vampiro
-        function setupVampireLinks() {
-            // Adiciona eventos aos cards de Vampiro
-            document.querySelectorAll('.rpg-card[data-rpg="vampire"]').forEach(card => {
-                card.addEventListener('click', function(e) {
-                    if (!e.target.closest('.btn-explore')) {
-                        goToVampirePage();
-                    }
-                });
-            });
-            
-            // Adiciona tooltips
-            const vampireCards = document.querySelectorAll('.rpg-card[data-rpg="vampire"], .session-card .vampire-badge');
-            vampireCards.forEach(card => {
-                card.style.cursor = 'pointer';
-                card.title = 'Clique para entrar no Mundo Vampírico';
-            });
-        }
-        
-        // NOVA FUNÇÃO: Configura todos os links de Lobisomem
-        function setupWerewolfLinks() {
-            // Adiciona eventos aos cards de Lobisomem
-            document.querySelectorAll('.rpg-card[data-rpg="werewolf"]').forEach(card => {
-                card.addEventListener('click', function(e) {
-                    if (!e.target.closest('.btn-explore')) {
-                        goToWerewolfPage();
-                    }
-                });
-            });
-            
-            // Adiciona tooltips
-            const werewolfCards = document.querySelectorAll('.rpg-card[data-rpg="werewolf"], .session-card .werewolf-badge');
-            werewolfCards.forEach(card => {
-                card.style.cursor = 'pointer';
-                card.title = 'Clique para entrar no Mundo dos Garou';
-            });
-            
-            // Configura link na navegação
-            const werewolfNavLink = document.querySelector('.werewolf-nav-link');
-            if (werewolfNavLink) {
-                werewolfNavLink.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    goToWerewolfPage();
-                });
-            }
+        function navigateToRPG(rpg) {
+            const messages = {
+                mage: 'Mago: A Ascensão será implementado em breve!',
+                tormenta: 'Tormenta será implementado em breve!',
+                dnd: 'D&D 5E será implementado em breve!'
+            };
+            alert(messages[rpg] || 'Sistema em desenvolvimento!');
         }
         
         // ============================================
         // SLIDESHOW
         // ============================================
         
-        function initSlideshow() {
-            let currentSlide = 0;
+        document.addEventListener('DOMContentLoaded', function() {
             const slides = document.querySelectorAll('.slide');
             const dots = document.querySelectorAll('.dot');
+            let currentSlide = 0;
             
-            function showSlide(n) {
+            function showSlide(index) {
                 slides.forEach(slide => slide.classList.remove('active'));
                 dots.forEach(dot => dot.classList.remove('active'));
                 
-                currentSlide = (n + slides.length) % slides.length;
-                slides[currentSlide].classList.add('active');
-                dots[currentSlide].classList.add('active');
-                
-                // Atualiza tema baseado no slide
-                const theme = slides[currentSlide].getAttribute('data-rpg');
-                document.documentElement.setAttribute('data-theme', theme);
+                slides[index].classList.add('active');
+                dots[index].classList.add('active');
+                currentSlide = index;
             }
             
-            // Controles
-            document.querySelector('.slide-next')?.addEventListener('click', () => {
-                showSlide(currentSlide + 1);
+            // Auto-play slideshow
+            setInterval(() => {
+                currentSlide = (currentSlide + 1) % slides.length;
+                showSlide(currentSlide);
+            }, 5000);
+            
+            // Controls
+            document.querySelector('.slide-prev').addEventListener('click', () => {
+                currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+                showSlide(currentSlide);
             });
             
-            document.querySelector('.slide-prev')?.addEventListener('click', () => {
-                showSlide(currentSlide - 1);
+            document.querySelector('.slide-next').addEventListener('click', () => {
+                currentSlide = (currentSlide + 1) % slides.length;
+                showSlide(currentSlide);
             });
             
+            // Dot navigation
             dots.forEach((dot, index) => {
-                dot.addEventListener('click', () => {
-                    showSlide(index);
-                });
+                dot.addEventListener('click', () => showSlide(index));
             });
-            
-            // Automático
-            setInterval(() => {
-                showSlide(currentSlide + 1);
-            }, 8000);
-        }
+        });
         
         // ============================================
-        // ESTATÍSTICAS AO VIVO
+        // NAVEGAÇÃO GERAL
         // ============================================
         
-        function updateLiveStats() {
-            setInterval(() => {
-                const online = document.getElementById('online-count');
-                const sessions = document.getElementById('active-sessions');
-                const gms = document.getElementById('available-gms');
-                
-                if (online && sessions && gms) {
-                    // Simula variação
-                    online.textContent = (parseInt(online.textContent) + Math.floor(Math.random() * 10) - 3).toString();
-                    sessions.textContent = (parseInt(sessions.textContent) + Math.floor(Math.random() * 5) - 2).toString();
-                    gms.textContent = (parseInt(gms.textContent) + Math.floor(Math.random() * 3) - 1).toString();
-                    
-                    // Garante números positivos
-                    if (parseInt(online.textContent) < 1000) online.textContent = '1000';
-                    if (parseInt(sessions.textContent) < 50) sessions.textContent = '50';
-                    if (parseInt(gms.textContent) < 20) gms.textContent = '20';
-                }
-            }, 10000);
-        }
-        
-        // ============================================
-        // TEMA
-        // ============================================
-        
-        function initThemeSwitcher() {
-            const savedTheme = localStorage.getItem('selectedRPG') || 'vampire';
-            document.documentElement.setAttribute('data-theme', savedTheme);
-        }
-        
-        // ============================================
-        // DEMO DA IA
-        // ============================================
-        
-        function sendToAI() {
-            const input = document.getElementById('player-input');
-            const aiResponse = document.getElementById('ai-response');
-            
-            if (!input || !aiResponse || input.value.trim() === '') return;
-            
-            // Mostra a mensagem do jogador
-            const playerMessage = document.createElement('div');
-            playerMessage.className = 'player-message';
-            playerMessage.innerHTML = `
-                <div class="message-header">
-                    <i class="fas fa-user"></i>
-                    <strong>Você:</strong>
-                </div>
-                <p>${input.value}</p>
-            `;
-            
-            const chatContainer = document.querySelector('.ai-chat');
-            if (chatContainer) {
-                chatContainer.insertBefore(playerMessage, document.querySelector('.player-message'));
+        function navigateTo(page) {
+            if (page === 'create-session') {
+                window.location.href = 'create-session.html';
+            } else if (page === 'find-session') {
+                alert('Sistema de busca de sessões em desenvolvimento!');
             }
-            
-            // Respostas por sistema
-            const system = document.getElementById('ai-system')?.value || 'vampire';
-            const responses = {
-                vampire: [
-                    "A noite parece se intensificar com sua decisão. Um corvo pousa na janela, observando você com olhos vermelhos.",
-                    "Na distância, você ouve risadas abafadas. Algo se move nas sombras do beco.",
-                    "Seu instinto vampírico alerta para perigo próximo. O cheiro de sangue fresco está no ar.",
-                    "A Lua cheia ilumina as ruas vazias. Esta é a hora dos predadores.",
-                    "Você sente a presença de outros Membros. Eles estão próximos, observando."
-                ],
-                werewolf: [
-                    "A floresta respira ao seu redor. Sua fúria desperta com o chamado de Gaia.",
-                    "O cheiro da Wyrm é forte aqui. Suas garras coçam por uma caçada.",
-                    "Os espíritos sussurram nos ventos. A terra sente sua presença.",
-                    "Sua forma Crinos está pronta para emergir. O combate se aproxima.",
-                    "A matilha aguarda sua liderança. A guerra pela Terra continua."
-                ],
-                mage: [
-                    "A realidade se dobra à sua vontade. O paradoxo aguarda os incautos.",
-                    "Seu paradigma molda o mundo ao seu redor. A magia flui através de você.",
-                    "Os mistérios do universo se revelam àqueles que sabem ver.",
-                    "A Tecnocracia observa. Suas ações não passam despercebidas.",
-                    "A Quintessência responde ao seu chamado. Que magia você conjura?"
-                ]
-            };
-            
-            const randomResponse = responses[system] ? 
-                responses[system][Math.floor(Math.random() * responses[system].length)] : 
-                "O mundo responde às suas ações. O que você faz a seguir?";
-                
-            aiResponse.textContent = `"${randomResponse}"`;
-            
-            // Limpa o input
-            input.value = '';
-            
-            // Rolagem automática
-            rollDemoDice();
+        }
+        
+        function viewAllSessions() {
+            alert('Lista completa de sessões em desenvolvimento!');
+        }
+        
+        // ============================================
+        // IA DEMO
+        // ============================================
+        
+        function tryAIDemo() {
+            document.getElementById('ai-demo').scrollIntoView({ behavior: 'smooth' });
         }
         
         function startAIDemo() {
-            const system = document.getElementById('ai-system')?.value || 'vampire';
-            const style = document.getElementById('ai-style')?.value || 'gothic';
-            const aiResponse = document.getElementById('ai-response');
-            
-            if (!aiResponse) return;
-            
-            const greetings = {
-                vampire: "Bem-vindo às trevas. A noite pertence aos vampiros. Qual é seu primeiro movimento?",
-                werewolf: "Gaia chama seus filhos. Sinta a fúria da Wyrm se aproximando. Seu uivo ecoa na floresta.",
-                mage: "A realidade é maleável em suas mãos. Que paradigma você escolhe?",
-                tormenta: "Arton aguarda seus heróis. Uma nova aventura começa.",
-                dnd: "Role para iniciativa! Sua jornada épica está prestes a começar."
-            };
-            
-            aiResponse.textContent = `"${greetings[system] || greetings.vampire}"`;
-            document.documentElement.setAttribute('data-theme', system);
-            
-            // Toca som de ambiente
-            playDemoSound();
+            alert('Demo IA iniciada! (Simulação)');
         }
         
-        function rollDemoDice() {
-            const chatContainer = document.querySelector('.ai-chat');
-            if (!chatContainer) return;
+        function sendToAI() {
+            const input = document.getElementById('player-input');
+            const response = document.getElementById('ai-response');
             
-            const system = document.getElementById('ai-system')?.value || 'vampire';
-            const diceType = system === 'werewolf' || system === 'vampire' || system === 'mage' ? 'D10' : 'D20';
+            if (input.value.trim() === '') return;
             
-            const diceResults = document.createElement('div');
-            diceResults.className = 'dice-roll-demo';
-            diceResults.innerHTML = `
-                <div class="dice-roll">
-                    <span class="dice-icon">🎲</span>
-                    <span class="roll-result">${diceType}: ${Math.floor(Math.random() * (system === 'werewolf' ? 10 : 20)) + 1}</span>
-                </div>
-            `;
+            const system = document.getElementById('ai-system').value;
+            const style = document.getElementById('ai-style').value;
             
-            chatContainer.insertBefore(diceResults, document.querySelector('.player-message'));
+            // Simulação de resposta IA
+            response.textContent = `(${system.toUpperCase()} - ${style}) Ação recebida: "${input.value}". A IA responderá aqui...`;
+            input.value = '';
         }
         
-        function playDemoSound() {
-            // Simula tocar som ambiente
-            const soundBtn = document.createElement('button');
-            soundBtn.className = 'sound-notification';
-            soundBtn.innerHTML = '<i class="fas fa-music"></i> Trilha sonora iniciada';
-            soundBtn.style.cssText = 'background: #8B0000; color: white; border: none; padding: 5px 10px; border-radius: 5px; margin: 10px;';
+        // ============================================
+        // MODAL SISTEMA PERSONALIZADO
+        // ============================================
+        
+        function openCustomSystemModal() {
+            document.getElementById('customSystemModal').style.display = 'flex';
+        }
+        
+        function closeCustomSystemModal() {
+            document.getElementById('customSystemModal').style.display = 'none';
+        }
+        
+        // ============================================
+        // NOTIFICAÇÕES
+        // ============================================
+        
+        function showNotification(message, type = 'info') {
+            const container = document.getElementById('notificationsContainer');
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            container.appendChild(notification);
             
-            const chatContainer = document.querySelector('.ai-chat');
-            if (chatContainer) {
-                chatContainer.insertBefore(soundBtn, document.querySelector('.player-message'));
-                
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
                 setTimeout(() => {
-                    soundBtn.remove();
+                    notification.remove();
                 }, 3000);
-            }
+            }, 3000);
         }
         
         // ============================================
@@ -1288,19 +1041,19 @@
         // ============================================
         
         function viewEvents() {
-            alert('Abrindo eventos...');
+            alert('Abrindo eventos.');
         }
         
         function viewWorkshops() {
-            alert('Abrindo workshops...');
+            alert('Abrindo workshops.');
         }
         
         function viewRankings() {
-            alert('Abrindo rankings...');
+            alert('Abrindo rankings.');
         }
         
         function viewMarket() {
-            alert('Abrindo mercado...');
+            alert('Abrindo mercado.');
         }
         
         // ============================================
