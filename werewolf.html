@@ -1,1084 +1,697 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-theme="werewolf">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lobisomem: A Idade das Trevas - RPG Online</title>
+    <title>Lobisomem: A Idade das Trevas | RPG Online</title>
     <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="css/werewolf-theme.css">
     <link rel="stylesheet" href="css/responsive.css">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=MedievalSharp&family=Uncial+Antiqua&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* Estilos específicos para Lobisomem */
-        :root[data-theme="werewolf"] {
-            --earth-brown: #8B4513;
-            --forest-green: #2E8B57;
-            --blood-red: #8B0000;
-            --moon-silver: #C0C0C0;
-            --night-black: #1A1A1A;
-            --clay-orange: #D2691E;
-            --spirit-blue: #4682B4;
-            --golden-fur: #DAA520;
-        }
-        
-        .werewolf-bg {
-            background: linear-gradient(135deg, 
-                rgba(26, 26, 26, 0.95) 0%,
-                rgba(46, 139, 87, 0.15) 30%,
-                rgba(139, 69, 19, 0.15) 70%,
-                rgba(26, 26, 26, 0.95) 100%),
-                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M20,50 Q50,20 80,50 Q50,80 20,50Z M35,50 Q50,35 65,50 Q50,65 35,50Z" fill="none" stroke="rgba(139,69,19,0.1)" stroke-width="1"/></svg>');
-        }
-        
-        .wolf-paw {
-            position: relative;
-        }
-        
-        .wolf-paw::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, 
-                transparent, 
-                var(--earth-brown), 
-                var(--forest-green), 
-                var(--earth-brown), 
-                transparent);
-        }
-        
-        .tribe-badge {
-            display: inline-flex;
-            align-items: center;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin: 2px;
-        }
-        
-        .tribe-shadowlords { background: linear-gradient(135deg, #2F4F4F, #1C1C1C); color: var(--moon-silver); }
-        .tribe-silverfangs { background: linear-gradient(135deg, #C0C0C0, #708090); color: var(--night-black); }
-        .tribe-bonegnawers { background: linear-gradient(135deg, #8B4513, #654321); color: var(--golden-fur); }
-        .tribe-getoffenris { background: linear-gradient(135deg, #8B0000, #4B0000); color: white; }
-        .tribe-glasswalkers { background: linear-gradient(135deg, #4682B4, #2E8B57); color: white; }
-        .tribe-blackfuries { background: linear-gradient(135deg, #4B0082, #2E2E5A); color: white; }
-        .tribe-redtalons { background: linear-gradient(135deg, #DC143C, #8B0000); color: white; }
-        .tribe-stargazers { background: linear-gradient(135deg, #4169E1, #191970); color: white; }
-        .tribe-uktena { background: linear-gradient(135deg, #9370DB, #483D8B); color: white; }
-        .tribe-wendigo { background: linear-gradient(135deg, #006400, #2E8B57); color: white; }
-        
-        .gift-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(139, 69, 19, 0.2);
-            border: 2px solid var(--earth-brown);
-            font-size: 1.2rem;
-            margin-right: 10px;
-        }
-        
-        .rage-pool {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .rage-point {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #DC143C, #8B0000);
-            border: 1px solid #8B0000;
-            box-shadow: 0 0 5px rgba(220, 20, 60, 0.5);
-        }
-        
-        .rage-point.empty {
-            background: linear-gradient(135deg, #333, #666);
-            box-shadow: none;
-        }
-        
-        .gnosis-track {
-            display: flex;
-            gap: 5px;
-            margin: 10px 0;
-        }
-        
-        .gnosis-dot {
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            border: 1px solid var(--spirit-blue);
-            background: var(--night-black);
-            position: relative;
-        }
-        
-        .gnosis-dot.filled {
-            background: linear-gradient(135deg, #4682B4, #87CEEB);
-            box-shadow: 0 0 5px rgba(70, 130, 180, 0.7);
-        }
-        
-        .gnosis-dot.filled::after {
-            content: '🌀';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            font-size: 10px;
-        }
-        
-        .willpower-track {
-            display: flex;
-            gap: 5px;
-            margin: 10px 0;
-        }
-        
-        .willpower-dot {
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            border: 1px solid var(--golden-fur);
-            background: var(--night-black);
-        }
-        
-        .willpower-dot.filled {
-            background: linear-gradient(135deg, #DAA520, #B8860B);
-            box-shadow: 0 0 5px rgba(218, 165, 32, 0.7);
-        }
-        
-        /* Animações específicas */
-        @keyframes howlPulse {
-            0% { box-shadow: 0 0 5px rgba(139, 69, 19, 0.5); }
-            50% { box-shadow: 0 0 15px rgba(220, 20, 60, 0.8); }
-            100% { box-shadow: 0 0 5px rgba(139, 69, 19, 0.5); }
-        }
-        
-        @keyframes fadeInWolf {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .howl-pulse {
-            animation: howlPulse 2s infinite;
-        }
-        
-        .fade-in-wolf {
-            animation: fadeInWolf 0.5s ease-out;
-        }
-        
-        /* Estilo para botões específicos */
-        .btn-werewolf {
-            background: linear-gradient(135deg, var(--earth-brown), var(--forest-green));
-            border: 1px solid var(--golden-fur);
-            color: var(--moon-silver);
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-        }
-        
-        .btn-werewolf:hover {
-            background: linear-gradient(135deg, var(--forest-green), #1E5631);
-            border-color: var(--moon-silver);
-            box-shadow: 0 0 15px rgba(139, 69, 19, 0.7);
-        }
-        
-        /* Cards de sessão específicos */
-        .werewolf-session-card {
-            border-left: 5px solid var(--forest-green);
-            background: linear-gradient(135deg, 
-                rgba(46, 42, 35, 0.9) 0%,
-                rgba(26, 26, 26, 0.9) 100%);
-        }
-        
-        .werewolf-session-card:hover {
-            border-left-color: var(--golden-fur);
-            box-shadow: 0 5px 20px rgba(46, 139, 87, 0.4);
-        }
-        
-        /* Spirits Cards */
-        .spirit-card {
-            background: linear-gradient(135deg, 
-                rgba(70, 0, 0, 0.8) 0%,
-                rgba(46, 139, 87, 0.8) 100%);
-            border: 1px solid var(--spirit-blue);
-            border-radius: 10px;
-            padding: 15px;
-            margin: 10px 0;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .spirit-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, 
-                transparent, 
-                var(--spirit-blue), 
-                transparent);
-        }
-        
-        .spirit-title {
-            color: var(--golden-fur);
-            font-family: 'MedievalSharp', cursive;
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-        }
-        
-        /* Tabela de Atributos Garou */
-        .werewolf-attributes {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin: 20px 0;
-        }
-        
-        .attribute-column h4 {
-            color: var(--golden-fur);
-            border-bottom: 2px solid var(--forest-green);
-            padding-bottom: 5px;
-            margin-bottom: 10px;
-            text-align: center;
-        }
-        
-        .attribute-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 12px;
-            background: rgba(46, 42, 35, 0.3);
-            border-radius: 5px;
-            margin: 5px 0;
-            border: 1px solid transparent;
-            transition: all 0.3s ease;
-        }
-        
-        .attribute-item:hover {
-            border-color: var(--earth-brown);
-            background: rgba(139, 69, 19, 0.2);
-        }
-        
-        .attribute-dots {
-            display: flex;
-            gap: 3px;
-        }
-        
-        .attribute-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid var(--moon-silver);
-        }
-        
-        .attribute-dot.filled {
-            background: var(--forest-green);
-            box-shadow: 0 0 5px rgba(46, 139, 87, 0.7);
-        }
-        
-        /* Rolagem Lobisomem */
-        .werewolf-roll-result {
-            background: linear-gradient(135deg, 
-                rgba(46, 42, 35, 0.9) 0%,
-                rgba(26, 26, 26, 0.9) 100%);
-            border: 2px solid var(--earth-brown);
-            border-radius: 10px;
-            padding: 15px;
-            margin: 10px 0;
-        }
-        
-        .success-count {
-            color: #32CD32;
-            font-weight: bold;
-            text-shadow: 0 0 10px rgba(50, 205, 50, 0.7);
-        }
-        
-        .failure-count {
-            color: #FF4444;
-            font-weight: bold;
-            text-shadow: 0 0 10px rgba(255, 68, 68, 0.7);
-        }
-        
-        /* Caerns */
-        .caern-card {
-            background: rgba(26, 26, 26, 0.8);
-            border: 1px solid var(--spirit-blue);
-            border-radius: 10px;
-            padding: 15px;
-            margin: 10px 0;
-            transition: all 0.3s ease;
-        }
-        
-        .caern-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 20px rgba(70, 130, 180, 0.4);
-            border-color: var(--golden-fur);
-        }
-        
-        .caern-keeper {
-            color: var(--golden-fur);
-            font-style: italic;
-        }
-        
-        /* Moots */
-        .moot-card {
-            background: linear-gradient(135deg, 
-                rgba(139, 69, 19, 0.1) 0%,
-                rgba(46, 139, 87, 0.1) 100%);
-            border: 2px solid var(--earth-brown);
-            border-radius: 15px;
-            padding: 20px;
-            margin: 15px 0;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .moot-card::after {
-            content: '🐺';
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 2rem;
-            opacity: 0.3;
-        }
-        
-        /* Status de Renome */
-        .renown-badge {
-            display: inline-block;
-            padding: 3px 10px;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            margin: 2px;
-            text-transform: uppercase;
-        }
-        
-        .renown-glory { background: linear-gradient(135deg, #DAA520, #B8860B); color: black; }
-        .renown-honor { background: linear-gradient(135deg, #2E8B57, #006400); color: white; }
-        .renown-wisdom { background: linear-gradient(135deg, #4682B4, #191970); color: white; }
-        .renown-infamy { background: linear-gradient(135deg, #8B0000, #4B0000); color: white; }
-        
-        /* Lairs */
-        .lair-card {
-            background: rgba(46, 42, 35, 0.2);
-            border: 1px solid var(--moon-silver);
-            border-radius: 8px;
-            padding: 15px;
-            margin: 10px 0;
-            transition: all 0.3s ease;
-        }
-        
-        .lair-card:hover {
-            background: rgba(139, 69, 19, 0.3);
-            border-color: var(--earth-brown);
-        }
-        
-        .security-level {
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-size: 0.7rem;
-            font-weight: bold;
-            margin-left: 10px;
-        }
-        
-        .security-high { background: #32CD32; color: black; }
-        .security-medium { background: #FFD700; color: black; }
-        .security-low { background: #FF4444; color: white; }
-        
-        /* Formas Garou */
-        .form-selector {
-            display: flex;
-            gap: 10px;
-            margin: 15px 0;
-        }
-        
-        .form-btn {
-            flex: 1;
-            padding: 10px;
-            background: rgba(46, 42, 35, 0.5);
-            border: 2px solid var(--earth-brown);
-            border-radius: 8px;
-            color: var(--moon-silver);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-        
-        .form-btn:hover {
-            background: rgba(139, 69, 19, 0.3);
-            border-color: var(--golden-fur);
-        }
-        
-        .form-btn.active {
-            background: linear-gradient(135deg, var(--earth-brown), var(--forest-green));
-            border-color: var(--golden-fur);
-            box-shadow: 0 0 10px rgba(218, 165, 32, 0.5);
-        }
-        
-        /* Totem Spirits */
-        .totem-card {
-            background: linear-gradient(135deg, 
-                rgba(70, 130, 180, 0.1) 0%,
-                rgba(46, 139, 87, 0.1) 100%);
-            border: 2px solid var(--spirit-blue);
-            border-radius: 10px;
-            padding: 15px;
-            margin: 10px 0;
-            position: relative;
-        }
-        
-        .totem-card::before {
-            content: '🦅';
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 1.5rem;
-            opacity: 0.5;
-        }
-        
-        /* Bans and Restrictions */
-        .ban-card {
-            background: rgba(139, 0, 0, 0.1);
-            border-left: 4px solid var(--blood-red);
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 0 5px 5px 0;
-        }
-        
-        /* Cores para raças */
-        .breed-homid { color: #E6E6FA; }
-        .breed-metis { color: #98FB98; }
-        .breed-lupus { color: #F0E68C; }
-        
-        /* Estilos para auras */
-        .aura-ragabash { border-color: #8A2BE2; }
-        .aura-theurge { border-color: #4682B4; }
-        .aura-philodox { border-color: #32CD32; }
-        .aura-galliard { border-color: #FFD700; }
-        .aura-ahroun { border-color: #DC143C; }
-        
-        /* Estilos para fases da lua */
-        .moon-new { color: #708090; }
-        .moon-crescent { color: #87CEEB; }
-        .moon-half { color: #C0C0C0; }
-        .moon-gibbous { color: #F0E68C; }
-        .moon-full { color: #FFFFFF; }
-        
-        /* Loader específico */
-        .wolf-loader {
-            border: 4px solid var(--earth-brown);
-            border-top: 4px solid var(--forest-green);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
 </head>
-<body class="werewolf-bg">
-    <!-- Efeito de Floresta -->
+<body class="werewolf-theme">
+    <!-- Floresta Dinâmica -->
     <div class="forest-overlay">
-        <div class="moonlight-beam"></div>
-        <div class="forest-silhouette"></div>
+        <div class="moonlight"></div>
+        <div class="wolf-silhouette"></div>
+        <div class="forest-depth"></div>
     </div>
-    
-    <!-- Barra de Navegação Garou -->
-    <nav class="navbar wolf-paw">
-        <div class="nav-brand">
-            <i class="fas fa-paw brand-icon howl-pulse"></i>
-            <h1><span class="wolf-text">Lobisomem:</span> A Idade das Trevas</h1>
-            <span class="version">W20</span>
-        </div>
-        
-        <div class="nav-menu">
-            <a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a>
-            <a href="#chronicles" class="nav-link active"><i class="fas fa-scroll"></i> Crônicas</a>
-            <a href="#sessions" class="nav-link"><i class="fas fa-users"></i> Sessões</a>
-            <a href="#characters" class="nav-link"><i class="fas fa-user"></i> Personagens</a>
-            <a href="#lore" class="nav-link"><i class="fas fa-book"></i> Lore</a>
-            <a href="#tools" class="nav-link"><i class="fas fa-tools"></i> Ferramentas</a>
-            <a href="character-creator.html?system=werewolf" class="nav-link"><i class="fas fa-user-plus"></i> Criar Garou</a>
-        </div>
-        
-        <div class="nav-user">
-            <div class="rage-pool" title="Reserva de Fúria">
-                <i class="fas fa-fire rage-icon"></i>
-                <div class="rage-points">
-                    <span class="current-rage">5</span>/<span class="max-rage">10</span>
+
+    <!-- Navegação Principal -->
+    <nav class="main-nav" id="mainNav">
+        <div class="nav-container">
+            <!-- Logo -->
+            <div class="nav-logo">
+                <div class="logo-icon">
+                    <i class="fas fa-paw"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>Lobisomem</h1>
+                    <p>A Idade das Trevas</p>
+                </div>
+                <span class="version-badge">W20</span>
+            </div>
+
+            <!-- Menu Principal -->
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home" class="nav-link active"><i class="fas fa-home"></i> <span>Início</span></a></li>
+                <li><a href="#hunts" class="nav-link"><i class="fas fa-crosshairs"></i> <span>Caçadas</span></a></li>
+                <li><a href="#characters" class="nav-link"><i class="fas fa-user-wolf"></i> <span>Personagens</span></a></li>
+                <li><a href="#tools" class="nav-link"><i class="fas fa-tools"></i> <span>Ferramentas</span></a></li>
+                <li><a href="#lore" class="nav-link"><i class="fas fa-book"></i> <span>Lore</span></a></li>
+                <li><a href="#community" class="nav-link"><i class="fas fa-users"></i> <span>Comunidade</span></a></li>
+            </ul>
+
+            <!-- Controles do Usuário -->
+            <div class="nav-controls">
+                <!-- Indicador de Fúria -->
+                <div class="rage-indicator" id="rageIndicator" title="Reserva de Fúria">
+                    <div class="rage-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <div class="rage-bar">
+                        <div class="rage-fill" id="rageFill"></div>
+                    </div>
+                    <span class="rage-count" id="rageCount">5/10</span>
+                </div>
+
+                <!-- Controles de Áudio -->
+                <div class="audio-controls" id="audioControls">
+                    <button class="audio-btn" id="audioToggle" title="Play/Pause">
+                        <i class="fas fa-play"></i>
+                    </button>
+                    <button class="audio-btn" id="audioMute" title="Mute">
+                        <i class="fas fa-volume-up"></i>
+                    </button>
+                    <input type="range" id="volumeSlider" min="0" max="100" value="70" title="Volume">
+                </div>
+
+                <!-- Botão de Login/Criação -->
+                <div class="user-actions">
+                    <button class="btn-primary" id="loginBtn">
+                        <i class="fas fa-paw"></i> Abraçar Gaia
+                    </button>
+                    <button class="btn-secondary" id="createCharacterBtn">
+                        <i class="fas fa-user-plus"></i> Criar Garou
+                    </button>
                 </div>
             </div>
-            <button class="btn-werewolf btn-login" onclick="loginGarou()">
-                <i class="fas fa-paw"></i> Abraçar Gaia
+
+            <!-- Botão Mobile -->
+            <button class="mobile-toggle" id="mobileToggle">
+                <i class="fas fa-bars"></i>
             </button>
         </div>
-        
-        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-            <i class="fas fa-bars"></i>
-        </button>
-    </nav>
 
-    <!-- Header Épico -->
-    <header class="werewolf-header">
-        <div class="header-content fade-in-wolf">
-            <div class="header-title">
-                <h1 class="wolf-text">LOBISOMEM: A IDADE DAS TREVAS</h1>
-                <h2>O Jogo de RPG de Fúria e Espiritualidade</h2>
-            </div>
-            
-            <div class="header-quote">
-                <p class="quote-text">"Nós somos os dentes e garras de Gaia. Nós somos a ira da natureza contra a corrupção. Nós somos os Garou."</p>
-                <p class="quote-author">— Um Ancião das Sombras</p>
-            </div>
-            
-            <div class="header-stats">
-                <div class="stat">
-                    <i class="fas fa-paw"></i>
-                    <span>🐺 287 Garou Online</span>
-                </div>
-                <div class="stat">
-                    <i class="fas fa-fire"></i>
-                    <span>🔥 64 Caçadas à Wyrm</span>
-                </div>
-                <div class="stat">
-                    <i class="fas fa-crown"></i>
-                    <span>👑 18 Anciões Ativos</span>
-                </div>
+        <!-- Sub-navegação para Caçadas -->
+        <div class="nav-submenu" id="huntSubmenu">
+            <div class="submenu-container">
+                <a href="#active-hunts" class="submenu-link"><i class="fas fa-running"></i> Caçadas Ativas</a>
+                <a href="#create-hunt" class="submenu-link"><i class="fas fa-plus-circle"></i> Nova Caçada</a>
+                <a href="#spectate" class="submenu-link"><i class="fas fa-eye"></i> Espiar Sessões</a>
+                <a href="#ai-narrator" class="submenu-link"><i class="fas fa-robot"></i> Narrador IA</a>
             </div>
         </div>
-        
-        <div class="full-moon">
-            <div class="moon"></div>
+    </nav>
+
+    <!-- Cabeçalho Hero -->
+    <header class="hero-section" id="home">
+        <div class="hero-content">
+            <div class="hero-title">
+                <h2 class="hero-subtitle">O RPG de Fúria e Espiritualidade</h2>
+                <h1 class="hero-main-title">Lobisomem: A Idade das Trevas</h1>
+            </div>
+
+            <div class="hero-quote">
+                <blockquote>
+                    "Nós somos os dentes e garras de Gaia. Nós somos a ira da natureza contra a corrupção. Nós somos os Garou."
+                    <cite>— Um Ancião das Sombras</cite>
+                </blockquote>
+            </div>
+
+            <!-- Contadores da Comunidade -->
+            <div class="community-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-paw"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-number" id="onlineGarou">287</span>
+                        <span class="stat-label">Garou Online</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-number" id="activeHunts">64</span>
+                        <span class="stat-label">Caçadas Ativas</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-number" id="activeElders">18</span>
+                        <span class="stat-label">Anciões Ativos</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-moon"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-number" id="moonPhase">Cheia</span>
+                        <span class="stat-label">Fase Lunar</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA Principal -->
+            <div class="hero-actions">
+                <button class="btn-hero btn-hero-primary" id="joinHuntBtn">
+                    <i class="fas fa-door-open"></i> Juntar-se a uma Caçada
+                </button>
+                <button class="btn-hero btn-hero-secondary" id="quickStartBtn">
+                    <i class="fas fa-bolt"></i> Início Rápido
+                </button>
+                <button class="btn-hero btn-hero-tertiary" id="learnMoreBtn">
+                    <i class="fas fa-graduation-cap"></i> Aprenda a Jogar
+                </button>
+            </div>
+        </div>
+
+        <!-- Lua Animada -->
+        <div class="moon-container">
+            <div class="moon" id="animatedMoon"></div>
             <div class="moon-glow"></div>
         </div>
     </header>
 
-    <!-- Painel de Controle Garou -->
-    <section class="control-panel werewolf-section">
-        <div class="section-header wolf-paw">
-            <h2><i class="fas fa-chess-board"></i> Controle do Jogo</h2>
-            <p>Gerencie suas crônicas e sessões Garou</p>
+    <!-- Seção de Caçadas -->
+    <section class="section-hunts" id="hunts">
+        <div class="section-header">
+            <h2 class="section-title"><i class="fas fa-crosshairs"></i> Caçadas em Andamento</h2>
+            <p class="section-subtitle">Junte-se à guerra contra a Wyrm</p>
         </div>
-        
-        <div class="werewolf-controls">
-            <button class="btn-werewolf btn-large" onclick="joinWerewolfSession()">
-                <i class="fas fa-door-open"></i> Entrar em Sessão
-            </button>
-            
-            <button class="btn-werewolf btn-large" onclick="createWerewolfSession()">
-                <i class="fas fa-plus-circle"></i> Criar Nova Caçada
-            </button>
-            
-            <button class="btn-werewolf btn-large" onclick="tryWerewolfAI()">
-                <i class="fas fa-robot"></i> Narrador IA Garou
-            </button>
-            
-            <button class="btn-werewolf btn-large" onclick="spectateWerewolf()">
-                <i class="fas fa-eye"></i> Espiar Sessões
-            </button>
-            
-            <button class="btn-werewolf btn-large" onclick="quickWerewolfDice()">
-                <i class="fas fa-dice-d10"></i> Rolar D10
-            </button>
-        </div>
-        
-        <div class="quick-actions">
-            <button class="btn-action" onclick="openTribeGuide()">
-                <i class="fas fa-users-between-lines"></i> Guia de Tribos
-            </button>
-            <button class="btn-action" onclick="openGifts()">
-                <i class="fas fa-hand-sparkles"></i> Dons Garou
-            </button>
-            <button class="btn-action" onclick="openCaerns()">
-                <i class="fas fa-mountain"></i> Caerns
-            </button>
-            <button class="btn-action" onclick="openMoots()">
-                <i class="fas fa-users"></i> Concílios
-            </button>
-            <button class="btn-action" onclick="openWyrmHunt()">
-                <i class="fas fa-crosshairs"></i> Caça à Wyrm
-            </button>
-        </div>
-    </section>
 
-    <!-- Caçadas Ativas -->
-    <section class="chronicles-section werewolf-section" id="chronicles">
-        <div class="section-header wolf-paw">
-            <h2><i class="fas fa-book"></i> Caçadas Ativas</h2>
-            <p>Sessões de Lobisomem em andamento</p>
-        </div>
-        
-        <div class="chronicles-filters">
+        <!-- Filtros de Caçadas -->
+        <div class="filters-panel">
             <div class="filter-group">
-                <label><i class="fas fa-filter"></i> Filtrar por:</label>
-                <select id="chronicle-filter" onchange="filterChronicles()">
-                    <option value="all">Todas as Caçadas</option>
-                    <option value="pack">Meu Pack</option>
-                    <option value="tribe">Por Tribo</option>
-                    <option value="auspice">Por Auspício</option>
-                    <option value="breed">Por Raça</option>
-                </select>
-                
-                <select id="region-filter" onchange="filterChronicles()">
-                    <option value="all">Todas as Regiões</option>
-                    <option value="amazonia">Amazônia</option>
-                    <option value="cerrado">Cerrado</option>
-                    <option value="atlantic-forest">Mata Atlântica</option>
-                    <option value="pantanal">Pantanal</option>
-                    <option value="urban">Área Urbana</option>
-                </select>
-                
-                <select id="tribe-filter" onchange="filterChronicles()">
-                    <option value="all">Todas as Tribos</option>
-                    <option value="shadowlords">Lords das Sombras</option>
-                    <option value="silverfangs">Presas de Prata</option>
-                    <option value="bonegnawers">Roe Ossos</option>
-                    <option value="getoffenris">Get of Fenris</option>
-                    <option value="glasswalkers">Andarilhos Urbanos</option>
-                    <option value="blackfuries">Fúrias Negras</option>
-                    <option value="redtalons">Garras Vermelhas</option>
-                    <option value="stargazers">Observadores das Estrelas</option>
-                </select>
+                <div class="filter-item">
+                    <label for="huntTypeFilter"><i class="fas fa-filter"></i> Tipo</label>
+                    <select id="huntTypeFilter" class="filter-select">
+                        <option value="all">Todas as Caçadas</option>
+                        <option value="active">Ativas</option>
+                        <option value="recruiting">Recrutando</option>
+                        <option value="featured">Destaque</option>
+                        <option value="ai">IA Narradora</option>
+                    </select>
+                </div>
+
+                <div class="filter-item">
+                    <label for="tribeFilter"><i class="fas fa-users"></i> Tribo</label>
+                    <select id="tribeFilter" class="filter-select">
+                        <option value="all">Todas as Tribos</option>
+                        <option value="shadowlords">Lords das Sombras</option>
+                        <option value="getoffenris">Get of Fenris</option>
+                        <option value="glasswalkers">Andarilhos Urbanos</option>
+                        <option value="blackfuries">Fúrias Negras</option>
+                        <option value="silverfangs">Presas de Prata</option>
+                        <option value="bonegnawers">Roe Ossos</option>
+                        <option value="redtalons">Garras Vermelhas</option>
+                        <option value="stargazers">Observadores das Estrelas</option>
+                    </select>
+                </div>
+
+                <div class="filter-item">
+                    <label for="regionFilter"><i class="fas fa-map-marker-alt"></i> Região</label>
+                    <select id="regionFilter" class="filter-select">
+                        <option value="all">Todas as Regiões</option>
+                        <option value="amazonia">Amazônia</option>
+                        <option value="atlantic">Mata Atlântica</option>
+                        <option value="cerrado">Cerrado</option>
+                        <option value="pantanal">Pantanal</option>
+                        <option value="urban">Urbano</option>
+                        <option value="spirit">Umbral</option>
+                    </select>
+                </div>
+
+                <div class="filter-item">
+                    <label for="difficultyFilter"><i class="fas fa-skull"></i> Dificuldade</label>
+                    <select id="difficultyFilter" class="filter-select">
+                        <option value="all">Qualquer</option>
+                        <option value="easy">Fácil</option>
+                        <option value="medium">Médio</option>
+                        <option value="hard">Difícil</option>
+                        <option value="epic">Épico</option>
+                    </select>
+                </div>
             </div>
-            
-            <button class="btn-werewolf" onclick="searchChronicles()">
-                <i class="fas fa-search"></i> Buscar
-            </button>
+
+            <div class="filter-actions">
+                <button class="btn-filter" id="applyFiltersBtn">
+                    <i class="fas fa-check"></i> Aplicar
+                </button>
+                <button class="btn-filter btn-filter-secondary" id="clearFiltersBtn">
+                    <i class="fas fa-times"></i> Limpar
+                </button>
+                <button class="btn-filter btn-filter-primary" id="createHuntBtn">
+                    <i class="fas fa-plus"></i> Criar Caçada
+                </button>
+            </div>
         </div>
-        
-        <div class="chronicles-grid" id="chronicles-grid">
+
+        <!-- Grid de Caçadas -->
+        <div class="hunts-grid" id="huntsGrid">
             <!-- As caçadas serão carregadas via JavaScript -->
         </div>
-        
-        <div class="loading-section" id="chronicles-loading">
-            <div class="wolf-loader"></div>
-            <p>Carregando caçadas ativas...</p>
-        </div>
-    </section>
 
-    <!-- Sistema de Criação de Personagem Garou -->
-    <section class="character-section werewolf-section" id="characters">
-        <div class="section-header wolf-paw">
-            <h2><i class="fas fa-user-wolf"></i> Criação de Garou</h2>
-            <p>Desperte o lobo dentro de você</p>
-        </div>
-        
-        <div class="character-creation-flow">
-            <div class="flow-step active" data-step="1">
-                <div class="step-number">1</div>
-                <div class="step-content">
-                    <h4>Escolha a Tribo</h4>
-                    <p>Selecione sua família Garou</p>
-                </div>
-            </div>
-            
-            <div class="flow-step" data-step="2">
-                <div class="step-number">2</div>
-                <div class="step-content">
-                    <h4>Auspício</h4>
-                    <p>Nasceu sob qual fase da lua?</p>
-                </div>
-            </div>
-            
-            <div class="flow-step" data-step="3">
-                <div class="step-number">3</div>
-                <div class="step-content">
-                    <h4>Raça</h4>
-                    <p>Homid, Metis ou Lupus?</p>
-                </div>
-            </div>
-            
-            <div class="flow-step" data-step="4">
-                <div class="step-number">4</div>
-                <div class="step-content">
-                    <h4>Dons</h4>
-                    <p>Escolha seus dons espirituais</p>
-                </div>
-            </div>
-            
-            <div class="flow-step" data-step="5">
-                <div class="step-number">5</div>
-                <div class="step-content">
-                    <h4>Renome</h4>
-                    <p>Estabeleça sua reputação</p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="tribe-selection">
-            <h3><i class="fas fa-users-between-lines"></i> Selecione Sua Tribo</h3>
-            <p>Cada tribo oferece uma visão única da luta por Gaia</p>
-            
-            <div class="tribes-grid" id="tribes-grid">
-                <!-- As tribos serão carregadas via JavaScript -->
-            </div>
-            
-            <div class="character-actions">
-                <button class="btn-werewolf btn-large" onclick="startWerewolfCreation()">
-                    <i class="fas fa-user-plus"></i> Começar Criação
-                </button>
-                <button class="btn-werewolf btn-outline" onclick="openWerewolfTemplates()">
-                    <i class="fas fa-copy"></i> Usar Template
-                </button>
-                <button class="btn-werewolf btn-outline" onclick="importWerewolfCharacter()">
-                    <i class="fas fa-file-import"></i> Importar Ficha
-                </button>
+        <!-- Carregamento -->
+        <div class="loading-state" id="huntsLoading">
+            <div class="loader">
+                <div class="wolf-loader"></div>
+                <p>Buscando caçadas ativas...</p>
             </div>
         </div>
     </section>
 
-    <!-- Ferramentas Garou -->
-    <section class="tools-section werewolf-section" id="tools">
-        <div class="section-header wolf-paw">
-            <h2><i class="fas fa-tools"></i> Ferramentas do Sistema</h2>
-            <p>Recursos específicos para Lobisomem: A Idade das Trevas</p>
+    <!-- Seção de Criação de Personagem -->
+    <section class="section-characters" id="characters">
+        <div class="section-header">
+            <h2 class="section-title"><i class="fas fa-user-wolf"></i> Crie seu Garou</h2>
+            <p class="section-subtitle">Desperte a besta interior</p>
         </div>
-        
-        <div class="werewolf-tools-grid">
-            <!-- Rolador Garou -->
-            <div class="tool-card">
-                <div class="tool-icon">
-                    <i class="fas fa-dice-d10"></i>
+
+        <!-- Fluxo de Criação -->
+        <div class="creation-flow">
+            <div class="flow-steps">
+                <div class="flow-step active" data-step="1">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Tribo</h4>
+                        <p>Sua família Garou</p>
+                    </div>
                 </div>
-                <div class="tool-content">
+                <div class="flow-step" data-step="2">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Auspício</h4>
+                        <p>Sua lua de nascimento</p>
+                    </div>
+                </div>
+                <div class="flow-step" data-step="3">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Raça</h4>
+                        <p>Sua origem</p>
+                    </div>
+                </div>
+                <div class="flow-step" data-step="4">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h4>Atributos</h4>
+                        <p>Força e habilidades</p>
+                    </div>
+                </div>
+                <div class="flow-step" data-step="5">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h4>Dons</h4>
+                        <p>Poderes espirituais</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Conteúdo do Passo Atual -->
+            <div class="creation-content">
+                <!-- Passo 1: Seleção de Tribo -->
+                <div class="creation-step active" id="step1">
+                    <h3>Escolha sua Tribo</h3>
+                    <p>Cada tribo oferece uma visão única da guerra por Gaia</p>
+                    
+                    <div class="tribes-selection" id="tribesSelection">
+                        <!-- Tribos carregadas via JS -->
+                    </div>
+                </div>
+
+                <!-- Pré-visualização do Personagem -->
+                <div class="character-preview" id="characterPreview">
+                    <div class="preview-header">
+                        <h4>Pré-visualização</h4>
+                        <button class="btn-preview-reset" id="resetPreviewBtn">
+                            <i class="fas fa-redo"></i> Reiniciar
+                        </button>
+                    </div>
+                    <div class="preview-content">
+                        <div class="preview-avatar" id="previewAvatar">
+                            <div class="avatar-placeholder">
+                                <i class="fas fa-paw"></i>
+                            </div>
+                        </div>
+                        <div class="preview-details">
+                            <h5 id="previewName">Garou Sem Nome</h5>
+                            <div class="preview-traits">
+                                <span class="trait-badge" id="previewTribe">Tribo: --</span>
+                                <span class="trait-badge" id="previewAuspice">Auspício: --</span>
+                                <span class="trait-badge" id="previewBreed">Raça: --</span>
+                            </div>
+                            <div class="preview-stats">
+                                <div class="stat-line">
+                                    <span>Fúria:</span>
+                                    <div class="stat-dots" id="previewRage">
+                                        <!-- Pontos de fúria -->
+                                    </div>
+                                </div>
+                                <div class="stat-line">
+                                    <span>Gnosis:</span>
+                                    <div class="stat-dots" id="previewGnosis">
+                                        <!-- Pontos de gnosis -->
+                                    </div>
+                                </div>
+                                <div class="stat-line">
+                                    <span>Vontade:</span>
+                                    <div class="stat-dots" id="previewWillpower">
+                                        <!-- Pontos de vontade -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controles de Criação -->
+            <div class="creation-controls">
+                <button class="btn-control btn-control-prev" id="prevStepBtn" disabled>
+                    <i class="fas fa-arrow-left"></i> Anterior
+                </button>
+                <div class="creation-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="creationProgress"></div>
+                    </div>
+                    <span class="progress-text">Passo <span id="currentStep">1</span> de 5</span>
+                </div>
+                <button class="btn-control btn-control-next" id="nextStepBtn">
+                    Próximo <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de Ferramentas -->
+    <section class="section-tools" id="tools">
+        <div class="section-header">
+            <h2 class="section-title"><i class="fas fa-tools"></i> Ferramentas do Garou</h2>
+            <p class="section-subtitle">Recursos para sua jornada</p>
+        </div>
+
+        <div class="tools-grid">
+            <!-- Rolador de Dados -->
+            <div class="tool-card tool-primary">
+                <div class="tool-header">
+                    <div class="tool-icon">
+                        <i class="fas fa-dice-d10"></i>
+                    </div>
                     <h3>Rolador Garou</h3>
-                    <p>Sistema de dados D10 com sucessos, falhas e críticos</p>
-                    <div class="dice-pool-selector">
-                        <div class="pool-control">
-                            <label>Dados:</label>
-                            <div class="pool-buttons">
-                                <button class="pool-btn" onclick="adjustPool(-1)">-</button>
-                                <span id="pool-count">6</span>
-                                <button class="pool-btn" onclick="adjustPool(1)">+</button>
+                </div>
+                <div class="tool-body">
+                    <p>Rolagem D10 com sistema de sucessos e dificuldade</p>
+                    
+                    <div class="dice-panel">
+                        <div class="pool-setup">
+                            <div class="pool-control">
+                                <label>Dados:</label>
+                                <div class="pool-counter">
+                                    <button class="pool-btn" id="decreasePool">-</button>
+                                    <span id="poolValue">6</span>
+                                    <button class="pool-btn" id="increasePool">+</button>
+                                </div>
+                            </div>
+                            
+                            <div class="pool-control">
+                                <label>Dificuldade:</label>
+                                <select id="difficultySelect">
+                                    <option value="3">3 (Fácil)</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6" selected>6 (Normal)</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8 (Difícil)</option>
+                                    <option value="9">9 (Muito Difícil)</option>
+                                    <option value="10">10 (Impossível)</option>
+                                </select>
                             </div>
                         </div>
                         
-                        <div class="pool-control">
-                            <label>Dificuldade:</label>
-                            <select id="difficulty-select">
-                                <option value="3">3 (Fácil)</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6" selected>6 (Normal)</option>
-                                <option value="7">7</option>
-                                <option value="8">8 (Difícil)</option>
-                                <option value="9">9 (Muito Difícil)</option>
-                                <option value="10">10 (Quase Impossível)</option>
-                            </select>
-                        </div>
-                        
-                        <div class="pool-options">
-                            <label>
-                                <input type="checkbox" id="specialty-check">
+                        <div class="pool-modifiers">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="specialtyCheck">
+                                <span class="checkbox-custom"></span>
                                 Especialidade
                             </label>
-                            <label>
-                                <input type="checkbox" id="rage-check">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="rageCheck">
+                                <span class="checkbox-custom"></span>
                                 Fúria
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="willpowerCheck">
+                                <span class="checkbox-custom"></span>
+                                Vontade
                             </label>
                         </div>
                         
-                        <button class="btn-werewolf" onclick="rollWerewolfPool()">
-                            <i class="fas fa-dice"></i> Rolar Pool
+                        <button class="btn-tool" id="rollDiceBtn">
+                            <i class="fas fa-dice"></i> Rolar Dados
                         </button>
                     </div>
                     
-                    <div class="roll-result" id="werewolf-roll-result">
+                    <div class="roll-results" id="rollResults">
                         <!-- Resultados aparecem aqui -->
                     </div>
                 </div>
             </div>
-            
-            <!-- Gerador de NPCs -->
+
+            <!-- Calculadora de Formas -->
             <div class="tool-card">
-                <div class="tool-icon">
-                    <i class="fas fa-ghost"></i>
-                </div>
-                <div class="tool-content">
-                    <h3>Gerador de NPCs</h3>
-                    <p>Crie Garous e Espíritos rapidamente</p>
-                    <div class="npc-options">
-                        <select id="npc-type" onchange="updateNPCOptions()">
-                            <option value="garou">Garou</option>
-                            <option value="spirit">Espírito</option>
-                            <option value="kinfolk">Kinfolk</option>
-                            <option value="villain">Antagonista</option>
-                        </select>
-                        
-                        <select id="npc-rank" style="display: none;">
-                            <option value="cub">Filhote</option>
-                            <option value="cliate">Cliate</option>
-                            <option value="fostern">Fostern</option>
-                            <option value="adren">Adren</option>
-                            <option value="athro">Athro</option>
-                            <option value="elder">Ancião</option>
-                        </select>
+                <div class="tool-header">
+                    <div class="tool-icon">
+                        <i class="fas fa-paw"></i>
                     </div>
+                    <h3>Formas Garou</h3>
+                </div>
+                <div class="tool-body">
+                    <p>Calcule atributos em cada forma</p>
                     
-                    <button class="btn-werewolf" onclick="generateWerewolfNPC()">
-                        <i class="fas fa-random"></i> Gerar NPC
-                    </button>
-                    
-                    <div class="npc-preview" id="npc-preview">
-                        <!-- NPC gerado aparece aqui -->
+                    <div class="form-calculator">
+                        <div class="form-selector">
+                            <button class="form-btn active" data-form="homid">Homid</button>
+                            <button class="form-btn" data-form="glabro">Glabro</button>
+                            <button class="form-btn" data-form="crinos">Crinos</button>
+                            <button class="form-btn" data-form="hispo">Hispo</button>
+                            <button class="form-btn" data-form="lupus">Lupus</button>
+                        </div>
+                        
+                        <div class="form-display">
+                            <div class="form-info">
+                                <h4 id="formName">Homid</h4>
+                                <p id="formDescription">Forma humana, socialmente aceita</p>
+                            </div>
+                            
+                            <div class="form-modifiers">
+                                <h5>Modificadores:</h5>
+                                <div class="modifiers-list">
+                                    <div class="modifier-item">
+                                        <span>Força:</span>
+                                        <span class="modifier-value" id="strMod">+0</span>
+                                    </div>
+                                    <div class="modifier-item">
+                                        <span>Destreza:</span>
+                                        <span class="modifier-value" id="dexMod">+0</span>
+                                    </div>
+                                    <div class="modifier-item">
+                                        <span>Vigor:</span>
+                                        <span class="modifier-value" id="staMod">+0</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            
-            <!-- Calculadora de Formas -->
+
+            <!-- Gerador de NPCs -->
             <div class="tool-card">
-                <div class="tool-icon">
-                    <i class="fas fa-paw"></i>
+                <div class="tool-header">
+                    <div class="tool-icon">
+                        <i class="fas fa-ghost"></i>
+                    </div>
+                    <h3>Gerador de NPCs</h3>
                 </div>
-                <div class="tool-content">
-                    <h3>Calculadora de Formas</h3>
-                    <p>Calcule atributos em cada forma Garou</p>
+                <div class="tool-body">
+                    <p>Crie Garous, espíritos e antagonistas</p>
                     
-                    <div class="form-calculator">
-                        <div class="form-control">
-                            <label>Forma:</label>
-                            <select id="form-select" onchange="calculateForm()">
-                                <option value="homid">Homid (Humano)</option>
-                                <option value="glabro">Glabro (Quase-Humano)</option>
-                                <option value="crinos" selected>Crinos (Guerreiro)</option>
-                                <option value="hispo">Hispo (Lobo Grande)</option>
-                                <option value="lupus">Lupus (Lobo)</option>
+                    <div class="npc-generator">
+                        <div class="npc-options">
+                            <select id="npcTypeSelect">
+                                <option value="garou">Garou</option>
+                                <option value="spirit">Espírito</option>
+                                <option value="kinfolk">Kinfolk</option>
+                                <option value="villain">Antagonista</option>
+                            </select>
+                            
+                            <select id="npcRankSelect">
+                                <option value="cub">Filhote</option>
+                                <option value="cliate">Cliate</option>
+                                <option value="fostern">Fostern</option>
+                                <option value="adren">Adren</option>
+                                <option value="athro">Athro</option>
+                                <option value="elder">Ancião</option>
                             </select>
                         </div>
                         
-                        <div class="form-attributes">
-                            <h4>Modificadores:</h4>
-                            <div class="attribute-list">
-                                <div class="attr-row">
-                                    <span>Força:</span>
-                                    <span id="str-mod">+2</span>
-                                </div>
-                                <div class="attr-row">
-                                    <span>Destreza:</span>
-                                    <span id="dex-mod">+1</span>
-                                </div>
-                                <div class="attr-row">
-                                    <span>Vigor:</span>
-                                    <span id="sta-mod">+3</span>
-                                </div>
-                            </div>
-                        </div>
+                        <button class="btn-tool" id="generateNPCBtn">
+                            <i class="fas fa-random"></i> Gerar NPC
+                        </button>
                         
-                        <div class="form-result">
-                            <h4>Totais:</h4>
-                            <div class="total-stats">
-                                <div class="stat-row">
-                                    <span>Força Total:</span>
-                                    <strong id="str-total">5</strong>
-                                </div>
-                                <div class="stat-row">
-                                    <span>Iniciativa:</span>
-                                    <strong id="init-total">6</strong>
-                                </div>
-                            </div>
+                        <div class="npc-output" id="npcOutput">
+                            <!-- NPC gerado aparece aqui -->
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             <!-- Mapa de Caerns -->
             <div class="tool-card">
-                <div class="tool-icon">
-                    <i class="fas fa-map-marked-alt"></i>
-                </div>
-                <div class="tool-content">
+                <div class="tool-header">
+                    <div class="tool-icon">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
                     <h3>Mapa de Caerns</h3>
-                    <p>Planeje territórios sagrados</p>
+                </div>
+                <div class="tool-body">
+                    <p>Planeje territórios e locais sagrados</p>
+                    
                     <div class="caern-map">
-                        <div class="map-grid" id="caern-map-grid">
-                            <!-- Grid do mapa será gerado via JavaScript -->
+                        <div class="map-controls">
+                            <button class="map-btn" data-type="caern" title="Adicionar Caern">🌳</button>
+                            <button class="map-btn" data-type="lair" title="Adicionar Covil">🏠</button>
+                            <button class="map-btn" data-type="wyrm" title="Área da Wyrm">☠️</button>
+                            <button class="map-btn" data-type="clear" title="Limpar">🗑️</button>
+                        </div>
+                        <div class="map-grid" id="caernMapGrid">
+                            <!-- Grid gerado via JS -->
                         </div>
                     </div>
-                    <button class="btn-werewolf" onclick="saveCaernMap()">
-                        <i class="fas fa-save"></i> Salvar Mapa
-                    </button>
+                    
+                    <div class="map-actions">
+                        <button class="btn-tool btn-tool-secondary" id="saveMapBtn">
+                            <i class="fas fa-save"></i> Salvar
+                        </button>
+                        <button class="btn-tool" id="loadMapBtn">
+                            <i class="fas fa-folder-open"></i> Carregar
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Lore e Recursos -->
-    <section class="lore-section werewolf-section" id="lore">
-        <div class="section-header wolf-paw">
-            <h2><i class="fas fa-book"></i> Lore Garou</h2>
-            <p>Conhecimento sobre a Guerra pela Gaia</p>
+    <!-- Seção de Lore -->
+    <section class="section-lore" id="lore">
+        <div class="section-header">
+            <h2 class="section-title"><i class="fas fa-book"></i> O Mundo dos Garou</h2>
+            <p class="section-subtitle">Conhecimento ancestral</p>
         </div>
-        
-        <div class="lore-tabs">
-            <div class="tab-buttons">
-                <button class="tab-btn active" data-tab="litany" onclick="openTab('litany')">A Litania</button>
-                <button class="tab-btn" data-tab="triat" onclick="openTab('triat')">A Triat</button>
-                <button class="tab-btn" data-tab="breeds" onclick="openTab('breeds')">Raças</button>
-                <button class="tab-btn" data-tab="auspices" onclick="openTab('auspices')">Auspícios</button>
-                <button class="tab-btn" data-tab="history" onclick="openTab('history')">História</button>
+
+        <div class="lore-container">
+            <!-- Navegação do Lore -->
+            <div class="lore-nav">
+                <button class="lore-nav-btn active" data-lore="litany">
+                    <i class="fas fa-scroll"></i> A Litania
+                </button>
+                <button class="lore-nav-btn" data-lore="triat">
+                    <i class="fas fa-balance-scale"></i> A Triat
+                </button>
+                <button class="lore-nav-btn" data-lore="tribes">
+                    <i class="fas fa-users"></i> As Tribos
+                </button>
+                <button class="lore-nav-btn" data-lore="auspices">
+                    <i class="fas fa-moon"></i> Auspícios
+                </button>
+                <button class="lore-nav-btn" data-lore="history">
+                    <i class="fas fa-landmark"></i> História
+                </button>
+                <button class="lore-nav-btn" data-lore="spirits">
+                    <i class="fas fa-ghost"></i> Espíritos
+                </button>
             </div>
-            
-            <div class="tab-content">
-                <div class="tab-pane active" id="tab-litany">
-                    <h3><i class="fas fa-scroll"></i> A Litania</h3>
+
+            <!-- Conteúdo do Lore -->
+            <div class="lore-content">
+                <!-- Litania -->
+                <div class="lore-section active" id="litanyContent">
+                    <h3>A Litania</h3>
+                    <p>As leis sagradas dos Garou, passadas através das gerações.</p>
+                    
                     <div class="litany-list">
                         <div class="litany-item">
-                            <h4>1. Garou não matará Garou</h4>
-                            <p>"O Sangue de Gaia não será derramado por nossas mãos."</p>
+                            <h4><span class="litany-number">1.</span> Garou não matará Garou</h4>
+                            <p class="litany-text">"O Sangue de Gaia não será derramado por nossas mãos, exceto em maior desafio, ou então estaremos perdidos."</p>
                         </div>
+                        
                         <div class="litany-item">
-                            <h4>2. Combatam a Wyrm Onde Quer Que Ela Seja</h4>
-                            <p>"A Corrupção será expurgada de nossa Mãe."</p>
+                            <h4><span class="litany-number">2.</span> Combatam a Wyrm Onde Quer Que Ela Esteja e Cresça</h4>
+                            <p class="litany-text">"A Corrupção será expurgada de nossa Mãe, para que ela possa viver."</p>
                         </div>
+                        
                         <div class="litany-item">
-                            <h4>3. Respeitem o Território Alheio</h4>
-                            <p>"O domínio de outro é sagrado. Não viole sem permissão."</p>
+                            <h4><span class="litany-number">3.</span> Respeitem o Território Alheio</h4>
+                            <p class="litany-text">"O domínio de outro é sagrado. Não viole sem permissão, ou então será violado."</p>
                         </div>
+                        
                         <div class="litany-item">
-                            <h4>4. Aceitem uma Rendição Honrosa</h4>
-                            <p>"Quando um inimigo se rende, mostre misericórdia."</p>
+                            <h4><span class="litany-number">4.</span> Aceitem uma Rendição Honrosa</h4>
+                            <p class="litany-text">"Quando um inimigo se rende, mostre misericórdia. A matança sem honra é o caminho da Wyrm."</p>
                         </div>
+                        
                         <div class="litany-item">
-                            <h4>5. O Primeiro de Vocês Cumprimenta o Primeiro Deles</h4>
-                            <p>"A hierarquia será respeitada em todos os encontros."</p>
-                        </div>
-                        <div class="litany-item">
-                            <h4>6. O Primogênito Pode Comandar o Primogênito</h4>
-                            <p>"A autoridade dos Anciões é absoluta."</p>
+                            <h4><span class="litany-number">5.</span> O Primeiro de Vocês Cumprimenta o Primeiro Deles</h4>
+                            <p class="litany-text">"A hierarquia será respeitada em todos os encontros. É assim que mantemos a ordem."</p>
                         </div>
                     </div>
                 </div>
-                
-                <div class="tab-pane" id="tab-triat">
-                    <h3><i class="fas fa-balance-scale"></i> A Triat</h3>
-                    <div class="triat-grid">
-                        <div class="triat-card wyld">
-                            <h4>Wyld</h4>
+
+                <!-- Triat -->
+                <div class="lore-section" id="triatContent">
+                    <h3>A Triat</h3>
+                    <p>Os três princípios fundamentais da realidade.</p>
+                    
+                    <div class="triat-display">
+                        <div class="triat-principle wyld">
+                            <div class="principle-header">
+                                <h4>Wyld</h4>
+                                <span class="principle-symbol">🌀</span>
+                            </div>
                             <p>O princípio da criação, caos e potencial infinito.</p>
-                            <div class="triat-aspects">
+                            <div class="principle-aspects">
                                 <span class="aspect">Criação</span>
                                 <span class="aspect">Caos</span>
                                 <span class="aspect">Potencial</span>
+                                <span class="aspect">Natureza</span>
                             </div>
                         </div>
                         
-                        <div class="triat-card weaver">
-                            <h4>Weaver</h4>
+                        <div class="triat-principle weaver">
+                            <div class="principle-header">
+                                <h4>Weaver</h4>
+                                <span class="principle-symbol">🕸️</span>
+                            </div>
                             <p>O princípio da ordem, estrutura e estagnação.</p>
-                            <div class="triat-aspects">
+                            <div class="principle-aspects">
                                 <span class="aspect">Ordem</span>
                                 <span class="aspect">Estrutura</span>
                                 <span class="aspect">Estagnação</span>
+                                <span class="aspect">Civilização</span>
                             </div>
                         </div>
                         
-                        <div class="triat-card wyrm">
-                            <h4>Wyrm</h4>
+                        <div class="triat-principle wyrm">
+                            <div class="principle-header">
+                                <h4>Wyrm</h4>
+                                <span class="principle-symbol">🐉</span>
+                            </div>
                             <p>O princípio da destruição, corrupção e entropia.</p>
-                            <div class="triat-aspects">
+                            <div class="principle-aspects">
                                 <span class="aspect">Destruição</span>
                                 <span class="aspect">Corrupção</span>
                                 <span class="aspect">Entropia</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="tab-pane" id="tab-breeds">
-                    <h3><i class="fas fa-dna"></i> Raças Garou</h3>
-                    <div class="breeds-grid">
-                        <div class="breed-card">
-                            <h4 class="breed-homid">Homid</h4>
-                            <p>Nascido entre humanos, criado na sociedade humana.</p>
-                            <div class="breed-stats">
-                                <span><strong>Vantagens:</strong> +3 Habilidades, +2 Atributos Sociais</span>
-                                <span><strong>Desvantagens:</strong> Início: Fúria 1, Gnosis 1</span>
-                            </div>
-                        </div>
-                        
-                        <div class="breed-card">
-                            <h4 class="breed-metis">Metis</h4>
-                            <p>Filho de dois Garous, nascido deformado mas poderoso.</p>
-                            <div class="breed-stats">
-                                <span><strong>Vantagens:</strong> +2 Atributos Físicos, +1 Gnosis</span>
-                                <span><strong>Desvantagens:</strong> Deformidade, Início: Renome 0</span>
-                            </div>
-                        </div>
-                        
-                        <div class="breed-card">
-                            <h4 class="breed-lupus">Lupus</h4>
-                            <p>Nascido como lobo, criado na natureza.</p>
-                            <div class="breed-stats">
-                                <span><strong>Vantagens:</strong> +2 Atributos Físicos, +2 Fúria</span>
-                                <span><strong>Desvantagens:</strong> Habilidades Humanas limitadas</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="tab-pane" id="tab-auspices">
-                    <h3><i class="fas fa-moon"></i> Auspícios Lunares</h3>
-                    <div class="auspices-grid">
-                        <div class="auspice-card">
-                            <h4 class="aura-ragabash">Ragabash (Lua Nova)</h4>
-                            <p>O Trapaceiro, o Inovador, o Desafiador.</p>
-                            <div class="auspice-gifts">
-                                <span class="gift-tag">Furtividade</span>
-                                <span class="gift-tag">Engano</span>
-                                <span class="gift-tag">Percepção</span>
-                            </div>
-                        </div>
-                        
-                        <div class="auspice-card">
-                            <h4 class="aura-theurge">Theurge (Lua Crescente)</h4>
-                            <p>O Xamã, o Médico Espiritual, o Comunicador.</p>
-                            <div class="auspice-gifts">
-                                <span class="gift-tag">Espiritualidade</span>
-                                <span class="gift-tag">Cura</span>
-                                <span class="gift-tag">Visão</span>
-                            </div>
-                        </div>
-                        
-                        <div class="auspice-card">
-                            <h4 class="aura-philodox">Philodox (Meia Lua)</h4>
-                            <p>O Juiz, o Diplomata, o Guardião da Tradição.</p>
-                            <div class="auspice-gifts">
-                                <span class="gift-tag">Sabedoria</span>
-                                <span class="gift-tag">Justiça</span>
-                                <span class="gift-tag">Liderança</span>
-                            </div>
-                        </div>
-                        
-                        <div class="auspice-card">
-                            <h4 class="aura-galliard">Galliard (Lua Gibosa)</h4>
-                            <p>O Bardista, o Historiador, o Inspirador.</p>
-                            <div class="auspice-gifts">
-                                <span class="gift-tag">Performance</span>
-                                <span class="gift-tag">Memória</span>
-                                <span class="gift-tag">Inspiração</span>
-                            </div>
-                        </div>
-                        
-                        <div class="auspice-card">
-                            <h4 class="aura-ahroun">Ahroun (Lua Cheia)</h4>
-                            <p>O Guerreiro, o Herói, o Protetor.</p>
-                            <div class="auspice-gifts">
-                                <span class="gift-tag">Combate</span>
-                                <span class="gift-tag">Fúria</span>
-                                <span class="gift-tag">Proteção</span>
+                                <span class="aspect">Doença</span>
                             </div>
                         </div>
                     </div>
@@ -1087,1402 +700,324 @@
         </div>
     </section>
 
-    <!-- Sistema de IA Garou -->
-    <section class="ai-section werewolf-section">
-        <div class="section-header wolf-paw">
-            <h2><i class="fas fa-robot"></i> Narrador IA Garou</h2>
-            <p>Jogue com uma IA treinada em Lobisomem: A Idade das Trevas</p>
+    <!-- Seção de Comunidade -->
+    <section class="section-community" id="community">
+        <div class="section-header">
+            <h2 class="section-title"><i class="fas fa-users"></i> Comunidade Garou</h2>
+            <p class="section-subtitle">Junte-se à matilha</p>
         </div>
-        
-        <div class="ai-demo-werewolf">
-            <div class="ai-chat-container">
-                <div class="ai-message">
-                    <div class="message-header">
-                        <i class="fas fa-paw"></i>
-                        <strong>Narrador IA (Primal):</strong>
-                    </div>
-                    <p id="werewolf-ai-response">"A floresta respira ao seu redor. O cheiro de terra molhada e sangue fresco enche seus pulmões. Sua fúria desperta. Gaia chama seus filhos. Qual é seu primeiro uivo?"</p>
+
+        <div class="community-features">
+            <!-- Fórum -->
+            <div class="community-card">
+                <div class="community-icon">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <h3>Fórum Garou</h3>
+                <p>Discuta estratégias, lore e histórias com outros Garou.</p>
+                <button class="btn-community">
+                    <i class="fas fa-door-open"></i> Entrar
+                </button>
+            </div>
+
+            <!-- Eventos -->
+            <div class="community-card">
+                <div class="community-icon">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <h3>Eventos</h3>
+                <p>Concílios, torneios e caçadas especiais.</p>
+                <div class="event-countdown">
+                    <span id="nextEvent">Próximo evento: 3 dias</span>
+                </div>
+                <button class="btn-community">
+                    <i class="fas fa-eye"></i> Ver Agenda
+                </button>
+            </div>
+
+            <!-- Mentores -->
+            <div class="community-card">
+                <div class="community-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h3>Mentores</h3>
+                <p>Aprenda com Garous experientes.</p>
+                <div class="mentor-stats">
+                    <span><i class="fas fa-user-check"></i> 24 mentores ativos</span>
+                </div>
+                <button class="btn-community">
+                    <i class="fas fa-hands-helping"></i> Encontrar Mentor
+                </button>
+            </div>
+
+            <!-- Torneios -->
+            <div class="community-card">
+                <div class="community-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <h3>Torneios</h3>
+                <p>Competições por glória e honra.</p>
+                <div class="tournament-info">
+                    <span class="active-tournaments">2 torneios ativos</span>
+                </div>
+                <button class="btn-community">
+                    <i class="fas fa-flag-checkered"></i> Competir
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- IA Narradora -->
+    <section class="section-ai" id="ai-narrator">
+        <div class="section-header">
+            <h2 class="section-title"><i class="fas fa-robot"></i> Narrador IA Garou</h2>
+            <p class="section-subtitle">Jogue com inteligência artificial</p>
+        </div>
+
+        <div class="ai-interface">
+            <!-- Configurações da IA -->
+            <div class="ai-settings-panel">
+                <h3><i class="fas fa-cog"></i> Configurar</h3>
+                
+                <div class="setting-group">
+                    <label>Estilo Narrativo:</label>
+                    <select id="aiStyleSelect">
+                        <option value="primal">Primal (Animal/Instintivo)</option>
+                        <option value="spiritual">Espiritual (Xamânico)</option>
+                        <option value="epic">Épico (Heróico)</option>
+                        <option value="gothic">Gótico (Sombrio)</option>
+                    </select>
                 </div>
                 
-                <div class="player-input">
-                    <div class="input-header">
-                        <select id="werewolf-action-type">
+                <div class="setting-group">
+                    <label>Tema da Caçada:</label>
+                    <select id="aiThemeSelect">
+                        <option value="wyrm">Caça à Wyrm</option>
+                        <option value="spirit">Jornada Espiritual</option>
+                        <option value="tribal">Conflito Tribal</option>
+                        <option value="survival">Sobrevivência</option>
+                    </select>
+                </div>
+                
+                <div class="setting-group">
+                    <label>Cenário:</label>
+                    <select id="aiSettingSelect">
+                        <option value="amazon">Amazônia</option>
+                        <option value="urban">Cidade</option>
+                        <option value="umbral">Umbral</option>
+                        <option value="caern">Caern Antigo</option>
+                    </select>
+                </div>
+                
+                <div class="setting-group">
+                    <label>Complexidade:</label>
+                    <div class="slider-container">
+                        <input type="range" id="aiComplexity" min="1" max="5" value="3">
+                        <div class="slider-labels">
+                            <span>Simples</span>
+                            <span>Média</span>
+                            <span>Complexa</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="btn-ai-start" id="startAIGameBtn">
+                    <i class="fas fa-play-circle"></i> Iniciar Jogo
+                </button>
+            </div>
+
+            <!-- Chat com a IA -->
+            <div class="ai-chat-panel">
+                <div class="ai-chat-header">
+                    <div class="ai-character">
+                        <div class="ai-avatar">
+                            <i class="fas fa-paw"></i>
+                        </div>
+                        <div class="ai-info">
+                            <h4>Narrador IA</h4>
+                            <span class="ai-mood" id="aiMood">Primal</span>
+                        </div>
+                    </div>
+                    <div class="ai-controls">
+                        <button class="ai-control-btn" title="Limpar conversa">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        <button class="ai-control-btn" title="Salvar sessão">
+                            <i class="fas fa-save"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="ai-chat-messages" id="aiChatMessages">
+                    <!-- Mensagens da IA aparecem aqui -->
+                    <div class="ai-message">
+                        <div class="message-content">
+                            <p>"A floresta respira ao seu redor. O cheiro de terra molhada e sangue fresco enche seus pulmões. Sua fúria desperta. Gaia chama seus filhos. Qual é seu primeiro uivo?"</p>
+                        </div>
+                        <div class="message-timestamp">
+                            <i class="fas fa-clock"></i> Agora
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="ai-chat-input">
+                    <div class="input-options">
+                        <select id="actionTypeSelect">
                             <option value="hunt">Caçar</option>
+                            <option value="investigate">Investigar</option>
                             <option value="ritual">Ritual</option>
                             <option value="gift">Usar Dom</option>
-                            <option value="investigate">Investigar</option>
-                            <option value="spirit">Interagir com Espírito</option>
+                            <option value="transform">Transformar</option>
                         </select>
                         
-                        <div class="mood-selector">
-                            <label>Tom:</label>
-                            <select id="werewolf-mood">
-                                <option value="primal">Primal/Animal</option>
-                                <option value="spiritual">Espiritual/Místico</option>
-                                <option value="epic">Épico/Bélico</option>
-                                <option value="tragic">Trágico/Heroico</option>
-                            </select>
-                        </div>
+                        <button class="dice-quick-btn" id="quickDiceBtn" title="Rolar dados">
+                            <i class="fas fa-dice-d10"></i>
+                        </button>
                     </div>
                     
                     <textarea 
-                        id="werewolf-player-input" 
+                        id="aiPlayerInput" 
                         placeholder="Descreva sua ação como Garou..."
                         rows="3"
                     ></textarea>
                     
                     <div class="input-actions">
-                        <button class="btn-werewolf" onclick="sendWerewolfAction()">
-                            <i class="fas fa-paper-plane"></i> Enviar Ação
+                        <button class="btn-send" id="sendAIMessageBtn">
+                            <i class="fas fa-paper-plane"></i> Enviar
                         </button>
-                        <button class="btn-werewolf" onclick="rollWerewolfAIAction()">
-                            <i class="fas fa-dice-d10"></i> Rolar + Enviar
+                        <button class="btn-send btn-send-secondary" id="generateActionBtn">
+                            <i class="fas fa-magic"></i> Sugerir Ação
                         </button>
                     </div>
                 </div>
-            </div>
-            
-            <div class="ai-settings">
-                <h3><i class="fas fa-cog"></i> Configurar Narrador IA</h3>
-                
-                <div class="setting-group">
-                    <label>Estilo Narrativo:</label>
-                    <select id="ai-narrative-style">
-                        <option value="primal">Primal (Rudyard Kipling)</option>
-                        <option value="spiritual">Espiritual (Xamanismo)</option>
-                        <option value="epic">Épico (Mitologia Nórdica)</option>
-                        <option value="ecological">Ecológico (David Attenborough)</option>
-                    </select>
-                </div>
-                
-                <div class="setting-group">
-                    <label>Foco da Crônica:</label>
-                    <select id="ai-chronicle-focus">
-                        <option value="wyrm">Caça à Wyrm</option>
-                        <option value="spiritual">Jornada Espiritual</option>
-                        <option value="tribal">Conflitos Tribais</option>
-                        <option value="ecological">Defesa Ecológica</option>
-                    </select>
-                </div>
-                
-                <div class="setting-group">
-                    <label>Região:</label>
-                    <select id="ai-region">
-                        <option value="amazonia">Amazônia</option>
-                        <option value="cerrado">Cerrado</option>
-                        <option value="atlantic-forest">Mata Atlântica</option>
-                        <option value="pantanal">Pantanal</option>
-                        <option value="urban">Área Urbana</option>
-                        <option value="custom">Personalizada</option>
-                    </select>
-                </div>
-                
-                <div class="setting-group">
-                    <label>Complexidade da IA:</label>
-                    <div class="slider-container">
-                        <input type="range" id="ai-complexity" min="1" max="5" value="3">
-                        <div class="slider-labels">
-                            <span>Simples</span>
-                            <span>Médio</span>
-                            <span>Complexo</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <button class="btn-werewolf btn-large" onclick="startWerewolfAIGame()">
-                    <i class="fas fa-play-circle"></i> Iniciar Jogo com IA
-                </button>
-            </div>
-        </div>
-        
-        <div class="ai-features">
-            <div class="ai-feature">
-                <i class="fas fa-brain"></i>
-                <h4>Memória Espiritual</h4>
-                <p>Lembra de espíritos, locais sagrados e eventos</p>
-            </div>
-            <div class="ai-feature">
-                <i class="fas fa-dice-d10"></i>
-                <h4>Rolagem Automática</h4>
-                <p>Calcula dados e interpreta resultados</p>
-            </div>
-            <div class="ai-feature">
-                <i class="fas fa-paw"></i>
-                <h4>NPCs Dinâmicos</h4>
-                <p>Cada espírito e Garou tem motivações únicas</p>
-            </div>
-            <div class="ai-feature">
-                <i class="fas fa-book"></i>
-                <h4>Lore Integrado</h4>
-                <p>Conhece todo o cânone de Lobisomem</p>
             </div>
         </div>
     </section>
 
-    <!-- Rodapé Garou -->
-    <footer class="werewolf-footer">
-        <div class="footer-content">
+    <!-- Rodapé -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            <!-- Informações -->
             <div class="footer-section">
-                <h3><i class="fas fa-paw"></i> Lobisomem: A Idade das Trevas</h3>
-                <p>O jogo de RPG de fúria e espiritualidade</p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-discord"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-reddit"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
+                <div class="footer-logo">
+                    <i class="fas fa-paw"></i>
+                    <h3>Lobisomem: A Idade das Trevas</h3>
+                </div>
+                <p class="footer-description">
+                    Uma plataforma dedicada ao RPG de Lobisomem: A Idade das Trevas.
+                    Junte-se à guerra por Gaia.
+                </p>
+                <div class="footer-social">
+                    <a href="#" class="social-link"><i class="fab fa-discord"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-reddit"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
                 </div>
             </div>
-            
+
+            <!-- Links Rápidos -->
+            <div class="footer-section">
+                <h4>Jogo</h4>
+                <ul class="footer-links">
+                    <li><a href="#hunts">Caçadas</a></li>
+                    <li><a href="#characters">Personagens</a></li>
+                    <li><a href="#tools">Ferramentas</a></li>
+                    <li><a href="#lore">Lore</a></li>
+                    <li><a href="#ai-narrator">Narrador IA</a></li>
+                </ul>
+            </div>
+
+            <!-- Recursos -->
             <div class="footer-section">
                 <h4>Recursos</h4>
-                <ul>
-                    <li><a href="#" onclick="openRulebook()">Livro de Regras W20</a></li>
-                    <li><a href="#" onclick="openTribeGuide()">Guia de Tribos</a></li>
-                    <li><a href="#" onclick="openGifts()">Lista de Dons</a></li>
-                    <li><a href="#" onclick="openCaerns()">Caerns e Locais Sagrados</a></li>
-                    <li><a href="#" onclick="openMoots()">Rituais e Concílios</a></li>
+                <ul class="footer-links">
+                    <li><a href="#">Livro de Regras</a></li>
+                    <li><a href="#">Guia de Tribos</a></li>
+                    <li><a href="#">Lista de Dons</a></li>
+                    <li><a href="#">Mapa de Caerns</a></li>
+                    <li><a href="#">Fichas Prontas</a></li>
                 </ul>
             </div>
-            
-            <div class="footer-section">
-                <h4>Comunidade</h4>
-                <ul>
-                    <li><a href="#">Fórum de Discussão</a></li>
-                    <li><a href="#">Torneios de Caçadas</a></li>
-                    <li><a href="#">Concurso de Packs</a></li>
-                    <li><a href="#">Eventos ao Vivo</a></li>
-                    <li><a href="#">Mentores</a></li>
-                </ul>
-            </div>
-            
+
+            <!-- Apoio -->
             <div class="footer-section">
                 <h4>Apoio</h4>
-                <ul>
+                <ul class="footer-links">
                     <li><a href="#">Central de Ajuda</a></li>
-                    <li><a href="#">Reportar Bug</a></li>
-                    <li><a href="#">Sugerir Melhorias</a></li>
+                    <li><a href="#">Reportar Problema</a></li>
+                    <li><a href="#">Sugerir Melhoria</a></li>
+                    <li><a href="#">FAQ</a></li>
                     <li><a href="#">Contato</a></li>
-                    <li><a href="#">Status do Servidor</a></li>
                 </ul>
             </div>
         </div>
-        
+
+        <!-- Rodapé Inferior -->
         <div class="footer-bottom">
-            <p>© 2024 Lobisomem: A Idade das Trevas RPG Platform. Lobisomem: A Idade das Trevas é uma marca registrada da White Wolf Publishing AB.</p>
-            <p class="disclaimer">Este é um projeto de fãs não oficial. Não afiliado à White Wolf ou Paradox Interactive.</p>
-            <div class="moon-phase">
-                <span id="current-moon">🌕 Lua Cheia</span>
-                <span class="moon-timer">Próxima lua cheia: 14 dias</span>
+            <div class="footer-info">
+                <p>&copy; 2024 Lobisomem: A Idade das Trevas RPG Platform</p>
+                <p class="disclaimer">
+                    Lobisomem: A Idade das Trevas é uma marca registrada da White Wolf Publishing AB.
+                    Este é um projeto de fãs não oficial.
+                </p>
+            </div>
+            
+            <div class="footer-moon">
+                <div class="moon-status">
+                    <span class="moon-icon" id="footerMoonIcon">🌕</span>
+                    <span class="moon-text" id="footerMoonText">Lua Cheia</span>
+                </div>
+                <div class="moon-timer">
+                    <i class="fas fa-clock"></i>
+                    <span id="nextFullMoon">Próxima cheia: 14 dias</span>
+                </div>
             </div>
         </div>
     </footer>
 
-    <!-- Scripts Garou -->
-    <script src="js/app.js"></script>
-    <script src="js/ai-narrator.js"></script>
-    <script src="js/dice-roller.js"></script>
-    <script src="js/ambience-system.js"></script>
+    <!-- Modal de Login -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Abraçar Gaia</h3>
+                <button class="modal-close" id="closeLoginModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Conteúdo do modal de login -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Notificações -->
+    <div class="notifications-container" id="notificationsContainer"></div>
+
+    <!-- Scripts -->
+    <script src="js/werewolf-app.js"></script>
+    <script src="js/werewolf-audio.js"></script>
+    <script src="js/werewolf-dice.js"></script>
+    <script src="js/werewolf-characters.js"></script>
     
+    <!-- Inicialização -->
     <script>
-        // ============================================
-        // DADOS ESPECÍFICOS PARA LOBISOMEM
-        // ============================================
-        
-        const werewolfData = {
-            tribes: {
-                shadowlords: {
-                    name: "Lords das Sombras",
-                    nicknames: ["Os Senhores", "Os Estrategistas"],
-                    auspice: "Ahroun",
-                    breed: "Homid",
-                    gifts: ["Liderança", "Furtividade", "Dominação"],
-                    totem: "Grifo",
-                    description: "Líderes natos e estrategistas implacáveis.",
-                    color: "#2F4F4F"
-                },
-                getoffenris: {
-                    name: "Get of Fenris",
-                    nicknames: ["Os Guerreiros", "Os Tradicionalistas"],
-                    auspice: "Ahroun",
-                    breed: "Homid/Lupus",
-                    gifts: ["Fúria", "Combate", "Resistência"],
-                    totem: "Fenris",
-                    description: "Guerreiros ferozes que valorizam honra acima de tudo.",
-                    color: "#8B0000"
-                },
-                glasswalkers: {
-                    name: "Andarilhos Urbanos",
-                    nicknames: ["Os Urbanos", "Os Tecnólogos"],
-                    auspice: "Ragabash",
-                    breed: "Homid",
-                    gifts: ["Tecnologia", "Adaptação", "Engenharia"],
-                    totem: "Aranha",
-                    description: "Mestres da cidade e da tecnologia.",
-                    color: "#4682B4"
-                },
-                blackfuries: {
-                    name: "Fúrias Negras",
-                    nicknames: ["As Matriarcas", "As Protetoras"],
-                    auspice: "Galliard",
-                    breed: "Homid/Metis",
-                    gifts: ["Natureza", "Cura", "Proteção"],
-                    totem: "Pegasus",
-                    description: "Matriarcas protetoras da natureza.",
-                    color: "#4B0082"
-                },
-                silverfangs: {
-                    name: "Presas de Prata",
-                    nicknames: ["A Realeza", "Os Nobres"],
-                    auspice: "Philodox",
-                    breed: "Homid",
-                    gifts: ["Liderança", "Diplomacia", "Nobreza"],
-                    totem: "Falcão",
-                    description: "A realeza Garou, liderança por direito de sangue.",
-                    color: "#C0C0C0"
-                },
-                bonegnawers: {
-                    name: "Roe Ossos",
-                    nicknames: ["Os Sobreviventes", "Os Marginalizados"],
-                    auspice: "Ragabash",
-                    breed: "Homid",
-                    gifts: ["Sobrevivência", "Furtividade", "Reciclagem"],
-                    totem: "Rato",
-                    description: "Mestres em viver com pouco e sobreviver a tudo.",
-                    color: "#8B4513"
-                },
-                redtalons: {
-                    name: "Garras Vermelhas",
-                    nicknames: ["Os Bestiais", "Os Puristas"],
-                    auspice: "Ahroun",
-                    breed: "Lupus",
-                    gifts: ["Ferradura", "Caça", "Instinto"],
-                    totem: "Lobo",
-                    description: "Os mais bestiais, acreditam que a humanidade é a praga.",
-                    color: "#DC143C"
-                },
-                stargazers: {
-                    name: "Observadores das Estrelas",
-                    nicknames: ["Os Filósofos", "Os Místicos"],
-                    auspice: "Theurge",
-                    breed: "Homid/Lupus",
-                    gifts: ["Meditação", "Visão", "Equilíbrio"],
-                    totem: "Coruja",
-                    description: "Buscam equilíbrio e iluminação espiritual.",
-                    color: "#4169E1"
-                }
-            },
+        // Inicializar aplicação quando o DOM estiver pronto
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inicializar módulos
+            if (typeof WerewolfApp !== 'undefined') {
+                WerewolfApp.init();
+            }
             
-            auspices: {
-                ragabash: {
-                    name: "Ragabash",
-                    moon: "Lua Nova",
-                    role: "Trapaceiro, Inovador, Desafiador",
-                    gifts: ["Furtividade", "Engano", "Percepção"],
-                    color: "#8A2BE2"
-                },
-                theurge: {
-                    name: "Theurge",
-                    moon: "Lua Crescente",
-                    role: "Xamã, Médico Espiritual, Comunicador",
-                    gifts: ["Espiritualidade", "Cura", "Visão"],
-                    color: "#4682B4"
-                },
-                philodox: {
-                    name: "Philodox",
-                    moon: "Meia Lua",
-                    role: "Juiz, Diplomata, Guardião da Tradição",
-                    gifts: ["Sabedoria", "Justiça", "Liderança"],
-                    color: "#32CD32"
-                },
-                galliard: {
-                    name: "Galliard",
-                    moon: "Lua Gibosa",
-                    role: "Bardista, Historiador, Inspirador",
-                    gifts: ["Performance", "Memória", "Inspiração"],
-                    color: "#FFD700"
-                },
-                ahroun: {
-                    name: "Ahroun",
-                    moon: "Lua Cheia",
-                    role: "Guerreiro, Herói, Protetor",
-                    gifts: ["Combate", "Fúria", "Proteção"],
-                    color: "#DC143C"
-                }
-            },
+            if (typeof WerewolfAudio !== 'undefined') {
+                WerewolfAudio.init();
+            }
             
-            breeds: {
-                homid: {
-                    name: "Homid",
-                    description: "Nascido entre humanos, criado na sociedade humana.",
-                    startingTraits: {
-                        willpower: 3,
-                        rage: 1,
-                        gnosis: 1
-                    }
-                },
-                metis: {
-                    name: "Metis",
-                    description: "Filho de dois Garous, nascido deformado mas poderoso.",
-                    startingTraits: {
-                        willpower: 4,
-                        rage: 2,
-                        gnosis: 2
-                    }
-                },
-                lupus: {
-                    name: "Lupus",
-                    description: "Nascido como lobo, criado na natureza.",
-                    startingTraits: {
-                        willpower: 3,
-                        rage: 3,
-                        gnosis: 1
-                    }
-                }
-            },
+            if (typeof WerewolfDice !== 'undefined') {
+                WerewolfDice.init();
+            }
             
-            forms: {
-                homid: {
-                    name: "Homid",
-                    description: "Forma humana, socialmente aceita.",
-                    modifiers: {
-                        strength: 0,
-                        dexterity: 0,
-                        stamina: 0,
-                        manipulation: 0,
-                        appearance: 0
-                    }
-                },
-                glabro: {
-                    name: "Glabro",
-                    description: "Quase-humano, musculatura exagerada.",
-                    modifiers: {
-                        strength: 2,
-                        dexterity: 0,
-                        stamina: 2,
-                        manipulation: -1,
-                        appearance: -1
-                    }
-                },
-                crinos: {
-                    name: "Crinos",
-                    description: "Forma de guerra, a mais temida.",
-                    modifiers: {
-                        strength: 3,
-                        dexterity: 1,
-                        stamina: 4,
-                        manipulation: -3,
-                        appearance: -3
-                    }
-                },
-                hispo: {
-                    name: "Hispo",
-                    description: "Lobo gigante, feroz e ágil.",
-                    modifiers: {
-                        strength: 2,
-                        dexterity: 3,
-                        stamina: 3,
-                        manipulation: -4,
-                        appearance: -4
-                    }
-                },
-                lupus: {
-                    name: "Lupus",
-                    description: "Lobo verdadeiro, totalmente animal.",
-                    modifiers: {
-                        strength: 1,
-                        dexterity: 2,
-                        stamina: 3,
-                        manipulation: -4,
-                        appearance: -4
-                    }
-                }
-            },
-            
-            // Sistema de áudio
-            audioSystem: null
-        };
-        
-        // ============================================
-        // FUNÇÕES PRINCIPAIS
-        // ============================================
-        
-        // Inicialização da página
-        document.addEventListener('DOMContentLoaded', async function() {
-            console.log('🐺 Inicializando sistema Lobisomem: A Idade das Trevas');
-            
-            // Carregar caçadas
-            loadChronicles();
-            
-            // Carregar tribos
-            loadTribes();
-            
-            // Inicializar sistema de áudio
-            await initializeAudioSystem();
-            
-            // Inicializar mapa de caerns
-            initializeCaernMap();
-            
-            // Atualizar contador da lua
-            updateMoonPhase();
-            
-            // Inicializar tabs de lore
-            initializeLoreTabs();
-            
-            console.log('✅ Sistema Lobisomem inicializado');
+            if (typeof WerewolfCharacters !== 'undefined') {
+                WerewolfCharacters.init();
+            }
         });
-        
-        // ============================================
-        // SISTEMA DE ÁUDIO
-        // ============================================
-        
-        async function initializeAudioSystem() {
-            try {
-                // Verificar se o sistema de áudio já foi carregado
-                if (typeof RPGAmbienceSystem !== 'undefined') {
-                    werewolfData.audioSystem = await RPGAmbienceSystem.create({
-                        volume: 0.7,
-                        crossfadeDuration: 3000,
-                        enable3DAudio: false,
-                        autoplay: true
-                    });
-                    
-                    console.log('🎵 Sistema de áudio Garou inicializado');
-                    
-                    // Configurar eventos de áudio
-                    setupAudioEvents();
-                    
-                    // Tocar música inicial
-                    setTimeout(() => {
-                        if (werewolfData.audioSystem) {
-                            werewolfData.audioSystem.playBackgroundMusic('werewolf', 'primal');
-                        }
-                    }, 2000);
-                }
-            } catch (error) {
-                console.error('❌ Erro ao inicializar sistema de áudio:', error);
-            }
-        }
-        
-        function setupAudioEvents() {
-            if (!werewolfData.audioSystem) return;
-            
-            // Eventos de música
-            werewolfData.audioSystem.addEventListener('musicChanged', (e) => {
-                console.log('🎵 Música alterada:', e.detail.track.name);
-            });
-            
-            // Eventos de efeitos
-            werewolfData.audioSystem.addEventListener('effectPlayed', (e) => {
-                console.log('🔊 Efeito tocado:', e.detail.effect.name);
-            });
-            
-            // Eventos de mood
-            werewolfData.audioSystem.addEventListener('moodChanged', (e) => {
-                console.log('🌙 Mood alterado:', e.detail.mood);
-            });
-        }
-        
-        // ============================================
-        // FUNÇÕES DE CAÇADAS (CHRONICLES)
-        // ============================================
-        
-        function loadChronicles() {
-            const grid = document.getElementById('chronicles-grid');
-            const loading = document.getElementById('chronicles-loading');
-            
-            if (!grid) return;
-            
-            // Simular carregamento
-            setTimeout(() => {
-                const chronicles = generateChronicles();
-                grid.innerHTML = chronicles;
-                
-                if (loading) {
-                    loading.style.display = 'none';
-                }
-            }, 1000);
-        }
-        
-        function generateChronicles() {
-            const chronicles = [
-                {
-                    id: 1,
-                    title: "Defensores da Amazônia: O Sangue da Wyrm",
-                    tribes: ["shadowlords", "blackfuries"],
-                    tags: ["featured", "epic"],
-                    description: "Uma caçada épica na Amazônia brasileira. O Pack deve proteger um antigo Caern da corrupção da Wyrm enquanto corporações avançam sobre a floresta.",
-                    stats: {
-                        players: "4/5",
-                        sessions: "12",
-                        rage: "92%",
-                        harano: "2"
-                    }
-                },
-                {
-                    id: 2,
-                    title: "Urban Shadows: A Batalha de São Paulo",
-                    tribes: ["glasswalkers", "bonegnawers"],
-                    tags: ["urban"],
-                    description: "Uma guerra nas sombras de São Paulo. O Pack urbano luta contra espíritos poluídos e corporações controladas pela Wyrm.",
-                    stats: {
-                        players: "3/5",
-                        sessions: "8",
-                        rage: "85%",
-                        harano: "1"
-                    }
-                },
-                {
-                    id: 3,
-                    title: "Ritual da Lua Cheia",
-                    tribes: ["silverfangs", "stargazers"],
-                    tags: ["ritual"],
-                    description: "Um ritual ancestral sob a lua cheia para fortalecer um Caern moribundo. Envolve negociações com espíritos antigos.",
-                    stats: {
-                        players: "2/3",
-                        sessions: "6",
-                        rage: "70%",
-                        harano: "0"
-                    }
-                },
-                {
-                    id: 4,
-                    title: "A Primeira Mudança (Oneshot IA)",
-                    tribes: ["getoffenris", "redtalons"],
-                    tags: ["ai", "oneshot"],
-                    description: "Viva sua Primeira Mudança. Um Garou recém-descoberto deve sobreviver à sua transformação e primeira caçada.",
-                    stats: {
-                        players: "1/3",
-                        sessions: "1",
-                        rage: "100%",
-                        harano: "0"
-                    }
-                }
-            ];
-            
-            return chronicles.map(chronicle => createChronicleCard(chronicle)).join('');
-        }
-        
-        function createChronicleCard(chronicle) {
-            const isFeatured = chronicle.tags.includes('featured');
-            const isAI = chronicle.tags.includes('ai');
-            
-            return `
-                <div class="session-card werewolf-session-card ${isFeatured ? 'featured' : ''}">
-                    ${isFeatured ? `
-                        <div class="session-badge">
-                            <i class="fas fa-crown"></i> Destaque
-                        </div>
-                    ` : ''}
-                    
-                    ${isAI ? `
-                        <div class="session-badge ai-badge">
-                            <i class="fas fa-robot"></i> IA Narradora
-                        </div>
-                    ` : ''}
-                    
-                    <div class="session-header">
-                        <div class="session-title">
-                            <h3>"${chronicle.title}"</h3>
-                            <div class="session-tags">
-                                ${chronicle.tribes.map(tribe => `
-                                    <span class="tribe-badge tribe-${tribe}">${werewolfData.tribes[tribe].name}</span>
-                                `).join('')}
-                                <span class="renown-badge renown-glory">Alta Glória</span>
-                            </div>
-                        </div>
-                        
-                        <div class="session-gm">
-                            <div class="gm-avatar">
-                                <img src="assets/avatars/${chronicle.tribes[0]}.png" alt="${werewolfData.tribes[chronicle.tribes[0]].name}">
-                                <span class="gm-status ${isAI ? 'ai' : 'online'}"></span>
-                            </div>
-                            <div class="gm-info">
-                                <span class="gm-name">${isAI ? 'Narrador IA Primal' : 'Ancião ' + werewolfData.tribes[chronicle.tribes[0]].name.split(' ')[0]}</span>
-                                <span class="gm-rating">${isAI ? '🤖 IA Avançada' : '⭐ 4.8 (42 reviews)'}</span>
-                                <span class="gm-tribe tribe-${chronicle.tribes[0]}">${werewolfData.tribes[chronicle.tribes[0]].name}</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="session-description">
-                        <p>${chronicle.description}</p>
-                        
-                        <div class="session-setting">
-                            <i class="fas fa-${chronicle.tags.includes('urban') ? 'city' : 'tree'}"></i>
-                            <strong>Cenário:</strong> ${chronicle.tags.includes('urban') ? 'São Paulo, Centro e Periferias' : 'Amazônia Profunda, Caern Antigo'}
-                        </div>
-                        
-                        ${chronicle.tags.includes('featured') ? `
-                            <div class="session-theme">
-                                <i class="fas fa-theater-masks"></i>
-                                <strong>Temas:</strong> Espiritualidade, Ecologia, Combate Épico, Sacrifício
-                            </div>
-                        ` : ''}
-                    </div>
-                    
-                    <div class="session-stats">
-                        <div class="stat">
-                            <i class="fas fa-users"></i>
-                            <div>
-                                <span class="stat-value">${chronicle.stats.players}</span>
-                                <span class="stat-label">Garou</span>
-                            </div>
-                        </div>
-                        
-                        <div class="stat">
-                            <i class="fas fa-clock"></i>
-                            <div>
-                                <span class="stat-value">${chronicle.stats.sessions}</span>
-                                <span class="stat-label">Sessões</span>
-                            </div>
-                        </div>
-                        
-                        <div class="stat">
-                            <i class="fas fa-fire"></i>
-                            <div>
-                                <span class="stat-value">${chronicle.stats.rage}</span>
-                                <span class="stat-label">Fúria Desperta</span>
-                            </div>
-                        </div>
-                        
-                        <div class="stat">
-                            <i class="fas fa-skull-crossbones"></i>
-                            <div>
-                                <span class="stat-value">${chronicle.stats.harano}</span>
-                                <span class="stat-label">Harano</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    ${chronicle.tags.includes('featured') ? `
-                        <div class="session-spirits">
-                            <h4><i class="fas fa-ghost"></i> Espíritos Envolvidos:</h4>
-                            <div class="spirit-list">
-                                <span class="spirit-tag">Espírito da Floresta</span>
-                                <span class="spirit-tag">Wyrm Corruptor</span>
-                                <span class="spirit-tag">Totem: Jaguar</span>
-                            </div>
-                        </div>
-                    ` : ''}
-                    
-                    <div class="session-actions">
-                        <button class="btn-werewolf" onclick="joinChronicle(${chronicle.id})">
-                            ${isAI ? '<i class="fas fa-play"></i> Iniciar Primeira Mudança' : '<i class="fas fa-door-open"></i> Juntar-se à Caçada'}
-                        </button>
-                        <button class="btn-werewolf btn-outline" onclick="spectateChronicle(${chronicle.id})">
-                            <i class="fas fa-eye"></i> Espiar (15)
-                        </button>
-                    </div>
-                </div>
-            `;
-        }
-        
-        function filterChronicles() {
-            const filter = document.getElementById('chronicle-filter').value;
-            const region = document.getElementById('region-filter').value;
-            const tribe = document.getElementById('tribe-filter').value;
-            
-            console.log('Filtrando caçadas:', { filter, region, tribe });
-            
-            // Aqui você implementaria a filtragem real
-            // Por enquanto, apenas mostra uma mensagem
-            showNotification('Filtros aplicados com sucesso!', 'success');
-        }
-        
-        function searchChronicles() {
-            showNotification('Buscando caçadas...', 'info');
-        }
-        
-        // ============================================
-        // FUNÇÕES DE CRIAÇÃO DE PERSONAGEM
-        // ============================================
-        
-        function loadTribes() {
-            const grid = document.getElementById('tribes-grid');
-            if (!grid) return;
-            
-            let html = '';
-            
-            Object.entries(werewolfData.tribes).forEach(([key, tribe]) => {
-                html += `
-                    <div class="tribe-card" data-tribe="${key}" onclick="selectTribe('${key}')">
-                        <div class="tribe-icon" style="background: ${tribe.color}">
-                            <i class="fas fa-${getTribeIcon(key)}"></i>
-                        </div>
-                        <div class="tribe-info">
-                            <h4 class="tribe-name">${tribe.name}</h4>
-                            <p class="tribe-description">${tribe.description}</p>
-                            <div class="tribe-gifts">
-                                ${tribe.gifts.map(gift => `
-                                    <span class="gift-badge">${gift}</span>
-                                `).join('')}
-                            </div>
-                            <div class="tribe-totem">
-                                <small><strong>Totem:</strong> ${tribe.totem}</small>
-                            </div>
-                        </div>
-                        <div class="tribe-select">
-                            <i class="fas fa-check-circle"></i>
-                        </div>
-                    </div>
-                `;
-            });
-            
-            grid.innerHTML = html;
-        }
-        
-        function getTribeIcon(tribeKey) {
-            const icons = {
-                shadowlords: 'crown',
-                getoffenris: 'fist-raised',
-                glasswalkers: 'city',
-                blackfuries: 'female',
-                silverfangs: 'crown',
-                bonegnawers: 'utensils',
-                redtalons: 'paw',
-                stargazers: 'star'
-            };
-            
-            return icons[tribeKey] || 'users';
-        }
-        
-        let selectedTribe = null;
-        
-        function selectTribe(tribeKey) {
-            selectedTribe = tribeKey;
-            
-            // Remover seleção anterior
-            document.querySelectorAll('.tribe-card').forEach(card => {
-                card.classList.remove('selected');
-            });
-            
-            // Adicionar seleção atual
-            const selectedCard = document.querySelector(`.tribe-card[data-tribe="${tribeKey}"]`);
-            if (selectedCard) {
-                selectedCard.classList.add('selected');
-            }
-            
-            // Atualizar passo
-            updateCreationStep(2);
-            
-            showNotification(`Tribo selecionada: ${werewolfData.tribes[tribeKey].name}`, 'success');
-        }
-        
-        function updateCreationStep(step) {
-            document.querySelectorAll('.flow-step').forEach(stepEl => {
-                stepEl.classList.remove('active');
-            });
-            
-            const currentStep = document.querySelector(`.flow-step[data-step="${step}"]`);
-            if (currentStep) {
-                currentStep.classList.add('active');
-            }
-        }
-        
-        function startWerewolfCreation() {
-            if (!selectedTribe) {
-                showNotification('Selecione uma tribo primeiro!', 'error');
-                return;
-            }
-            
-            window.location.href = `character-creator.html?system=werewolf&tribe=${selectedTribe}`;
-        }
-        
-        function openWerewolfTemplates() {
-            showNotification('Abrindo templates de personagens...', 'info');
-        }
-        
-        function importWerewolfCharacter() {
-            showNotification('Importando ficha de personagem...', 'info');
-        }
-        
-        // ============================================
-        // FUNÇÕES DE FERRAMENTAS
-        // ============================================
-        
-        let dicePool = 6;
-        
-        function adjustPool(amount) {
-            dicePool = Math.max(1, Math.min(20, dicePool + amount));
-            document.getElementById('pool-count').textContent = dicePool;
-        }
-        
-        function rollWerewolfPool() {
-            const difficulty = parseInt(document.getElementById('difficulty-select').value);
-            const hasSpecialty = document.getElementById('specialty-check').checked;
-            const hasRage = document.getElementById('rage-check').checked;
-            
-            let successes = 0;
-            let rolls = [];
-            let specialCount = 0;
-            
-            // Rolar os dados
-            for (let i = 0; i < dicePool; i++) {
-                const roll = Math.floor(Math.random() * 10) + 1;
-                rolls.push(roll);
-                
-                // Contar sucessos
-                if (roll >= difficulty) {
-                    successes++;
-                    if (roll === 10) {
-                        specialCount++;
-                    }
-                } else if (roll === 1) {
-                    specialCount--;
-                }
-            }
-            
-            // Aplicar bônus
-            if (hasSpecialty && successes > 0) {
-                const specialtyRoll = Math.floor(Math.random() * 10) + 1;
-                rolls.push(`Especialidade: ${specialtyRoll}`);
-                if (specialtyRoll >= difficulty) {
-                    successes++;
-                    if (specialtyRoll === 10) {
-                        specialCount++;
-                    }
-                }
-            }
-            
-            if (hasRage) {
-                successes = Math.min(successes * 2, dicePool * 2);
-            }
-            
-            // Aplicar especiais
-            successes = Math.max(0, successes + specialCount);
-            
-            // Mostrar resultado
-            const resultDiv = document.getElementById('werewolf-roll-result');
-            let resultHTML = `
-                <div class="werewolf-roll-result">
-                    <h4><i class="fas fa-dice"></i> Resultado da Rolagem</h4>
-                    <div class="roll-details">
-                        <p><strong>Dados:</strong> ${dicePool} <strong>Dificuldade:</strong> ${difficulty}</p>
-                        <p><strong>Rolagens:</strong> ${rolls.join(', ')}</p>
-                        <p><strong>Sucessos:</strong> <span class="success-count">${successes}</span></p>
-                        ${specialCount !== 0 ? `<p><strong>Especiais:</strong> ${specialCount > 0 ? '+' : ''}${specialCount}</p>` : ''}
-                    </div>
-                    <div class="roll-interpretation">
-                        <p><strong>Interpretação:</strong> ${getRollInterpretation(successes)}</p>
-                    </div>
-                </div>
-            `;
-            
-            resultDiv.innerHTML = resultHTML;
-            
-            // Tocar som de dados
-            if (werewolfData.audioSystem) {
-                werewolfData.audioSystem.playSoundEffect('dice_roll', { volume: 0.5 });
-            }
-        }
-        
-        function getRollInterpretation(successes) {
-            if (successes <= 0) return "Falha catastrófica! O personagem falha miseravelmente.";
-            if (successes <= 1) return "Falha simples. O personagem não consegue realizar a ação.";
-            if (successes <= 2) return "Sucesso marginal. Consegue, mas com complicações.";
-            if (successes <= 4) return "Sucesso. Ação realizada com competência.";
-            if (successes <= 6) return "Sucesso notável. Resultado acima do esperado.";
-            return "Sucesso espetacular! Resultado impressionante com benefícios extras.";
-        }
-        
-        function generateWerewolfNPC() {
-            const type = document.getElementById('npc-type').value;
-            const rank = document.getElementById('npc-rank').value;
-            
-            const npc = createNPC(type, rank);
-            const preview = document.getElementById('npc-preview');
-            
-            preview.innerHTML = `
-                <div class="npc-display">
-                    <h4><i class="fas fa-${type === 'garou' ? 'paw' : 'ghost'}"></i> ${npc.name}</h4>
-                    <p><strong>Tipo:</strong> ${npc.type}</p>
-                    ${npc.tribe ? `<p><strong>Tribo:</strong> ${npc.tribe}</p>` : ''}
-                    ${npc.auspice ? `<p><strong>Auspício:</strong> ${npc.auspice}</p>` : ''}
-                    ${npc.rank ? `<p><strong>Patente:</strong> ${npc.rank}</p>` : ''}
-                    <p><strong>Descrição:</strong> ${npc.description}</p>
-                    <div class="npc-stats">
-                        ${npc.stats ? `
-                            <p><strong>Atributos:</strong> ${npc.stats.physical.join('/')} ${npc.stats.social.join('/')} ${npc.stats.mental.join('/')}</p>
-                            <p><strong>Fúria:</strong> ${npc.stats.rage} <strong>Gnosis:</strong> ${npc.stats.gnosis} <strong>Força de Vontade:</strong> ${npc.stats.willpower}</p>
-                        ` : ''}
-                    </div>
-                </div>
-            `;
-        }
-        
-        function updateNPCOptions() {
-            const type = document.getElementById('npc-type').value;
-            const rankSelect = document.getElementById('npc-rank');
-            
-            if (type === 'garou') {
-                rankSelect.style.display = 'block';
-            } else {
-                rankSelect.style.display = 'none';
-            }
-        }
-        
-        function createNPC(type, rank = 'cliate') {
-            const tribes = Object.keys(werewolfData.tribes);
-            const auspices = Object.keys(werewolfData.auspices);
-            const breeds = Object.keys(werewolfData.breeds);
-            
-            const randomTribe = tribes[Math.floor(Math.random() * tribes.length)];
-            const randomAuspice = auspices[Math.floor(Math.random() * auspices.length)];
-            const randomBreed = breeds[Math.floor(Math.random() * breeds.length)];
-            
-            const names = {
-                garou: ['Koga', 'Luna', 'Fenrir', 'Sasha', 'Bruno', 'Raven', 'Thor', 'Maya'],
-                spirit: ['Espírito da Floresta', 'Wyrm Corruptor', 'Totem do Lobo', 'Ancestral Antigo'],
-                kinfolk: ['Carlos Silva', 'Ana Santos', 'Pedro Oliveira', 'Maria Costa'],
-                villain: ['Dr. Corrupção', 'Industrialista', 'Caçador de Recompensas', 'Servo da Wyrm']
-            };
-            
-            const descriptions = {
-                garou: `Um ${werewolfData.tribes[randomTribe].name} ${werewolfData.auspices[randomAuspice].name}, ${werewolfData.breeds[randomBreed].description.toLowerCase()}`,
-                spirit: 'Uma entidade espiritual com objetivos misteriosos e poderes sobrenaturais.',
-                kinfolk: 'Um humano com sangue Garou, vivendo entre os dois mundos.',
-                villain: 'Uma ameaça aos Garou e à própria Gaia, servindo à corrupção.'
-            };
-            
-            return {
-                name: names[type][Math.floor(Math.random() * names[type].length)],
-                type: type === 'garou' ? 'Garou' : type === 'spirit' ? 'Espírito' : type === 'kinfolk' ? 'Kinfolk' : 'Antagonista',
-                tribe: type === 'garou' ? werewolfData.tribes[randomTribe].name : null,
-                auspice: type === 'garou' ? werewolfData.auspices[randomAuspice].name : null,
-                rank: type === 'garou' ? rank : null,
-                description: descriptions[type],
-                stats: type === 'garou' ? {
-                    physical: [3, 3, 3],
-                    social: [2, 2, 2],
-                    mental: [2, 2, 2],
-                    rage: Math.floor(Math.random() * 6) + 3,
-                    gnosis: Math.floor(Math.random() * 6) + 1,
-                    willpower: Math.floor(Math.random() * 6) + 3
-                } : null
-            };
-        }
-        
-        function calculateForm() {
-            const form = document.getElementById('form-select').value;
-            const modifiers = werewolfData.forms[form].modifiers;
-            
-            // Atualizar modificadores
-            document.getElementById('str-mod').textContent = modifiers.strength > 0 ? `+${modifiers.strength}` : modifiers.strength;
-            document.getElementById('dex-mod').textContent = modifiers.dexterity > 0 ? `+${modifiers.dexterity}` : modifiers.dexterity;
-            document.getElementById('sta-mod').textContent = modifiers.stamina > 0 ? `+${modifiers.stamina}` : modifiers.stamina;
-            
-            // Calcular totais (com valores base hipotéticos)
-            const baseStr = 3;
-            const baseDex = 3;
-            const baseSta = 3;
-            
-            const totalStr = baseStr + modifiers.strength;
-            const totalDex = baseDex + modifiers.dexterity;
-            const totalInit = totalDex + 3; // Iniciativa base + destreza
-            
-            document.getElementById('str-total').textContent = totalStr;
-            document.getElementById('init-total').textContent = totalInit;
-        }
-        
-        function initializeCaernMap() {
-            const grid = document.getElementById('caern-map-grid');
-            if (!grid) return;
-            
-            const tiles = [
-                { type: 'major', label: '🌳 Caern Maior', description: 'Um grande caern sagrado' },
-                { type: 'minor', label: '🌿 Caern Menor', description: 'Um pequeno local de poder' },
-                { type: 'lair', label: '🏠 Covil', description: 'Covil de um pack' },
-                { type: 'wyrm', label: '☠️ Infestação', description: 'Área corrupta pela Wyrm' },
-                { type: 'neutral', label: '⚖️ Neutro', description: 'Território neutro' }
-            ];
-            
-            grid.innerHTML = tiles.map(tile => `
-                <div class="map-tile" data-caern="${tile.type}" onclick="selectCaern('${tile.type}')" title="${tile.description}">
-                    ${tile.label}
-                </div>
-            `).join('');
-        }
-        
-        function selectCaern(type) {
-            showNotification(`Caern selecionado: ${type}`, 'info');
-        }
-        
-        function saveCaernMap() {
-            showNotification('Mapa de Caerns salvo com sucesso!', 'success');
-        }
-        
-        // ============================================
-        // FUNÇÕES DE LORE
-        // ============================================
-        
-        function initializeLoreTabs() {
-            const tabButtons = document.querySelectorAll('.tab-btn');
-            const tabPanes = document.querySelectorAll('.tab-pane');
-            
-            tabButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const tab = this.getAttribute('data-tab');
-                    openTab(tab);
-                });
-            });
-        }
-        
-        function openTab(tabName) {
-            // Atualizar botões
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.getAttribute('data-tab') === tabName) {
-                    btn.classList.add('active');
-                }
-            });
-            
-            // Atualizar conteúdo
-            document.querySelectorAll('.tab-pane').forEach(pane => {
-                pane.classList.remove('active');
-                if (pane.id === `tab-${tabName}`) {
-                    pane.classList.add('active');
-                }
-            });
-            
-            // Carregar conteúdo se necessário
-            loadTabContent(tabName);
-        }
-        
-        function loadTabContent(tabName) {
-            // Aqui você poderia carregar conteúdo dinâmico
-            console.log(`Carregando conteúdo da tab: ${tabName}`);
-        }
-        
-        // ============================================
-        // FUNÇÕES DE IA
-        // ============================================
-        
-        function sendWerewolfAction() {
-            const action = document.getElementById('werewolf-player-input').value;
-            const mood = document.getElementById('werewolf-mood').value;
-            const actionType = document.getElementById('werewolf-action-type').value;
-            
-            if (!action.trim()) {
-                showNotification('Digite uma ação primeiro!', 'error');
-                return;
-            }
-            
-            // Simular resposta da IA
-            const responses = {
-                hunt: [
-                    "Seus instintos guiam você através da floresta. O cheiro de presa é forte no ar. A fúria lateja em suas veias.",
-                    "A caça está próxima. Você sente cada movimento, cada som. A natureza conspira a seu favor."
-                ],
-                ritual: [
-                    "O círculo está traçado, os espíritos atendem. O Umbra responde ao seu chamado.",
-                    "A energia espiritual flui através de você. Os ancestrais sussurram segredos antigos."
-                ],
-                gift: [
-                    "Seu dom desperta. O poder ancestral flui através de seu sangue, manifestando-se no mundo físico.",
-                    "A essência Garou se manifesta. Um poder antigo responde ao seu chamado."
-                ],
-                investigate: [
-                    "Seus sentidos aguçados analisam cada detalhe. Nada escapa ao olhar de um Garou.",
-                    "O cheiro da verdade está no ar. A Wyrm pode esconder, mas nunca completamente."
-                ],
-                spirit: [
-                    "O espírito se manifesta diante de você. Sua presença é ao mesmo tempo assustadora e fascinante.",
-                    "O Umbra se abre. Uma entidade ancestral estabelece comunicação."
-                ]
-            };
-            
-            const moodResponses = {
-                primal: "A besta dentro de você resmunga de satisfação.",
-                spiritual: "Uma sensação de conexão cósmica invade seu ser.",
-                epic: "Este momento será lembrado nas canções dos Galliard.",
-                tragic: "O peso do dever Garou oprime seu coração, mas você segue em frente."
-            };
-            
-            const randomResponse = responses[actionType][Math.floor(Math.random() * responses[actionType].length)];
-            const moodResponse = moodResponses[mood];
-            
-            document.getElementById('werewolf-ai-response').textContent = 
-                `${randomResponse} ${moodResponse}`;
-            
-            // Limpar input
-            document.getElementById('werewolf-player-input').value = '';
-            
-            // Tocar som apropriado
-            if (werewolfData.audioSystem) {
-                werewolfData.audioSystem.playSoundEffect(getSoundForAction(actionType), { volume: 0.3 });
-            }
-            
-            showNotification('Ação enviada para a IA!', 'success');
-        }
-        
-        function getSoundForAction(actionType) {
-            const sounds = {
-                hunt: 'wolf_howl',
-                ritual: 'spell_cast',
-                gift: 'magic_aura',
-                investigate: 'book_close',
-                spirit: 'ancient_whisper'
-            };
-            
-            return sounds[actionType] || 'dice_roll';
-        }
-        
-        function rollWerewolfAIAction() {
-            // Primeiro rolar os dados
-            rollWerewolfPool();
-            
-            // Depois enviar a ação
-            setTimeout(() => {
-                sendWerewolfAction();
-            }, 500);
-        }
-        
-        function startWerewolfAIGame() {
-            const style = document.getElementById('ai-narrative-style').value;
-            const focus = document.getElementById('ai-chronicle-focus').value;
-            const region = document.getElementById('ai-region').value;
-            const complexity = document.getElementById('ai-complexity').value;
-            
-            showNotification(
-                `Iniciando jogo com IA: ${style}, foco ${focus}, região ${region}, complexidade ${complexidade}`, 
-                'success'
-            );
-            
-            // Iniciar música apropriada
-            if (werewolfData.audioSystem) {
-                werewolfData.audioSystem.setMood(focus);
-            }
-            
-            // Redirecionar para a página do jogo com IA
-            setTimeout(() => {
-                window.location.href = `ai-game.html?style=${style}&focus=${focus}&region=${region}&complexity=${complexity}`;
-            }, 1000);
-        }
-        
-        // ============================================
-        // FUNÇÕES GERAIS
-        // ============================================
-        
-        function joinChronicle(id) {
-            showNotification(`Entrando na caçada #${id}...`, 'info');
-            
-            // Tocar som de porta abrindo
-            if (werewolfData.audioSystem) {
-                werewolfData.audioSystem.playSoundEffect('door_open', { volume: 0.5 });
-            }
-            
-            // Simular redirecionamento
-            setTimeout(() => {
-                window.location.href = `session.html?id=${id}&system=werewolf`;
-            }, 1000);
-        }
-        
-        function spectateChronicle(id) {
-            showNotification(`Espiando caçada #${id}...`, 'info');
-        }
-        
-        function joinWerewolfSession() {
-            showNotification('Buscando sessões de Lobisomem disponíveis...', 'info');
-        }
-        
-        function createWerewolfSession() {
-            showNotification('Criando nova caçada...', 'info');
-        }
-        
-        function tryWerewolfAI() {
-            // Role para baixo até a seção de IA
-            document.querySelector('.ai-section').scrollIntoView({ behavior: 'smooth' });
-            showNotification('Experimente o narrador IA Garou!', 'info');
-        }
-        
-        function spectateWerewolf() {
-            showNotification('Procurando sessões para espiar...', 'info');
-        }
-        
-        function quickWerewolfDice() {
-            // Rolar 10 dados D10 rapidamente
-            const rolls = [];
-            let successes = 0;
-            
-            for (let i = 0; i < 10; i++) {
-                const roll = Math.floor(Math.random() * 10) + 1;
-                rolls.push(roll);
-                if (roll >= 6) successes++;
-            }
-            
-            showNotification(
-                `Rolagem rápida: ${rolls.join(', ')} | Sucessos: ${successes}`, 
-                'info'
-            );
-            
-            // Tocar som de dados
-            if (werewolfData.audioSystem) {
-                werewolfData.audioSystem.playSoundEffect('dice_roll', { volume: 0.5 });
-            }
-        }
-        
-        function openTribeGuide() {
-            showNotification('Abrindo guia completo das tribos Garou...', 'info');
-        }
-        
-        function openGifts() {
-            showNotification('Abrindo lista completa de dons Garou...', 'info');
-        }
-        
-        function openCaerns() {
-            showNotification('Abrindo mapa interativo de caerns...', 'info');
-        }
-        
-        function openMoots() {
-            showNotification('Abrindo guia de rituais e concílios...', 'info');
-        }
-        
-        function openWyrmHunt() {
-            showNotification('Iniciando nova caçada à Wyrm...', 'info');
-        }
-        
-        function loginGarou() {
-            showNotification('Abraçando Gaia... Bem-vindo, Garou!', 'success');
-            
-            // Tocar som épico
-            if (werewolfData.audioSystem) {
-                werewolfData.audioSystem.playSoundEffect('heartbeat', { volume: 0.3 });
-                setTimeout(() => {
-                    werewolfData.audioSystem.playSoundEffect('wolf_howl', { volume: 0.5 });
-                }, 500);
-            }
-        }
-        
-        function updateMoonPhase() {
-            const moonPhases = ['🌑 Lua Nova', '🌒 Crescente', '🌓 Quarto Crescente', '🌔 Gibosa', '🌕 Lua Cheia', '🌖 Minguante', '🌗 Quarto Minguante', '🌘 Balsâmica'];
-            const randomPhase = moonPhases[Math.floor(Math.random() * moonPhases.length)];
-            const randomDays = Math.floor(Math.random() * 30) + 1;
-            
-            document.getElementById('current-moon').textContent = randomPhase;
-            document.querySelector('.moon-timer').textContent = `Próxima lua cheia: ${randomDays} dias`;
-        }
-        
-        function toggleMobileMenu() {
-            const navMenu = document.querySelector('.nav-menu');
-            navMenu.classList.toggle('active');
-        }
-        
-        function showNotification(message, type = 'info') {
-            // Criar notificação
-            const notification = document.createElement('div');
-            notification.className = `notification notification-${type}`;
-            notification.innerHTML = `
-                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
-                <span>${message}</span>
-            `;
-            
-            // Adicionar ao corpo
-            document.body.appendChild(notification);
-            
-            // Mostrar
-            setTimeout(() => {
-                notification.classList.add('show');
-            }, 10);
-            
-            // Remover após 3 segundos
-            setTimeout(() => {
-                notification.classList.remove('show');
-                setTimeout(() => {
-                    notification.remove();
-                }, 300);
-            }, 3000);
-            
-            // Tocar som de notificação
-            if (type === 'success' && werewolfData.audioSystem) {
-                werewolfData.audioSystem.playSoundEffect('dice_roll', { volume: 0.2 });
-            }
-        }
-        
-        // ============================================
-        // ESTILOS PARA NOTIFICAÇÕES
-        // ============================================
-        
-        const style = document.createElement('style');
-        style.textContent = `
-            .notification {
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: var(--night-black);
-                color: var(--moon-silver);
-                border-left: 4px solid var(--forest-green);
-                padding: 15px 20px;
-                border-radius: 5px;
-                box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                z-index: 1000;
-                transform: translateX(150%);
-                transition: transform 0.3s ease;
-                max-width: 400px;
-            }
-            
-            .notification.show {
-                transform: translateX(0);
-            }
-            
-            .notification-success {
-                border-left-color: var(--forest-green);
-            }
-            
-            .notification-error {
-                border-left-color: var(--blood-red);
-            }
-            
-            .notification-info {
-                border-left-color: var(--spirit-blue);
-            }
-            
-            .tribe-card.selected {
-                border: 2px solid var(--golden-fur);
-                box-shadow: 0 0 15px rgba(218, 165, 32, 0.5);
-            }
-            
-            .tribe-card.selected .tribe-select {
-                display: block;
-            }
-            
-            .tribe-select {
-                display: none;
-                color: var(--golden-fur);
-                font-size: 1.5rem;
-            }
-            
-            .tribe-icon {
-                width: 50px;
-                height: 50px;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 1.5rem;
-                color: white;
-            }
-            
-            .loading-section {
-                text-align: center;
-                padding: 40px;
-                color: var(--moon-silver);
-            }
-            
-            .ai-badge {
-                background: linear-gradient(135deg, #4B0082, #8A2BE2);
-                color: white;
-            }
-            
-            .gm-status.ai {
-                background: #8A2BE2;
-                box-shadow: 0 0 10px #8A2BE2;
-            }
-        `;
-        
-        document.head.appendChild(style);
     </script>
 </body>
 </html>
