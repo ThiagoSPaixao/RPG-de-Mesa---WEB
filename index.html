@@ -50,6 +50,65 @@
             transform: translateY(-5px);
             transition: transform 0.3s ease;
         }
+        
+        /* Botão Lobisomem específico */
+        .btn-werewolf-play {
+            background: linear-gradient(135deg, #8B4513, #654321);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-family: 'Cinzel', serif;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 10px;
+            min-width: 200px;
+        }
+        
+        .btn-werewolf-play:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(139, 69, 19, 0.5);
+            background: linear-gradient(135deg, #A0522D, #8B4513);
+        }
+        
+        /* Grid de ações especiais */
+        .special-actions {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+        }
+        
+        /* Botão de ação rápida */
+        .quick-action-btn {
+            background: rgba(139, 69, 19, 0.3);
+            border: 2px solid #8B4513;
+            color: #F4A460;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .quick-action-btn:hover {
+            background: #8B4513;
+            color: white;
+            transform: scale(1.05);
+        }
     </style>
 </head>
 <body>
@@ -70,6 +129,10 @@
             <a href="#sessions" class="nav-link"><i class="fas fa-users"></i> Sessões</a>
             <a href="#community" class="nav-link"><i class="fas fa-comments"></i> Comunidade</a>
             <a href="character-creator.html" class="nav-link"><i class="fas fa-user-plus"></i> Criar Personagem</a>
+            <!-- NOVO LINK DIRETO PARA LOBISOMEM -->
+            <a href="werewolf.html" class="nav-link werewolf-nav-link" style="color: #F4A460; font-weight: bold;">
+                <i class="fas fa-paw"></i> Lobisomem
+            </a>
         </div>
         
         <div class="nav-user">
@@ -112,6 +175,10 @@
                         <span class="tag">🌍 Ecologia</span>
                         <span class="tag">⚔️ Combate Épico</span>
                     </div>
+                    <!-- BOTÃO PARA LOBISOMEM NO SLIDE -->
+                    <button class="btn-play btn-werewolf-play" onclick="goToWerewolfPage()">
+                        <i class="fas fa-paw"></i> Abraçar a Natureza
+                    </button>
                 </div>
                 <div class="slide-overlay"></div>
             </div>
@@ -140,6 +207,19 @@
                 <span class="dot" data-slide="2"></span>
             </div>
             <button class="slide-next"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        
+        <!-- NOVA SEÇÃO: Ações Rápidas para Sistemas -->
+        <div class="special-actions">
+            <button class="quick-action-btn" onclick="goToVampirePage()">
+                <i class="fas fa-bat"></i> Vampiro: A Máscara
+            </button>
+            <button class="quick-action-btn" onclick="goToWerewolfPage()">
+                <i class="fas fa-paw"></i> Lobisomem: Idade das Trevas
+            </button>
+            <button class="quick-action-btn" onclick="navigateToRPG('mage')">
+                <i class="fas fa-hat-wizard"></i> Mago: A Ascensão
+            </button>
         </div>
         
         <!-- CTA Buttons -->
@@ -238,8 +318,8 @@
                     </div>
                 </div>
                 <div class="rpg-card-footer">
-                    <button class="btn-explore" onclick="navigateToRPG('werewolf')">
-                        Explorar <i class="fas fa-arrow-right"></i>
+                    <button class="btn-explore btn-werewolf-play" onclick="goToWerewolfPage()">
+                        <i class="fas fa-paw"></i> Tornar-se Garou
                     </button>
                 </div>
             </div>
@@ -453,10 +533,10 @@
                 </div>
                 
                 <div class="session-actions">
-                    <button class="btn-join-session" onclick="joinSession(102)">
-                        <i class="fas fa-door-open"></i> Entrar
+                    <button class="btn-join-session btn-werewolf-play" onclick="joinWerewolfSession(102)">
+                        <i class="fas fa-paw"></i> Juntar-se ao Pack
                     </button>
-                    <button class="btn-spectate" onclick="spectateSession(102)">
+                    <button class="btn-spectate" onclick="spectateWerewolfSession(102)">
                         <i class="fas fa-eye"></i> Assistir
                     </button>
                 </div>
@@ -616,8 +696,8 @@
                         <label>Sistema:</label>
                         <select id="ai-system">
                             <option value="vampire">Vampiro: A Máscara</option>
-                            <option value="werewolf">Lobisomem</option>
-                            <option value="mage">Mago</option>
+                            <option value="werewolf">Lobisomem: Idade das Trevas</option>
+                            <option value="mage">Mago: A Ascensão</option>
                             <option value="tormenta">Tormenta</option>
                             <option value="dnd">D&D 5E</option>
                         </select>
@@ -627,6 +707,7 @@
                         <label>Estilo:</label>
                         <select id="ai-style">
                             <option value="gothic">Gótico/Dramático</option>
+                            <option value="primal">Primal/Animal</option>
                             <option value="neutral">Neutro/Descriptivo</option>
                             <option value="humorous">Humorístico</option>
                             <option value="epic">Épico/Cinematográfico</option>
@@ -650,6 +731,9 @@
                     </button>
                     <button class="btn-try-vampire-ai" onclick="goToVampireAIPage()" style="margin-top: 10px; background: linear-gradient(135deg, #8B0000, #660000);">
                         <i class="fas fa-bat"></i> IA Vampírica Avançada
+                    </button>
+                    <button class="btn-try-werewolf-ai" onclick="goToWerewolfAIPage()" style="margin-top: 10px; background: linear-gradient(135deg, #8B4513, #654321);">
+                        <i class="fas fa-paw"></i> IA Garou Avançada
                     </button>
                 </div>
             </div>
@@ -749,8 +833,8 @@
                 <h4>Sistemas</h4>
                 <ul>
                     <li><a href="#" onclick="goToVampirePage()">Vampiro: A Máscara</a></li>
-                    <li><a href="#" onclick="navigateToRPG('werewolf')">Lobisomem</a></li>
-                    <li><a href="#" onclick="navigateToRPG('mage')">Mago</a></li>
+                    <li><a href="#" onclick="goToWerewolfPage()">Lobisomem: Idade das Trevas</a></li>
+                    <li><a href="#" onclick="navigateToRPG('mage')">Mago: A Ascensão</a></li>
                     <li><a href="#" onclick="navigateToRPG('tormenta')">Tormenta</a></li>
                     <li><a href="#" onclick="navigateToRPG('dnd')">D&D 5E</a></li>
                 </ul>
@@ -761,9 +845,9 @@
                 <ul>
                     <li><a href="character-creator.html">Criador de Personagens</a></li>
                     <li><a href="#" onclick="goToVampirePage()">Mundo Vampírico</a></li>
+                    <li><a href="#" onclick="goToWerewolfPage()">Mundo dos Garou</a></li>
                     <li><a href="#">Documentação</a></li>
                     <li><a href="#">API para Desenvolvedores</a></li>
-                    <li><a href="#">Blog de RPG</a></li>
                 </ul>
             </div>
             
@@ -781,7 +865,7 @@
         
         <div class="footer-bottom">
             <p>&copy; 2024 RPG Online Platform. Todos os direitos reservados.</p>
-            <p>Vampiro: A Máscara, Lobisomem e outros são marcas registradas da White Wolf Publishing.</p>
+            <p>Vampiro: A Máscara, Lobisomem: Idade das Trevas e outros são marcas registradas da White Wolf Publishing.</p>
         </div>
     </footer>
 
@@ -808,11 +892,33 @@
             window.location.href = 'vampire.html';
         }
         
+        // NOVA FUNÇÃO: Ir para a página de Lobisomem
+        function goToWerewolfPage() {
+            console.log('Redirecionando para werewolf.html...');
+            
+            // Salva no localStorage que o usuário escolheu Lobisomem
+            localStorage.setItem('selectedRPG', 'werewolf');
+            localStorage.setItem('lastVisited', 'werewolf');
+            
+            // Muda o tema para lobisomem
+            document.documentElement.setAttribute('data-theme', 'werewolf');
+            
+            // Redireciona para werewolf.html
+            window.location.href = 'werewolf.html';
+        }
+        
         // Função para ir para IA Vampírica específica
         function goToVampireAIPage() {
             localStorage.setItem('selectedRPG', 'vampire');
             localStorage.setItem('vampireAIAction', 'start_demo');
             window.location.href = 'vampire.html#ai-demo';
+        }
+        
+        // NOVA FUNÇÃO: Ir para IA Lobisomem específica
+        function goToWerewolfAIPage() {
+            localStorage.setItem('selectedRPG', 'werewolf');
+            localStorage.setItem('werewolfAIAction', 'start_demo');
+            window.location.href = 'werewolf.html#ai-narrator';
         }
         
         // Funções para sessões de Vampiro
@@ -841,6 +947,32 @@
             window.location.href = `vampire.html?session=${sessionId}&spectate=true`;
         }
         
+        // NOVAS FUNÇÕES: Sessões de Lobisomem
+        function joinWerewolfSession(sessionId) {
+            console.log(`Entrando na sessão lobisomem ${sessionId}...`);
+            
+            // Salva dados da sessão
+            localStorage.setItem('selectedRPG', 'werewolf');
+            localStorage.setItem('joiningSession', sessionId);
+            localStorage.setItem('sessionType', 'werewolf');
+            
+            // Mostra mensagem e redireciona
+            alert(`Entrando na sessão lobisomem ${sessionId}...\nRedirecionando para o Mundo dos Garou!`);
+            
+            // Redireciona para werewolf.html com parâmetro da sessão
+            window.location.href = `werewolf.html?session=${sessionId}&join=true`;
+        }
+        
+        function spectateWerewolfSession(sessionId) {
+            console.log(`Assistindo sessão lobisomem ${sessionId}...`);
+            
+            localStorage.setItem('selectedRPG', 'werewolf');
+            localStorage.setItem('spectatingSession', sessionId);
+            
+            alert(`Preparando para assistir sessão lobisomem ${sessionId}...`);
+            window.location.href = `werewolf.html?session=${sessionId}&spectate=true`;
+        }
+        
         // ============================================
         // FUNÇÕES GENÉRICAS DE NAVEGAÇÃO
         // ============================================
@@ -848,6 +980,11 @@
         function navigateToRPG(system) {
             if (system === 'vampire') {
                 goToVampirePage();
+                return;
+            }
+            
+            if (system === 'werewolf') {
+                goToWerewolfPage();
                 return;
             }
             
@@ -897,6 +1034,7 @@
             updateLiveStats();
             initThemeSwitcher();
             setupVampireLinks();
+            setupWerewolfLinks(); // NOVO
         });
         
         // Configura todos os links de Vampiro
@@ -916,6 +1054,34 @@
                 card.style.cursor = 'pointer';
                 card.title = 'Clique para entrar no Mundo Vampírico';
             });
+        }
+        
+        // NOVA FUNÇÃO: Configura todos os links de Lobisomem
+        function setupWerewolfLinks() {
+            // Adiciona eventos aos cards de Lobisomem
+            document.querySelectorAll('.rpg-card[data-rpg="werewolf"]').forEach(card => {
+                card.addEventListener('click', function(e) {
+                    if (!e.target.closest('.btn-explore')) {
+                        goToWerewolfPage();
+                    }
+                });
+            });
+            
+            // Adiciona tooltips
+            const werewolfCards = document.querySelectorAll('.rpg-card[data-rpg="werewolf"], .session-card .werewolf-badge');
+            werewolfCards.forEach(card => {
+                card.style.cursor = 'pointer';
+                card.title = 'Clique para entrar no Mundo dos Garou';
+            });
+            
+            // Configura link na navegação
+            const werewolfNavLink = document.querySelector('.werewolf-nav-link');
+            if (werewolfNavLink) {
+                werewolfNavLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    goToWerewolfPage();
+                });
+            }
         }
         
         // ============================================
@@ -1020,16 +1186,36 @@
                 chatContainer.insertBefore(playerMessage, document.querySelector('.player-message'));
             }
             
-            // Simula resposta da IA
-            const responses = [
-                "A noite parece se intensificar com sua decisão. Um corvo pousa na janela, observando você com olhos vermelhos.",
-                "Na distância, você ouve risadas abafadas. Algo se move nas sombras do beco.",
-                "Seu instinto vampírico alerta para perigo próximo. O cheiro de sangue fresco está no ar.",
-                "A Lua cheia ilumina as ruas vazias. Esta é a hora dos predadores.",
-                "Você sente a presença de outros Membros. Eles estão próximos, observando."
-            ];
+            // Respostas por sistema
+            const system = document.getElementById('ai-system')?.value || 'vampire';
+            const responses = {
+                vampire: [
+                    "A noite parece se intensificar com sua decisão. Um corvo pousa na janela, observando você com olhos vermelhos.",
+                    "Na distância, você ouve risadas abafadas. Algo se move nas sombras do beco.",
+                    "Seu instinto vampírico alerta para perigo próximo. O cheiro de sangue fresco está no ar.",
+                    "A Lua cheia ilumina as ruas vazias. Esta é a hora dos predadores.",
+                    "Você sente a presença de outros Membros. Eles estão próximos, observando."
+                ],
+                werewolf: [
+                    "A floresta respira ao seu redor. Sua fúria desperta com o chamado de Gaia.",
+                    "O cheiro da Wyrm é forte aqui. Suas garras coçam por uma caçada.",
+                    "Os espíritos sussurram nos ventos. A terra sente sua presença.",
+                    "Sua forma Crinos está pronta para emergir. O combate se aproxima.",
+                    "A matilha aguarda sua liderança. A guerra pela Terra continua."
+                ],
+                mage: [
+                    "A realidade se dobra à sua vontade. O paradoxo aguarda os incautos.",
+                    "Seu paradigma molda o mundo ao seu redor. A magia flui através de você.",
+                    "Os mistérios do universo se revelam àqueles que sabem ver.",
+                    "A Tecnocracia observa. Suas ações não passam despercebidas.",
+                    "A Quintessência responde ao seu chamado. Que magia você conjura?"
+                ]
+            };
             
-            const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+            const randomResponse = responses[system] ? 
+                responses[system][Math.floor(Math.random() * responses[system].length)] : 
+                "O mundo responde às suas ações. O que você faz a seguir?";
+                
             aiResponse.textContent = `"${randomResponse}"`;
             
             // Limpa o input
@@ -1048,7 +1234,7 @@
             
             const greetings = {
                 vampire: "Bem-vindo às trevas. A noite pertence aos vampiros. Qual é seu primeiro movimento?",
-                werewolf: "Gaia chama seus filhos. Sinta a fúria da Wyrm se aproximando.",
+                werewolf: "Gaia chama seus filhos. Sinta a fúria da Wyrm se aproximando. Seu uivo ecoa na floresta.",
                 mage: "A realidade é maleável em suas mãos. Que paradigma você escolhe?",
                 tormenta: "Arton aguarda seus heróis. Uma nova aventura começa.",
                 dnd: "Role para iniciativa! Sua jornada épica está prestes a começar."
@@ -1065,12 +1251,15 @@
             const chatContainer = document.querySelector('.ai-chat');
             if (!chatContainer) return;
             
+            const system = document.getElementById('ai-system')?.value || 'vampire';
+            const diceType = system === 'werewolf' || system === 'vampire' || system === 'mage' ? 'D10' : 'D20';
+            
             const diceResults = document.createElement('div');
             diceResults.className = 'dice-roll-demo';
             diceResults.innerHTML = `
                 <div class="dice-roll">
                     <span class="dice-icon">🎲</span>
-                    <span class="roll-result">D10: ${Math.floor(Math.random() * 10) + 1}</span>
+                    <span class="roll-result">${diceType}: ${Math.floor(Math.random() * (system === 'werewolf' ? 10 : 20)) + 1}</span>
                 </div>
             `;
             
@@ -1115,7 +1304,7 @@
         }
         
         // ============================================
-        // DETECÇÃO DE CLIQUE EM ELEMENTOS VAMPÍRICOS
+        // DETECÇÃO DE CLIQUE EM ELEMENTOS VAMPÍRICOS E LOBISOMEM
         // ============================================
         
         // Detecta cliques em qualquer elemento relacionado a Vampiro
@@ -1126,9 +1315,21 @@
                 e.preventDefault();
             }
             
+            // Se clicar em um badge de Lobisomem
+            if (e.target.closest('.werewolf-badge')) {
+                goToWerewolfPage();
+                e.preventDefault();
+            }
+            
             // Se clicar em uma tag relacionada a Vampiro
             if (e.target.closest('.tag') && e.target.textContent.includes('Vamp')) {
                 goToVampirePage();
+                e.preventDefault();
+            }
+            
+            // Se clicar em uma tag relacionada a Lobisomem
+            if (e.target.closest('.tag') && (e.target.textContent.includes('Lobis') || e.target.textContent.includes('Garou') || e.target.textContent.includes('Tribo'))) {
+                goToWerewolfPage();
                 e.preventDefault();
             }
         });

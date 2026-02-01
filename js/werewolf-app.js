@@ -743,10 +743,10 @@ const WerewolfApp = {
         
         return `
             <div class="hunt-card ${isFeatured ? 'featured' : ''}" data-hunt-id="${hunt.id}" 
-                 data-tribes="${hunt.tribes.join(',')}" 
-                 data-region="${hunt.region}" 
-                 data-difficulty="${hunt.difficulty}"
-                 data-type="${hunt.tags.join(',')}">
+                data-tribes="${hunt.tribes.join(',')}" 
+                data-region="${hunt.region}" 
+                data-difficulty="${hunt.difficulty}"
+                data-type="${hunt.tags.join(',')}">
                 ${isFeatured ? `
                     <div class="hunt-badge badge-featured">
                         <i class="fas fa-crown"></i> Destaque
