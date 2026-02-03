@@ -1,104 +1,279 @@
-/* ============================================
-   HOME.CSS - estilos específicos do portal
-   (antes estavam inline no index.html)
-   ============================================ */
+    /* ============================================
+    HOME.CSS - portal (alinhamento, cliques, mobile)
+    ============================================ */
 
-/* Badges */
-.vampire-badge {
-    background: linear-gradient(135deg, #8B0000, #660000);
-    color: white;
-    padding: 4px 12px;
-    border-radius: 15px;
-    font-size: 0.85rem;
-    font-weight: bold;
-    display: inline-block;
-}
+    :root {
+    --portal-max: 1200px;
+    --portal-pad: 16px;
+    }
 
-.werewolf-badge {
-    background: linear-gradient(135deg, #8B4513, #654321);
-    color: white;
-    padding: 4px 12px;
-    border-radius: 15px;
-    font-size: 0.85rem;
-    font-weight: bold;
-    display: inline-block;
-}
+    /* Garantir box model previsível */
+    * { box-sizing: border-box; }
 
-.mage-badge {
-    background: linear-gradient(135deg, #4B0082, #483D8B);
-    color: white;
-    padding: 4px 12px;
-    border-radius: 15px;
-    font-size: 0.85rem;
-    font-weight: bold;
-    display: inline-block;
-}
+    body {
+    overflow-x: hidden;
+    }
 
-/* Hover geral */
-.btn-explore:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(139, 0, 0, 0.4);
-}
+    /* =========================
+    HERO / SLIDES
+    ========================= */
 
-.session-card:hover {
-    transform: translateY(-5px);
-    transition: transform 0.3s ease;
-}
+    .hero-banner {
+    position: relative;
+    z-index: 1;
+    }
 
-/* Botão Lobisomem */
-.btn-werewolf-play {
-    background: linear-gradient(135deg, #8B4513, #654321);
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 25px;
-    font-family: 'Cinzel', serif;
-    font-weight: bold;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
+    /* Evita overlay “comer” clique */
+    .slideshow {
+    position: relative;
+    z-index: 2;
+    }
+
+    /* Cada slide vira um mini “stack” */
+    .slide {
+    position: relative;
+    min-height: 420px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    margin: 10px;
-    min-width: 200px;
-}
+    }
 
-.btn-werewolf-play:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(139, 69, 19, 0.5);
-    background: linear-gradient(135deg, #A0522D, #8B4513);
-}
+    /* Overlay não captura clique */
+    .slide-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none; /* ✅ ESSENCIAL */
+    z-index: 1;
+    }
 
-/* Ações rápidas */
-.special-actions {
+    /* Conteúdo acima de overlay */
+    .slide-content {
+    position: relative;
+    z-index: 5; /* ✅ acima do overlay e de backgrounds */
+    width: min(var(--portal-max), 92vw);
+    padding: 24px;
+    }
+
+    /* Controles do slideshow acima do slide */
+    .slideshow-controls {
+    position: relative;
+    z-index: 10;
+    width: min(var(--portal-max), 92vw);
+    margin: 10px auto 0;
+    }
+
+    /* Botões sempre clicáveis */
+    .btn-play,
+    .btn-create,
+    .btn-demo,
+    .btn-explore,
+    .btn-join-session,
+    .btn-spectate,
+    .quick-action-btn,
+    .session-system {
+    position: relative;
+    z-index: 15;
+    }
+
+    /* =========================
+    AÇÕES RÁPIDAS
+    ========================= */
+
+    .special-actions {
+    width: min(var(--portal-max), 92vw);
+    margin: 18px auto 0;
+    padding: 16px;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 14px;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 15px;
-    margin: 30px 0;
-    padding: 20px;
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 15px;
-}
+    gap: 12px;
+    }
 
-.quick-action-btn {
-    background: rgba(139, 69, 19, 0.3);
+    /* Botão de ação rápida */
+    .quick-action-btn {
+    background: rgba(139, 69, 19, 0.22);
     border: 2px solid #8B4513;
     color: #F4A460;
-    padding: 10px 20px;
-    border-radius: 20px;
-    font-weight: bold;
+    padding: 10px 16px;
+    border-radius: 999px;
+    font-weight: 700;
     cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
+    transition: transform 0.18s ease, background 0.18s ease;
+    display: inline-flex;
     align-items: center;
     gap: 8px;
-}
+    }
 
-.quick-action-btn:hover {
+    .quick-action-btn:hover {
     background: #8B4513;
+    color: #fff;
+    transform: translateY(-1px);
+    }
+
+    /* =========================
+    BADGES CLICÁVEIS (DESTAQUE)
+    ========================= */
+
+    .vampire-badge,
+    .werewolf-badge,
+    .mage-badge {
+    border: 0;
+    cursor: pointer;
+    user-select: none;
+    }
+
+    .vampire-badge {
+    background: linear-gradient(135deg, #8B0000, #660000);
+    color: #fff;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    }
+
+    .werewolf-badge {
+    background: linear-gradient(135deg, #8B4513, #654321);
+    color: #fff;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    }
+
+    .mage-badge {
+    background: linear-gradient(135deg, #4B0082, #483D8B);
+    color: #fff;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    }
+
+    /* =========================
+    GRID / SEÇÕES (ALINHAMENTO)
+    ========================= */
+
+    /* Centraliza títulos/áreas se o CSS base não fizer */
+    .rpg-systems-section,
+    .featured-sessions,
+    .community-section,
+    .ai-narrator-section {
+    width: min(var(--portal-max), 92vw);
+    margin-left: auto;
+    margin-right: auto;
+    }
+
+    .section-title,
+    .section-subtitle {
+    text-align: center;
+    }
+
+    /* Grid de sistemas mais consistente */
+    .rpg-systems-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    align-items: stretch;
+    }
+
+    /* Cards com altura consistente */
+    .rpg-card {
+    height: 100%;
+    }
+
+    /* Sessões em lista com respiro */
+    .sessions-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    }
+
+    /* =========================
+    BOTÃO LOBISOMEM
+    ========================= */
+
+    .btn-werewolf-play {
+    background: linear-gradient(135deg, #8B4513, #654321);
     color: white;
-    transform: scale(1.05);
-}
+    border: none;
+    padding: 12px 22px;
+    border-radius: 999px;
+    font-family: 'Cinzel', serif;
+    font-weight: 800;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-width: 200px;
+    }
+
+    .btn-werewolf-play:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 26px rgba(139, 69, 19, 0.42);
+    background: linear-gradient(135deg, #A0522D, #8B4513);
+    }
+
+    /* =========================
+    MENU MOBILE FUNCIONANDO
+    ========================= */
+
+    /* Em telas pequenas, escondemos o menu e abrimos via JS */
+    @media (max-width: 900px) {
+    .nav-menu {
+        position: absolute;
+        top: 64px; /* ajuste se sua navbar tiver outra altura */
+        left: 0;
+        right: 0;
+        padding: 14px 12px;
+        background: rgba(0, 0, 0, 0.92);
+        backdrop-filter: blur(8px);
+        display: none;
+        flex-direction: column;
+        gap: 10px;
+        z-index: 999; /* ✅ acima do banner */
+        border-bottom: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .nav-menu.is-open {
+        display: flex;
+    }
+
+    .nav-user {
+        display: none; /* opcional no mobile */
+    }
+
+    .mobile-menu-btn {
+        display: inline-flex;
+        z-index: 1000;
+    }
+
+    .rpg-systems-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .sessions-list {
+        grid-template-columns: 1fr;
+    }
+
+    .slide-content {
+        padding: 18px;
+    }
+
+    .special-actions {
+        padding: 12px;
+    }
+    }
