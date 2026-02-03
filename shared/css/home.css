@@ -1,0 +1,104 @@
+/* ============================================
+   HOME.CSS - estilos específicos do portal
+   (antes estavam inline no index.html)
+   ============================================ */
+
+/* Badges */
+.vampire-badge {
+    background: linear-gradient(135deg, #8B0000, #660000);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.werewolf-badge {
+    background: linear-gradient(135deg, #8B4513, #654321);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.mage-badge {
+    background: linear-gradient(135deg, #4B0082, #483D8B);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    display: inline-block;
+}
+
+/* Hover geral */
+.btn-explore:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(139, 0, 0, 0.4);
+}
+
+.session-card:hover {
+    transform: translateY(-5px);
+    transition: transform 0.3s ease;
+}
+
+/* Botão Lobisomem */
+.btn-werewolf-play {
+    background: linear-gradient(135deg, #8B4513, #654321);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-family: 'Cinzel', serif;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 10px;
+    min-width: 200px;
+}
+
+.btn-werewolf-play:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(139, 69, 19, 0.5);
+    background: linear-gradient(135deg, #A0522D, #8B4513);
+}
+
+/* Ações rápidas */
+.special-actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 30px 0;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+}
+
+.quick-action-btn {
+    background: rgba(139, 69, 19, 0.3);
+    border: 2px solid #8B4513;
+    color: #F4A460;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.quick-action-btn:hover {
+    background: #8B4513;
+    color: white;
+    transform: scale(1.05);
+}
