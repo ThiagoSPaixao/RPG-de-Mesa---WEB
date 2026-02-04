@@ -1,102 +1,104 @@
-    /* themes.css */
-    :root {
+/* themes.css - Temas por sistema (com transição de cor por tema) */
+
+/* Defaults (fallback) */
+:root {
     --primary: #8B0000;
     --secondary: #2C2C2C;
     --accent: #C0C0C0;
     --bg: #1A1A1A;
     --text: #E8E8E8;
-    --scrollbar: #444;
-    --card-bg: rgba(40, 40, 40, 0.8);
-    --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-    }
+    --text-secondary: #AAAAAA;
+    --border: #444444;
 
-    /* Sistema: Vampiro */
-    [data-theme="vampire"] {
+    /* RGB helpers for smooth themed gradients */
+    --primary-rgb: 139, 0, 0;     /* #8B0000 */
+    --accent-rgb: 192, 192, 192;  /* #C0C0C0 */
+    --bg-rgb: 26, 26, 26;         /* #1A1A1A */
+}
+
+/* -----------------------------
+   VAMPIRE
+----------------------------- */
+[data-theme="vampire"] {
     --primary: #8B0000;
     --secondary: #2C2C2C;
     --accent: #C0C0C0;
     --bg: #1A1A1A;
     --text: #E8E8E8;
-    --scrollbar: #660000;
-    --card-bg: rgba(43, 0, 0, 0.8);
-    }
+    --text-secondary: #AAAAAA;
+    --border: #444444;
 
-    /* Sistema: Lobisomem */
-    [data-theme="werewolf"] {
-    --primary: #8B4513;
-    --secondary: #2F4F4F;
-    --accent: #D2691E;
-    --bg: #1A1A1A;
-    --text: #F5F5DC;
-    --scrollbar: #654321;
-    --card-bg: rgba(46, 42, 35, 0.8);
-    }
+    --primary-rgb: 139, 0, 0;
+    --accent-rgb: 192, 192, 192;
+    --bg-rgb: 26, 26, 26;
+}
 
-    /* Sistema: Mago */
-    [data-theme="mage"] {
-    --primary: #4B0082;
-    --secondary: #2E2E5A;
-    --accent: #9370DB;
-    --bg: #0F0F1A;
-    --text: #E6E6FA;
-    --scrollbar: #483D8B;
-    --card-bg: rgba(46, 46, 90, 0.8);
-    }
+/* -----------------------------
+   WEREWOLF
+----------------------------- */
+[data-theme="werewolf"] {
+    --primary: #8B4513;           /* saddle brown */
+    --secondary: #2B241B;
+    --accent: #F4A460;            /* sandy brown */
+    --bg: #1E1A14;
+    --text: #F5F5DC;              /* beige */
+    --text-secondary: #CDBB9A;
+    --border: #4A3B2A;
 
-    /* Sistema: Tormenta */
-    [data-theme="tormenta"] {
-    --primary: #228B22;
-    --secondary: #006400;
-    --accent: #DAA520;
-    --bg: #0A1F0A;
-    --text: #F0FFF0;
-    --scrollbar: #2E8B57;
-    --card-bg: rgba(34, 139, 34, 0.1);
-    }
+    --primary-rgb: 139, 69, 19;
+    --accent-rgb: 244, 164, 96;
+    --bg-rgb: 30, 26, 20;
+}
 
-    /* Sistema: D&D */
-    [data-theme="dnd"] {
-    --primary: #1E90FF;
-    --secondary: #00008B;
-    --accent: #FFD700;
-    --bg: #0A1929;
-    --text: #F8F8FF;
-    --scrollbar: #4169E1;
-    --card-bg: rgba(30, 144, 255, 0.1);
-    }
+/* -----------------------------
+   MAGE
+----------------------------- */
+[data-theme="mage"] {
+    --primary: #4B0082;           /* indigo */
+    --secondary: #1E1B2E;
+    --accent: #9370DB;            /* medium purple */
+    --bg: #141221;
+    --text: #EEEAF8;
+    --text-secondary: #CFC6E6;
+    --border: #3A2F55;
 
-    /* Estilos Base */
-    * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    }
+    --primary-rgb: 75, 0, 130;
+    --accent-rgb: 147, 112, 219;
+    --bg-rgb: 20, 18, 33;
+}
 
-    body {
-    font-family: 'Cinzel', 'MedievalSharp', serif;
+/* -----------------------------
+   GLOBAL THEME APPLICATION
+----------------------------- */
+body {
     background-color: var(--bg);
     color: var(--text);
-    background-image: 
-        radial-gradient(circle at 20% 30%, rgba(139, 0, 0, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 70%, rgba(139, 69, 19, 0.1) 0%, transparent 50%);
-    min-height: 100vh;
-    overflow-x: hidden;
-    }
 
-    /* Animação de Neblina */
-    @keyframes fog {
-    0% { opacity: 0.1; transform: translateX(-100px); }
-    100% { opacity: 0.3; transform: translateX(100vw); }
-    }
+    /* THEMED background that actually changes when data-theme changes */
+    background-image:
+        radial-gradient(circle at 10% 20%, rgba(var(--primary-rgb), 0.10) 0%, transparent 55%),
+        radial-gradient(circle at 90% 80%, rgba(var(--accent-rgb), 0.08) 0%, transparent 55%),
+        url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
 
-    .fog-effect {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
-    animation: fog 20s linear infinite;
-    pointer-events: none;
-    z-index: 9999;
-    }
+    /* Not perfect for gradients (CSS can’t smoothly animate gradient stops everywhere),
+       but this restores the “theme shift” feel on most elements */
+    transition: background-color 600ms ease, color 600ms ease;
+}
+
+/* Make the “theme transition” feel consistent across UI */
+.navbar,
+.rpg-card,
+.modal-content,
+.slide-content,
+.btn,
+.nav-link,
+.tool-btn,
+.session-card,
+.community-card {
+    transition:
+        background-color 600ms ease,
+        color 600ms ease,
+        border-color 600ms ease,
+        box-shadow 600ms ease,
+        transform 300ms ease;
+}
