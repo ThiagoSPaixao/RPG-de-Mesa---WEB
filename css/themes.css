@@ -1,6 +1,6 @@
-/* themes.css - Temas por sistema (com transição de cor por tema) */
+/* themes.css - Temas por sistema (tema muda conforme o banner) */
 
-/* Defaults (fallback) */
+/* Defaults */
 :root {
     --primary: #8B0000;
     --secondary: #2C2C2C;
@@ -10,16 +10,16 @@
     --text-secondary: #AAAAAA;
     --border: #444444;
 
-    /* RGB helpers for smooth themed gradients */
-    --primary-rgb: 139, 0, 0;     /* #8B0000 */
-    --accent-rgb: 192, 192, 192;  /* #C0C0C0 */
-    --bg-rgb: 26, 26, 26;         /* #1A1A1A */
+    /* RGB helpers para fundos temáticos */
+    --primary-rgb: 139, 0, 0;
+    --accent-rgb: 192, 192, 192;
+    --bg-rgb: 26, 26, 26;
 }
 
-/* -----------------------------
+/* =========================
    VAMPIRE
------------------------------ */
-[data-theme="vampire"] {
+   ========================= */
+html[data-theme="vampire"] {
     --primary: #8B0000;
     --secondary: #2C2C2C;
     --accent: #C0C0C0;
@@ -33,15 +33,15 @@
     --bg-rgb: 26, 26, 26;
 }
 
-/* -----------------------------
+/* =========================
    WEREWOLF
------------------------------ */
-[data-theme="werewolf"] {
-    --primary: #8B4513;           /* saddle brown */
+   ========================= */
+html[data-theme="werewolf"] {
+    --primary: #8B4513;
     --secondary: #2B241B;
-    --accent: #F4A460;            /* sandy brown */
+    --accent: #F4A460;
     --bg: #1E1A14;
-    --text: #F5F5DC;              /* beige */
+    --text: #F5F5DC;
     --text-secondary: #CDBB9A;
     --border: #4A3B2A;
 
@@ -50,13 +50,13 @@
     --bg-rgb: 30, 26, 20;
 }
 
-/* -----------------------------
+/* =========================
    MAGE
------------------------------ */
-[data-theme="mage"] {
-    --primary: #4B0082;           /* indigo */
+   ========================= */
+html[data-theme="mage"] {
+    --primary: #4B0082;
     --secondary: #1E1B2E;
-    --accent: #9370DB;            /* medium purple */
+    --accent: #9370DB;
     --bg: #141221;
     --text: #EEEAF8;
     --text-secondary: #CFC6E6;
@@ -67,38 +67,41 @@
     --bg-rgb: 20, 18, 33;
 }
 
-/* -----------------------------
-   GLOBAL THEME APPLICATION
------------------------------ */
+/* =========================
+   APPLY THEME VISUALLY
+   ========================= */
 body {
     background-color: var(--bg);
     color: var(--text);
 
-    /* THEMED background that actually changes when data-theme changes */
+    /* Fundo que realmente muda com o tema */
     background-image:
-        radial-gradient(circle at 10% 20%, rgba(var(--primary-rgb), 0.10) 0%, transparent 55%),
-        radial-gradient(circle at 90% 80%, rgba(var(--accent-rgb), 0.08) 0%, transparent 55%),
-        url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
+        radial-gradient(circle at 10% 20%, rgba(var(--primary-rgb), 0.16) 0%, transparent 55%),
+        radial-gradient(circle at 90% 80%, rgba(var(--accent-rgb), 0.12) 0%, transparent 55%),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.70));
 
-    /* Not perfect for gradients (CSS can’t smoothly animate gradient stops everywhere),
-       but this restores the “theme shift” feel on most elements */
-    transition: background-color 600ms ease, color 600ms ease;
+    transition: background-color 700ms ease, color 700ms ease;
 }
 
-/* Make the “theme transition” feel consistent across UI */
+/* Componentes acompanhando tema */
 .navbar,
 .rpg-card,
-.modal-content,
-.slide-content,
-.btn,
-.nav-link,
-.tool-btn,
 .session-card,
-.community-card {
+.community-card,
+.modal-content,
+.slide-content {
     transition:
-        background-color 600ms ease,
-        color 600ms ease,
-        border-color 600ms ease,
-        box-shadow 600ms ease,
-        transform 300ms ease;
+        background-color 700ms ease,
+        color 700ms ease,
+        border-color 700ms ease,
+        box-shadow 700ms ease;
+}
+
+/* Elementos comuns usando as variáveis */
+.navbar {
+    border-bottom-color: var(--primary);
+}
+
+.section-title::after {
+    background: var(--primary);
 }

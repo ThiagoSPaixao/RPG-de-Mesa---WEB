@@ -1,9 +1,17 @@
     /* ============================================
-    HOME.JS - portal (cliques, slideshow, menu mobile)
+    HOME.JS - portal (tema por banner + menu mobile)
     ============================================ */
 
     (function () {
     const registry = window.RPG?.registry;
+
+    // =========================
+    // Tema (cor do site por slide)
+    // =========================
+    function applyTheme(themeId) {
+        if (!themeId) return;
+        document.documentElement.setAttribute('data-theme', themeId);
+    }
 
     // =========================
     // Navegação por sistema
@@ -24,13 +32,13 @@
         window.location.href = system.page;
     }
 
-    // Mantém compatibilidade com onclicks antigos (se existirem)
+    // Compatibilidade (se ainda existir onclick antigo)
     window.goToVampirePage = () => goToSystem('vampire');
     window.goToWerewolfPage = () => goToSystem('werewolf');
     window.navigateToRPG = (id) => goToSystem(id);
 
     // =========================
-    // Delegação de clique (padronização)
+    // Delegação de clique padronizada
     // =========================
     function initSystemLinkDelegation() {
         document.addEventListener('click', (e) => {
@@ -44,7 +52,7 @@
     }
 
     // =========================
-    // Slideshow
+    // Slideshow (agora muda tema certo)
     // =========================
     function initSlideshow() {
         const slides = document.querySelectorAll('.slide');
@@ -64,8 +72,18 @@
         if (dots[index]) dots[index].classList.add('active');
 
         currentSlide = index;
+
+        // ✅ AQUI está o ponto que voltou:
+        // aplica o tema do slide atual (vampire / werewolf / mage)
+        const rpgType = slides[index].getAttribute('data-rpg');
+        applyTheme(rpgType);
         }
 
+        // Inicializa tema com o slide ativo
+        const initiallyActive = [...slides].findIndex(s => s.classList.contains('active'));
+        showSlide(initiallyActive >= 0 ? initiallyActive : 0);
+
+        // Auto play
         setInterval(() => {
         currentSlide = (currentSlide + 1) % slides.length;
         showSlide(currentSlide);
@@ -85,7 +103,7 @@
     }
 
     // =========================
-    // Menu Mobile (funcionando)
+    // Menu Mobile
     // =========================
     function initMobileMenu() {
         const btn = document.getElementById('mobileMenuBtn');
@@ -97,14 +115,12 @@
         menu.classList.toggle('is-open');
         });
 
-        // Fecha ao clicar em algum link do menu
         menu.addEventListener('click', (e) => {
         const isLink = e.target.closest('a');
         if (!isLink) return;
         menu.classList.remove('is-open');
         });
 
-        // Fecha ao clicar fora
         document.addEventListener('click', (e) => {
         const clickedInsideMenu = e.target.closest('#mainNavMenu');
         const clickedButton = e.target.closest('#mobileMenuBtn');
@@ -113,14 +129,13 @@
         }
         });
 
-        // Segurança: se redimensionar pra desktop, remove estado aberto
         window.addEventListener('resize', () => {
         if (window.innerWidth > 900) menu.classList.remove('is-open');
         });
     }
 
     // =========================
-    // Navegação geral (mantido)
+    // Navegação geral
     // =========================
     window.navigateTo = function (page) {
         if (page === 'create-session') {
@@ -138,7 +153,7 @@
     };
 
     // =========================
-    // IA DEMO (mantido)
+    // IA DEMO
     // =========================
     window.tryAIDemo = function () {
         document.getElementById('ai-demo')?.scrollIntoView({ behavior: 'smooth' });
@@ -162,7 +177,7 @@
     };
 
     // =========================
-    // Modal (mantido)
+    // Modal
     // =========================
     window.openCustomSystemModal = function () {
         const modal = document.getElementById('customSystemModal');
@@ -175,7 +190,7 @@
     };
 
     // =========================
-    // Placeholders de sessão (mantido)
+    // Placeholders
     // =========================
     window.joinVampireSession = (id) => alert(`Entrando na sessão de Vampiro #${id} (em desenvolvimento)`);
     window.spectateVampireSession = (id) => alert(`Assistindo a sessão de Vampiro #${id} (em desenvolvimento)`);
@@ -184,9 +199,6 @@
     window.joinSession = (id) => alert(`Entrando na sessão #${id} (em desenvolvimento)`);
     window.spectateSession = (id) => alert(`Assistindo a sessão #${id} (em desenvolvimento)`);
 
-    // =========================
-    // Comunidade (mantido)
-    // =========================
     window.viewEvents = () => alert('Abrindo eventos.');
     window.viewWorkshops = () => alert('Abrindo workshops.');
     window.viewRankings = () => alert('Abrindo rankings.');
